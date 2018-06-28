@@ -118,7 +118,7 @@ def write_index_json(schemas, fname):
 
     # Construct top-level dictionary including meta-data
     # --------------------------------------------------------------
-    vers = pas.utils._get_astroschema_version()
+    vers = pas.utils.get_astroschema_version()
     if VERBOSE:
         print("\tastroschema version: '{}'".format(vers))
 
@@ -133,7 +133,7 @@ def write_index_json(schemas, fname):
     # ---------------------
     pas.utils.json_dump_file(index, fname)
     if VERBOSE:
-        size_str = pas.utils._get_file_size_str(fname)
+        size_str = pas.utils.get_file_size_str(fname)
         print("\t{}, size: {}".format(fname_base, size_str))
 
     return

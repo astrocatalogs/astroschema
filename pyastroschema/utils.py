@@ -34,7 +34,7 @@ def _json_dump_kwargs(**kwargs):
     return kw
 
 
-def _get_file_size_str(fil):
+def get_file_size_str(fil):
     """Given a filename, return the filesize as a string.
     """
     fsize = os.path.getsize(fil)
@@ -60,7 +60,7 @@ def _get_file_size_str(fil):
     return size_str
 
 
-def _get_astroschema_version():
+def get_astroschema_version():
     """Load the version of the entire `astroschema` package, from the version file.
     """
     # fname = os.path.join(PATH_ASTROSCHEMA, FNAME_VERSION)
