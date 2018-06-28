@@ -1,0 +1,14 @@
+{
+  "description":"Index and summary of schema included in `astroschema`.",
+  "filename":"astroschema_index.json",
+  "version":"0.0",
+  "updated":"2018-06-28 09:37:47.684308",
+  "index":{
+    "source":{
+      "description":"An item representing a bibliographic attribution or reference.",
+      "filename":"source.json",
+      "version":"0.0",
+      "updated":"2018-06-28 09:31:47"
+    }
+  }
+}
