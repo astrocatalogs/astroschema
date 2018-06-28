@@ -10,9 +10,10 @@ import os
 
 VERBOSE = True
 
-_DIR_SCHEMA = "schema"
 _FNAME_VERSION = "VERSION"
 _INDEX_JSON_FILENAME = "astroschema_index.json"
+_DIR_SCHEMA = "schema"
+_DIR_TESTS = "tests"
 
 INDEX_DESCRIPTION = "Index and summary of schema included in `astroschema`."
 
@@ -25,6 +26,7 @@ class PATHS:
     ASTROSCHEMA = os.path.realpath(os.path.join(PYASTROSCHEMA, os.path.pardir))
 
     SCHEMA_DIR = os.path.join(ASTROSCHEMA, _DIR_SCHEMA, "")
+    TESTS_DIR = os.path.join(ASTROSCHEMA, _DIR_TESTS, "")
     ASTROSCHEMA_VERSION_FILE = os.path.join(ASTROSCHEMA, _FNAME_VERSION)
     INDEX_JSON_FILE = os.path.join(ASTROSCHEMA, _INDEX_JSON_FILENAME)
 
