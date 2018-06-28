@@ -44,3 +44,11 @@ class META_KEYS:
     UPDATED = "updated"
     INDEX = "index"
     SCHEMA = "schema"
+
+
+class SCHEMA_KEYS:
+    TITLE = "title"
+    DESC = "description"
+    PROPS = "properties"
+    TYPE = "type"
+    REQD = "required"
