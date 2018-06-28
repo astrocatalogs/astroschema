@@ -21,6 +21,9 @@ def main():
     print("Validating schema")
     schemas = load_schemas(files)
 
+    print("Validating test files")
+    test_schemas(schemas)
+
     index_fname = PATHS.INDEX_JSON_FILE
     print("Writing summary to index file: '{}'".format(index_fname))
     write_index_json(schemas, index_fname)
@@ -81,9 +84,9 @@ def load_schemas(files):
         common_path = os.path.join(os.path.commonpath([fname, PATHS.ASTROSCHEMA]), '')
         relpath = fname.split(common_path)[-1]
 
-        keys = [META_KEYS.DESC, META_KEYS.FNAME, META_KEYS.VERS,
+        keys = [META_KEYS.TITLE, META_KEYS.DESC, META_KEYS.FNAME, META_KEYS.VERS,
                 META_KEYS.UPDATED, META_KEYS.SCHEMA]
-        vals = [desc, relpath, vers,
+        vals = [title, desc, relpath, vers,
                 mtime, _schema]
         this_schema = OrderedDict.fromkeys(keys)
         for kk, vv in zip(keys, vals):
@@ -92,6 +95,41 @@ def load_schemas(files):
         schemas[title] = this_schema
 
     return schemas
+
+
+def test_schemas(schemas):
+    for schema_meta in schemas.values():
+        name = schema_meta[META_KEYS.TITLE]
+        schem = schema_meta[META_KEYS.SCHEMA]
+        test_path = os.path.join(PATHS.TESTS_DIR, name, '')
+        test_file_pattern = os.path.join(test_path, '*.json')
+        test_files = sorted(glob.glob(test_file_pattern))
+
+        if VERBOSE:
+            print("\t{}: '{}' with {} files".format(name, test_path, len(test_files)))
+
+        for fname in test_files:
+            entry_meta = utils.json_load_file(fname)
+            valid = entry_meta['valid']
+            entry = entry_meta['entry']
+            rel_fname = os.path.join(name, os.path.basename(fname))
+
+            try:
+                jsonschema.validate(entry, schem)
+                success = True
+            except Exception:
+                success = False
+                if valid:
+                    raise
+            else:
+                if not valid:
+                    err = "This test should have failed!"
+                    raise jsonschema.exceptions.ValidationError(err)
+            finally:
+                print("\t\ttest '{}'  valid: {:5s}  passed: {:5s}".format(
+                    rel_fname, str(valid), str(success)))
+
+    return
 
 
 def write_index_json(schemas, fname):
