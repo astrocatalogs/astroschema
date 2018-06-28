@@ -4,8 +4,9 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 ## Structure
 
-- `schema`: the schema specifications themselves
-- `pyastroschema`: the python module for interacting with astroschema
+- `schema/`: the schema specifications themselves
+- `pyastroschema/`: the python module for interacting with astroschema
+- `validations/`: directory containing sample JSON files for testing schema validation
 - `astroschema.json`: description of each schema included in this package.
 
 
@@ -24,3 +25,5 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
         - Could use either, i.e. `["number", "string"]`
 
 - `astroschema.json` should be dynamically generated
+
+- Add enforced versioning such that for each schema file, if it is changed, ensure that the new version is saved into a special versions directory, and if the file is unchanged, ensure that the version number is not changed.
