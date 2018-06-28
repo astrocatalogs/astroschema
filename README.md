@@ -6,7 +6,7 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 - `schema/`: the schema specifications themselves
 - `pyastroschema/`: the python module for interacting with astroschema
-- `validations/`: directory containing sample JSON files for testing schema validation
+- `tests/`: directory containing sample JSON files for testing schema validation
 - `astroschema.json`: description of each schema included in this package.
 
 
@@ -36,3 +36,19 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 - `astroschema.json` should be dynamically generated
 
 - Add enforced versioning such that for each schema file, if it is changed, ensure that the new version is saved into a special versions directory, and if the file is unchanged, ensure that the version number is not changed.
+
+
+## Change Log
+
+### Current
+
+
+### v0.1.0 - 2018-06-28
+
+- Simple schema for 'source' structures created.
+- A few test JSON files added in `tests/source` for checking validations.
+
+- `pyastroschema`
+    - `Keychain` class to store parameter names ('keys') specified in schema files.
+    - `Source` class to store data associated with the `source.json` schema.  Currently specific to the 'source' structure, and will be generalized in the future to arbitrary schema.
+    - Validation works for 'source' entries and `Source` instances using the `jsonschema` python package.  This uses the example JSON files in `tests/source`.
