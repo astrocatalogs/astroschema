@@ -3,17 +3,31 @@
 
 import os
 import json
+from collections import OrderedDict
 
-from . import PATH_ASTROSCHEMA_VERSION_FILE
+from . import PATHS, META_KEYS
 
 
 def load_schema_index():
-
-    return
+    index = json_load_file(PATHS.INDEX_JSON_FILE)
+    return index
 
 
 def load_schema(sname):
-    return
+    index = load_schema_index()
+    if sname not in index:
+        err = "Schema name '{}' not found in index!".format(sname)
+        raise ValueError(err)
+
+    # Load the meta-data for this particular schema
+    schema_meta = index[sname]
+    # Get the filename for the schema file
+    schema_fname = schema_meta[META_KEYS.FNAME]
+    schema_fname = os.path.join(PATHS.ASTROSCHEMA, schema_fname)
+
+    schema = json_load_file(schema_fname)
+
+    return schema
 
 
 def json_dump_str(odict, **kwargs):
@@ -31,6 +45,19 @@ def json_dump_file(odict, fname, **kwargs):
     with open(fname, 'w') as out:
         json.dump(odict, out, **kw)
     return
+
+
+def json_load_file(fname):
+    """Load the contents of a JSON file into an `OrderedDict`.
+    """
+    try:
+        with open(fname, 'r') as inp:
+            data = json.load(inp, object_pairs_hook=OrderedDict)
+    except:
+        print("ERROR: Failed to load file '{}'".format(fname))
+        raise
+
+    return data
 
 
 def _json_dump_kwargs(**kwargs):
@@ -73,6 +100,6 @@ def get_astroschema_version():
     """Load the version of the entire `astroschema` package, from the version file.
     """
     # fname = os.path.join(PATH_ASTROSCHEMA, FNAME_VERSION)
-    with open(PATH_ASTROSCHEMA_VERSION_FILE, 'r') as inp:
+    with open(PATHS.ASTROSCHEMA_VERSION_FILE, 'r') as inp:
         vers = inp.read().strip()
     return vers

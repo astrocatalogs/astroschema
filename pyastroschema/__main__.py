@@ -1,22 +1,17 @@
 """Primary astroschema script for validating schema and producing additional output files.
 
 To-Do:
-- Create a class to contain the keys used in JSON files, e.g. 'filename', 'description', so that
-  they aren't always hardcoded in.
 
 """
 import os
 import glob
-import json
 import datetime
 from collections import OrderedDict
 
 import jsonschema
 
-from . import PATH_SCHEMA_DIR, PATH_INDEX_JSON_FILE
+from . import (PATHS, INDEX_DESCRIPTION, VERBOSE, META_KEYS)
 from . import utils
-
-VERBOSE = True
 
 
 def main():
@@ -26,7 +21,7 @@ def main():
     print("Validating schema")
     schemas = load_schemas(files)
 
-    index_fname = PATH_INDEX_JSON_FILE
+    index_fname = PATHS.INDEX_JSON_FILE
     print("Writing summary to index file: '{}'".format(index_fname))
     write_index_json(schemas, index_fname)
 
@@ -41,7 +36,7 @@ def get_schema_filenames():
     files : list of str
 
     """
-    schema_file_pattern = os.path.join(PATH_SCHEMA_DIR, '*.json')
+    schema_file_pattern = os.path.join(PATHS.SCHEMA_DIR, '*.json')
     if VERBOSE:
         print("\tSearching for files matching '{}'".format(schema_file_pattern))
     files = sorted(glob.glob(schema_file_pattern))
@@ -60,24 +55,19 @@ def load_schemas(files):
     """
     schemas = OrderedDict()
 
-    for ii, ff in enumerate(files):
-        fname = os.path.basename(ff)
+    for ii, fname in enumerate(files):
+        fname_base = os.path.basename(fname)
         if VERBOSE:
-            print("\t{:2d}: '{}'".format(ii, fname))
+            print("\t{:2d}: '{}'".format(ii, fname_base))
 
-        # Load Schema from JSON file
-        try:
-            with open(ff, 'r') as data:
-                _schema = json.load(data)
-        except json.decoder.JSONDecodeError:
-            print("ERROR: Failed to load file '{}'".format(ff))
-            raise
+        # Load schema from file
+        _schema = utils.json_load_file(fname)
 
-        title = _schema['title']
-        desc = _schema['description']
-        vers = _schema['version']
+        title = _schema[META_KEYS.TITLE]
+        desc = _schema[META_KEYS.DESC]
+        vers = _schema[META_KEYS.VERS]
         # Get modification time of file
-        mtime = os.path.getmtime(ff)
+        mtime = os.path.getmtime(fname)
         # Convert to str via `datetime` instance for nice formatting
         mtime = str(datetime.datetime.fromtimestamp(mtime))
 
@@ -87,8 +77,14 @@ def load_schemas(files):
         # Validate schema itself
         validator.check_schema(_schema)
 
-        keys = ['description', 'filename', 'version', 'updated', 'schema']
-        vals = [desc, fname, vers, mtime, _schema]
+        # Get filename relative to `PATH_ASTROSCHEMA`
+        common_path = os.path.join(os.path.commonpath([fname, PATHS.ASTROSCHEMA]), '')
+        relpath = fname.split(common_path)[-1]
+
+        keys = [META_KEYS.DESC, META_KEYS.FNAME, META_KEYS.VERS,
+                META_KEYS.UPDATED, META_KEYS.SCHEMA]
+        vals = [desc, relpath, vers,
+                mtime, _schema]
         this_schema = OrderedDict.fromkeys(keys)
         for kk, vv in zip(keys, vals):
             this_schema[kk] = vv
@@ -106,7 +102,7 @@ def write_index_json(schemas, fname):
     # Construct summary/index dictionary
     # ----------------------------------------
     schemas_index = OrderedDict()
-    keys = ['description', 'filename', 'version', 'updated']
+    keys = [META_KEYS.DESC, META_KEYS.FNAME, META_KEYS.VERS]
     for title, entry in schemas.items():
         this = OrderedDict()
         for kk in keys:
@@ -120,11 +116,11 @@ def write_index_json(schemas, fname):
         print("\tastroschema version: '{}'".format(vers))
 
     index = OrderedDict()
-    index['description'] = INDEX_DESCRIPTION
-    index['filename'] = fname_base
-    index['version'] = vers
-    index['updated'] = str(datetime.datetime.now())
-    index['index'] = schemas_index
+    index[META_KEYS.DESC] = INDEX_DESCRIPTION
+    index[META_KEYS.FNAME] = fname_base
+    index[META_KEYS.VERS] = vers
+    # index[META_KEYS.UPDATED] = str(datetime.datetime.now())
+    index[META_KEYS.INDEX] = schemas_index
 
     # Save to File
     # ---------------------
