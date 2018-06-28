@@ -1,11 +1,10 @@
 {
-    "valid": true,
+    "valid": false,
     "entry": {
         "name":"The Open Supernova Catalog",
         "bibcode":"2017ApJ...835...64G",
         "reference":"Guillochon et al. (2017)",
         "secondary":true,
-        "url":"https://sne.space",
-        "alias":"2"
+        "url":"https://sne.space"
     }
 }

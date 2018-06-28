@@ -1,6 +1,9 @@
 {
-    "name":"2017arXiv171102474F",
-    "bibcode":"2017arXiv171102474F",
-    "reference":"Foley et al. (2017)",
-    "alias":"1"
+    "valid": true,
+    "entry": {
+        "name":"2017arXiv171102474F",
+        "bibcode":"2017arXiv171102474F",
+        "reference":"Foley et al. (2017)",
+        "alias":"1"
+    }
 }
