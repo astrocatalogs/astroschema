@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "title": "source",
+    "description": "An item representing a bibliographic attribution or reference.",
+    "type": "object",
+    "properties": {
+        "alias": {
+            "description": "The unique identifier for this source",
+            "type": "integer",
+            "minimum": 0,
+        },
+        "bibcode": {
+            "type": "string"
+        },
+        "arxivid": {
+            "description": "ID number for the arXiv.",
+            "type": "string"
+        },
+        "doi": {
+            "description": "Digital Object Identifier (DOI) for this source.",
+            "type": "string"
+        },
+        "url": {
+            "type": "string",
+            "format": "uri"
+        },
+        "acknowledgment": {
+            "type": "string"
+        },
+        "reference": {
+            "type": "string"
+        },
+        "secondary": {
+            "type": "boolean"
+        },
+        "private": {
+            "type": "boolean"
+        }
+    },
+
+    "required": ["alias"],
+
+    "anyOf": [
+        { "required": ["bibcode"]},
+        { "required": ["arxivid"]},
+        { "required": ["doi"]},
+        { "required": ["url"]},
+        { "required": ["name"]}
+    ]
+}
