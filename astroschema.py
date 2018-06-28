@@ -1,4 +1,4 @@
-"""
+"""Primary astroschema script for validating schema and producing additional output files.
 
 To-Do:
 - Create a class to contain the keys used in JSON files, e.g. 'filename', 'description', so that
@@ -38,7 +38,12 @@ def main():
 
 
 def get_schema_filenames():
-    """
+    """Load the schema-files filenames: everything in the schema directory.
+
+    returns
+    -------
+    files : list of str
+
     """
     schema_file_pattern = os.path.join(PATH_ASTROSCHEMA, DIR_SCHEMA, '*.json')
     if VERBOSE:
@@ -50,7 +55,12 @@ def get_schema_filenames():
 
 
 def load_schemas(files):
-    """
+    """Given a list of schema filenames, load the schema and metadata from each of them.
+
+    Returns
+    -------
+    schemas : `OrderedDict`
+
     """
     schemas = OrderedDict()
 
@@ -107,6 +117,8 @@ def write_index_json(schemas, fname):
             this[kk] = entry[kk]
         schemas_index[title] = this
 
+    # Construct top-level dictionary including meta-data
+    # --------------------------------------------------------------
     vers = _get_astroschema_version()
     if VERBOSE:
         print("\tastroschema version: '{}'".format(vers))
@@ -128,12 +140,16 @@ def write_index_json(schemas, fname):
 
 
 def json_dump_str(odict, **kwargs):
+    """Dump the contents of a dictionary to a string using json formatting.
+    """
     kw = _json_dump_kwargs(indent=2)
     jsonstring = json.dumps(odict, **kw)
     return jsonstring
 
 
 def json_dump_file(odict, fname, **kwargs):
+    """Dump the contents of a dictionary to a JSON file with the given filename.
+    """
     kw = _json_dump_kwargs(**kwargs)
     with open(fname, 'w') as out:
         json.dump(odict, out, **kw)
@@ -141,6 +157,8 @@ def json_dump_file(odict, fname, **kwargs):
 
 
 def _json_dump_kwargs(**kwargs):
+    """Load kwargs to be passed to `json.dump` and `json.dumps`.
+    """
     kw = dict(indent=2, separators=(',', ':'), ensure_ascii=False)
     for kk, vv in kwargs.items():
         kw[kk] = vv
@@ -149,7 +167,10 @@ def _json_dump_kwargs(**kwargs):
 
 
 def _get_file_size_str(fil):
+    """Given a filename, return the filesize as a string.
+    """
     fsize = os.path.getsize(fil)
+    # decimal-places precision
     PREC = 1
 
     abbrevs = (
@@ -161,10 +182,12 @@ def _get_file_size_str(fil):
         (1, 'bytes')
     )
 
+    # Determine the correct abbreviation
     for factor, suffix in abbrevs:
         if fsize >= factor:
             break
 
+    # Construct file size string
     size_str = '{size:.{prec:}f} {suff}'.format(prec=PREC, size=fsize/factor, suff=suffix)
     return size_str
 
