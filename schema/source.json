@@ -7,7 +7,7 @@
     "properties": {
         "alias": {
             "description": "The unique identifier for this source",
-            "type": "integer",
+            "type": ["integer", "string"],
             "minimum": 0
         },
         "bibcode": {
