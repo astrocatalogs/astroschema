@@ -11,7 +11,8 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 
 ## Definitions and Terminology
-- 
+- A `struct` is an `astroschema` data structure that has a schema specification.  For example `source` is a particular `astroschema` `struct`, that has a particular `schema` specifying its structure.
+- An `entry` is data in the form of a `struct`, i.e. an instance of a `struct` filled with data.
 
 
 ## To-Do
