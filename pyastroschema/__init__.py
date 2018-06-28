@@ -29,9 +29,9 @@ class PATHS:
     INDEX_JSON_FILE = os.path.join(ASTROSCHEMA, _INDEX_JSON_FILENAME)
 
 
-print("Path: pyastroschema: '{}'".format(PATHS.PYASTROSCHEMA))
-print("Path:   astroschema: '{}'".format(PATHS.ASTROSCHEMA))
-print("Path:        schema: '{}'".format(PATHS.SCHEMA_DIR))
+# print("Path: pyastroschema: '{}'".format(PATHS.PYASTROSCHEMA))
+# print("Path:   astroschema: '{}'".format(PATHS.ASTROSCHEMA))
+# print("Path:        schema: '{}'".format(PATHS.SCHEMA_DIR))
 
 
 class META_KEYS:
