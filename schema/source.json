@@ -2,12 +2,13 @@
     "$schema": "http://json-schema.org/schema#",
     "title": "source",
     "description": "An item representing a bibliographic attribution or reference.",
+    "version": "0.0",
     "type": "object",
     "properties": {
         "alias": {
             "description": "The unique identifier for this source",
             "type": "integer",
-            "minimum": 0,
+            "minimum": 0
         },
         "bibcode": {
             "type": "string"
