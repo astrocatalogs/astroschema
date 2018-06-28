@@ -13,13 +13,10 @@ from collections import OrderedDict
 
 import jsonschema
 
-import pyastroschema as pas
-from pyastroschema import PATH_ASTROSCHEMA, PATH_SCHEMA
+from . import PATH_SCHEMA_DIR, PATH_INDEX_JSON_FILE
+from . import utils
 
 VERBOSE = True
-
-INDEX_JSON_FILENAME = "astroschema_index.json"
-INDEX_DESCRIPTION = "Index and summary of schema included in `astroschema`."
 
 
 def main():
@@ -29,7 +26,7 @@ def main():
     print("Validating schema")
     schemas = load_schemas(files)
 
-    index_fname = os.path.join(PATH_ASTROSCHEMA, INDEX_JSON_FILENAME)
+    index_fname = PATH_INDEX_JSON_FILE
     print("Writing summary to index file: '{}'".format(index_fname))
     write_index_json(schemas, index_fname)
 
@@ -44,7 +41,7 @@ def get_schema_filenames():
     files : list of str
 
     """
-    schema_file_pattern = os.path.join(PATH_SCHEMA, '*.json')
+    schema_file_pattern = os.path.join(PATH_SCHEMA_DIR, '*.json')
     if VERBOSE:
         print("\tSearching for files matching '{}'".format(schema_file_pattern))
     files = sorted(glob.glob(schema_file_pattern))
@@ -118,7 +115,7 @@ def write_index_json(schemas, fname):
 
     # Construct top-level dictionary including meta-data
     # --------------------------------------------------------------
-    vers = pas.utils.get_astroschema_version()
+    vers = utils.get_astroschema_version()
     if VERBOSE:
         print("\tastroschema version: '{}'".format(vers))
 
@@ -131,9 +128,9 @@ def write_index_json(schemas, fname):
 
     # Save to File
     # ---------------------
-    pas.utils.json_dump_file(index, fname)
+    utils.json_dump_file(index, fname)
     if VERBOSE:
-        size_str = pas.utils.get_file_size_str(fname)
+        size_str = utils.get_file_size_str(fname)
         print("\t{}, size: {}".format(fname_base, size_str))
 
     return

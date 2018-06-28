@@ -4,7 +4,16 @@
 import os
 import json
 
-from . import PATH_ASTROSCHEMA_VERSION
+from . import PATH_ASTROSCHEMA_VERSION_FILE
+
+
+def load_schema_index():
+
+    return
+
+
+def load_schema(sname):
+    return
 
 
 def json_dump_str(odict, **kwargs):
@@ -64,6 +73,6 @@ def get_astroschema_version():
     """Load the version of the entire `astroschema` package, from the version file.
     """
     # fname = os.path.join(PATH_ASTROSCHEMA, FNAME_VERSION)
-    with open(PATH_ASTROSCHEMA_VERSION, 'r') as inp:
+    with open(PATH_ASTROSCHEMA_VERSION_FILE, 'r') as inp:
         vers = inp.read().strip()
     return vers
