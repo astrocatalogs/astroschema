@@ -15,7 +15,8 @@ def load_schema_index():
 
 def load_schema(sname):
     index = load_schema_index()
-    if sname not in index:
+    index = index[META_KEYS.INDEX]
+    if sname not in index.keys():
         err = "Schema name '{}' not found in index!".format(sname)
         raise ValueError(err)
 
