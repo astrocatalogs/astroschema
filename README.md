@@ -10,6 +10,10 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 - `astroschema.json`: description of each schema included in this package.
 
 
+## Definitions and Terminology
+- 
+
+
 ## To-Do
 
 - Name changes:
