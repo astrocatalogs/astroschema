@@ -22,3 +22,5 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
         - Also internal aspects, e.g. `compare` as a part of any `astrocats.catalog.Key`
     - How should numeric types be handled?  i.e. string vs number
         - Could use either, i.e. `["number", "string"]`
+
+- `astroschema.json` should be dynamically generated
