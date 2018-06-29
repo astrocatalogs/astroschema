@@ -52,3 +52,6 @@ class SCHEMA_KEYS:
     PROPS = "properties"
     TYPE = "type"
     REQD = "required"
+
+from . import utils  # noqa
+from . import source  # noqa
