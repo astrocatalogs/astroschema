@@ -49,19 +49,26 @@ class Keychain(object):
         # Only control mutability if the `_mutable` variable is set (should happen at end of init)
         if hasattr(self, "_mutable"):
             # If this instance is *not* mutable, but this `name` is already set... raise error
-            if not getattr(self, "_mutable") and hasattr(self, name):
+            if not self._mutable and hasattr(self, name):
                 raise RuntimeError("This instance is not mutable, cannot modify existing key!")
 
         # Only control extendability if `_extendable` variable is set (happens at end of init)
         if hasattr(self, "_extendable"):
             # If this instance is *not* extendable, and this `name` is new... raise error
-            if not getattr(self, "_extendable") and hasattr(self, name):
+            if not self._extendable and not hasattr(self, name):
                 raise RuntimeError("This instance is not extendable, cannot add a new key!")
 
-        # Store valid new attributes to the keys and values lists
+        # Only store attributes if `_keys` exists
+        #    this is needed to prevent recursion when adding `_keys`
         if hasattr(self, "_keys") and self._test_key_val(name, value):
-            self._keys.append(name)
-            self._values.append(value)
+            # Store valid new attributes to the keys and values lists
+            if not hasattr(self, name):
+                self._keys.append(name)
+                self._values.append(value)
+            # Update existing attributes
+            elif hasattr(self, name):
+                idx = self._keys.index(name)
+                self._values[idx] = value
 
         # Actually store key-value pair as an attribute
         super(Keychain, self).__setattr__(name, value)
