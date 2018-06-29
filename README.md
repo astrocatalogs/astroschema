@@ -41,6 +41,10 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 - Add enforced versioning such that for each schema file, if it is changed, ensure that the new version is saved into a special versions directory, and if the file is unchanged, ensure that the version number is not changed.
 
+- Add travis and coveralls integration.
+
+- Add python2 compatibility.
+
 
 ## Change Log
 
