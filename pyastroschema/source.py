@@ -97,6 +97,8 @@ class Keychain(object):
 
 class Source(OrderedDict):
 
+    SCHEMA_NAME = 'source'
+
     def __init__(self, *args, extendable=False, validate=True, **kwargs):
         """Initialize with parameters based on the associated schema.
 
@@ -118,13 +120,14 @@ class Source(OrderedDict):
 
         # Load the schema for this type of structure
         #    This will eventually be generalized to use an arbitrary schema
-        schema = utils.load_schema('source')
+        schema = utils.load_schema(self.SCHEMA_NAME)
         # Create a `Keychain` instance to store the properties described in this schema
         keychain = Keychain(schema, mutable=False, extendable=False)
 
         self._schema = schema
-        self.keychain = keychain
+        self._keychain = keychain
         self._extendable = extendable
+        self.get_keychain = self._get_keychain_inst
 
         # Store parameters passed during initialization
         for key, val in kwargs.items():
@@ -139,16 +142,26 @@ class Source(OrderedDict):
     def __setitem__(self, name, value):
         """Control what dictionary elements can be added.
 
-        If `self._extendable` is False, only known parameters (from `self.keychain`) are
+        If `self._extendable` is False, only known parameters (from `self._keychain`) are
         allowed to be stored.
 
         """
-        if (not self._extendable) and (name not in self.keychain):
+        if (not self._extendable) and (name not in self._keychain):
             err = "'{}' not in `keychain`, and not extendable!".format(name)
             raise RuntimeError(err)
 
         super(Source, self).__setitem__(name, value)
         return
+
+    @classmethod
+    def get_keychain(cls):
+        schema = utils.load_schema(cls.SCHEMA_NAME)
+        # Create a `Keychain` instance to store the properties described in this schema
+        keychain = Keychain(schema, mutable=False, extendable=False)
+        return keychain
+
+    def _get_keychain_inst(self):
+        return self._keychain
 
     def validate(self):
         """Check for consistency between the stored parameters and schema.
@@ -161,8 +174,8 @@ class Source(OrderedDict):
         if type(other) is not type(self):
             return False
 
-        s_keys = self.keychain.keys()
-        o_keys = other.keychain.keys()
+        s_keys = self._keychain.keys()
+        o_keys = other._keychain.keys()
         if ignore_case:
             s_keys = [sk.lower() for sk in s_keys]
             o_keys = [ok.lower() for ok in o_keys]
