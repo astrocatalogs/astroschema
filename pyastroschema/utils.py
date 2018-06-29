@@ -61,6 +61,13 @@ def json_load_file(fname):
     return data
 
 
+def json_load_str(jstr):
+    """Load the contents of a JSON formatted string into an `OrderedDict`.
+    """
+    data = json.loads(jstr, object_pairs_hook=OrderedDict)
+    return data
+
+
 def _json_dump_kwargs(**kwargs):
     """Load kwargs to be passed to `json.dump` and `json.dumps`.
     """
