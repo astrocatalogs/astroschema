@@ -32,6 +32,10 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
     - How should numeric types be handled?  i.e. string vs number
         - Could use either, i.e. `["number", "string"]`
     - Should schema/'structs' be restricted to having one and only one level of properties?
+    - How should the package be structured?
+        - Should `pyastroschema` be a completely separate package that downloads and/or caches the astroschema specifications?
+        - Should `pyastroschema` (and future other language-specific packages) stay inside `pyastroschema`?
+            - In that case, should each language package be downloaded/installed on demand, or just all bundled together?
 
 - `astroschema.json` should be dynamically generated
 
@@ -40,7 +44,15 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 ## Change Log
 
+
 ### Current
+- `pyastroschema/`
+    - `tests/`
+        - `test_keychain.py`
+            - Unittests for the `Keychain` class.
+    - `utils.py`
+        - `json_load_str()` [new-function]
+            - Load dictionary from json-formatted string.
 
 
 ### v0.1.0 - 2018-06-28
@@ -48,7 +60,7 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 - Simple schema for 'source' structures created.
 - A few test JSON files added in `tests/source` for checking validations.
 
-- `pyastroschema`
+- `pyastroschema/`
     - `Keychain` class to store parameter names ('keys') specified in schema files.
     - `Source` class to store data associated with the `source.json` schema.  Currently specific to the 'source' structure, and will be generalized in the future to arbitrary schema.
     - Validation works for 'source' entries and `Source` instances using the `jsonschema` python package.  This uses the example JSON files in `tests/source`.
