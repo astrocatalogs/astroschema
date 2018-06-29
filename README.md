@@ -54,6 +54,8 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
     - `tests/`
         - `test_keychain.py`
             - Unittests for the `Keychain` class.
+        - `test_source.py`
+            - Basic tests for basic functionality of `Source` class.
     - `utils.py`
         - `json_load_str()` [new-function]
             - Load dictionary from json-formatted string.
