@@ -156,6 +156,44 @@ class Source(OrderedDict):
         jsonschema.validate(self, self._schema)
         return
 
+    def is_duplicate_of(self, other, ignore_case=True):
+        # If these are not the same type, return False
+        if type(other) is not type(self):
+            return False
+
+        s_keys = self.keychain.keys()
+        o_keys = other.keychain.keys()
+        if ignore_case:
+            s_keys = [sk.lower() for sk in s_keys]
+            o_keys = [ok.lower() for ok in o_keys]
+
+        # NOTE: fix-speed
+        keys = set(s_keys + o_keys)
+        for ky in keys:
+            kis = (ky in self)
+            kio = (ky in other)
+            # If only one object has this parameter, not the same
+            if kis != kio:
+                return False
+
+            # If neither has parameter
+            if not kis:
+                continue
+
+            s_val = self[ky]
+            o_val = other[ky]
+            if type(s_val) != type(o_val):
+                return False
+
+            if ignore_case and isinstance(s_val, str):
+                s_val = s_val.lower()
+                o_val = o_val.lower()
+
+            if s_val != o_val:
+                return False
+
+        return True
+
     def to_json(self):
         jstr = utils.json_dump_str(self)
         return jstr
