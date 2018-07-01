@@ -47,8 +47,9 @@ class Keychain(object):
         self._values = []
 
         # Store all of the property names to this object
-        for prop_name in props.keys():
-            setattr(self, prop_name.upper(), prop_name)
+        for prop_name, prop_vals in props.items():
+            _key = Key(prop_name, **prop_vals)
+            setattr(self, prop_name.upper(), _key)
 
         # This must be set after changed are made, so that 'False' values will not lead to error
         self._mutable = mutable
