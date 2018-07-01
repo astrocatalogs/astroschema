@@ -58,7 +58,12 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
             - Basic tests for basic functionality of `Source` class.
             - Tests for both copy and deepcopy behavior.
 
+    - `keys.py`
+        - Moved `Keychain` from `source.py` to here.
+        - Added new `Key` class to hold each property key.
+
     - `source.py`
+        - Removed `Keychain` class (see `keys.py`).
         - `Source`
             - Added overriding of `__copy__` and `__deepcopy__` methods.
             - `is_duplicate_of()` [new-function]
