@@ -6,6 +6,7 @@ Can be run with:
 
 """
 # from __future__ import absolute_import, division, print_function, unicode_literals
+import copy
 
 import jsonschema
 
@@ -27,7 +28,7 @@ def test_basics():
     # Should work with alias and name
     source = pas.source.Source(**SIMPLEST_SOURCE)
 
-    keys = source.keychain
+    keys = source._keychain
     assert_true(source['alias'] == SIMPLEST_SOURCE['alias'])
     assert_true(source['name'] == SIMPLEST_SOURCE['name'])
     assert_true(source[keys.ALIAS] == SIMPLEST_SOURCE['alias'])
@@ -70,7 +71,7 @@ def test_validation():
         assert_true(source[kk] == vv)
 
     # Should fail with deleted alias
-    keys = source.keychain
+    keys = source._keychain
     del source[keys.ALIAS]
     with assert_raises(jsonschema.exceptions.ValidationError):
         source.validate()
@@ -112,5 +113,94 @@ def test_duplicate_comparison():
     s2['alias'] = s1['alias']
     assert_false(s1.is_duplicate_of(s2))
     assert_false(s2.is_duplicate_of(s1))
+
+    return
+
+
+def test_copy_shallow():
+
+    s1 = pas.source.Source(validate=False, extendable=True, alias=2, alias_other=[3])
+    s1.t1 = [5]
+    s2 = copy.copy(s1)
+
+    # Copy and establish baseline, everything should be transferred
+    print("s1['alias'] = ", s1['alias'],
+          "s1['alias_other'] = ", s1['alias_other'],
+          "s1.t1 = ", s1.t1)
+    print("s2['alias'] = ", s2['alias'],
+          "s2['alias_other'] = ", s2['alias_other'],
+          "s2.t1 = ", s2.t1)
+
+    assert_true(s1['alias'] == 2)
+    assert_true(s1['alias_other'] == [3])
+    assert_true(s1.t1 == [5])
+    assert_true(s1['alias'] == s2['alias'])
+    assert_true(s1['alias_other'] == s2['alias_other'])
+    assert_true(s1.t1 == s2.t1)
+
+    # Modify in original, complex variables should also copy, primitives not
+    s1['alias'] = 20
+    s1['alias_other'][0] = 30
+    s1.t1[0] = 50
+
+    print("s1['alias'] = ", s1['alias'],
+          "s1['alias_other'] = ", s1['alias_other'],
+          "s1.t1 = ", s1.t1)
+    print("s2['alias'] = ", s2['alias'],
+          "s2['alias_other'] = ", s2['alias_other'],
+          "s2.t1 = ", s2.t1)
+
+    assert_true(s1['alias'] == 20)
+    assert_true(s1['alias_other'] == [30])
+    assert_true(s1.t1 == [50])
+    # This is a primitive and should not transfer
+    assert_true(s1['alias'] != s2['alias'])
+    # These are complex and should transfer
+    assert_true(s1['alias_other'] == s2['alias_other'])
+    assert_true(s1.t1 == s2.t1)
+
+    return
+
+
+def test_copy_deep():
+
+    s1 = pas.source.Source(validate=False, extendable=True, alias=2, alias_other=[3])
+    s1.t1 = [5]
+    s2 = copy.deepcopy(s1)
+
+    # Copy and establish baseline, everything should be transferred
+    print("s1['alias'] = ", s1['alias'],
+          "s1['alias_other'] = ", s1['alias_other'],
+          "s1.t1 = ", s1.t1)
+    print("s2['alias'] = ", s2['alias'],
+          "s2['alias_other'] = ", s2['alias_other'],
+          "s2.t1 = ", s2.t1)
+
+    assert_true(s1['alias'] == 2)
+    assert_true(s1['alias_other'] == [3])
+    assert_true(s1.t1 == [5])
+    assert_true(s1['alias'] == s2['alias'])
+    assert_true(s1['alias_other'] == s2['alias_other'])
+    assert_true(s1.t1 == s2.t1)
+
+    # Modify in original, complex variables should also copy, primitives not
+    s1['alias'] = 20
+    s1['alias_other'][0] = 30
+    s1.t1[0] = 50
+
+    print("s1['alias'] = ", s1['alias'],
+          "s1['alias_other'] = ", s1['alias_other'],
+          "s1.t1 = ", s1.t1)
+    print("s2['alias'] = ", s2['alias'],
+          "s2['alias_other'] = ", s2['alias_other'],
+          "s2.t1 = ", s2.t1)
+
+    assert_true(s1['alias'] == 20)
+    assert_true(s1['alias_other'] == [30])
+    assert_true(s1.t1 == [50])
+
+    assert_true(s2['alias'] == 2)
+    assert_true(s2['alias_other'] == [3])
+    assert_true(s2.t1 == [5])
 
     return

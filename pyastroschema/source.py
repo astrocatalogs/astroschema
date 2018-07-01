@@ -1,6 +1,6 @@
 """Eventually this will be generalized from 'source' specifically to any 'struct'.
 """
-
+from copy import deepcopy
 from collections import OrderedDict
 
 import jsonschema
@@ -99,13 +99,15 @@ class Source(OrderedDict):
 
     SCHEMA_NAME = 'source'
 
-    def __init__(self, *args, extendable=False, validate=True, **kwargs):
+    def __init__(self, *args, parent=None, extendable=False, validate=True, **kwargs):
         """Initialize with parameters based on the associated schema.
 
         Arguments
         ---------
         *args : None,
             NOT ALLOWED.  Only keyword-arguments (`kwargs`) can be used.
+        parent : obj,
+            Parent entry/structure or `None`.
         extendable : bool,
             If `True`, then new key-value pairs can be added to this dict after initialization.
         validate : bool,
@@ -127,9 +129,12 @@ class Source(OrderedDict):
         self._schema = schema
         self._keychain = keychain
         self._extendable = extendable
+        # NOTE: Reconsider having parent... is it still needed?
+        self._parent = parent
         self.get_keychain = self._get_keychain_inst
 
         # Store parameters passed during initialization
+        # NOTE: this is fine for `source`, but perhaps this should be a deepcopy for other objects?
         for key, val in kwargs.items():
             self[key] = val
 
@@ -210,3 +215,33 @@ class Source(OrderedDict):
     def to_json(self):
         jstr = utils.json_dump_str(self)
         return jstr
+
+    def __copy__(self):
+        """
+
+        Based on answer here: https://stackoverflow.com/a/15774013/230468
+        """
+        cls = self.__class__
+        result = cls.__new__(cls)
+        # Copy attributes
+        result.__dict__.update(self.__dict__)
+        # Copy dictionary entries
+        result.update(self)
+        return result
+
+    def __deepcopy__(self, memo):
+        """
+
+        Based on answer here: https://stackoverflow.com/a/15774013/230468
+        """
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memo[id(self)] = result
+        # Copy attributes
+        for kk, vv in self.__dict__.items():
+            setattr(result, kk, deepcopy(vv, memo))
+        # Copy dictionary entries
+        for kk, vv in self.items():
+            result[kk] = deepcopy(vv, memo)
+
+        return result

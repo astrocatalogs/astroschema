@@ -56,9 +56,11 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
             - Unittests for the `Keychain` class.
         - `test_source.py`
             - Basic tests for basic functionality of `Source` class.
+            - Tests for both copy and deepcopy behavior.
 
     - `source.py`
         - `Source`
+            - Added overriding of `__copy__` and `__deepcopy__` methods.
             - `is_duplicate_of()` [new-function]
                 - Duplicated behavior of related method in astrocats class.
     - `utils.py`
