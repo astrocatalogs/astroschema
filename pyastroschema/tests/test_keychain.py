@@ -10,14 +10,21 @@ Can be run with:
 from nose.tools import assert_true, assert_raises  # , assert_false, assert_equal,
 
 # import pyastroschema as pas
-from pyastroschema.source import Keychain
+from pyastroschema.keys import Keychain
 
 
 SIMPLEST_SCHEMA = dict(
     kitten=123,
     properties=dict(
-        alias=1,
-        name={"type": "string"}
+        alias=dict(
+            names={"type": "string"},
+            type="string",
+            distinguishing=True
+        ),
+        name=dict(
+            type="string",
+            distinguishing=True
+        )
     )
 )
 
@@ -28,6 +35,7 @@ def test_basics():
     good_keys = [gv.upper() for gv in good_values]
 
     print("Checking values")
+    print("keys.values = ", keys.values())
     assert_true(len(keys.values()) == 2)
     assert_true(all([gv in keys.values() for gv in good_values]))
     #   test the `__contains__` overridden method
@@ -112,7 +120,7 @@ def test_valid_key_val():
     print("test_valid_key_val()")
     simplest = dict(
         properties=dict(
-            alias=1
+            alias=dict(type="string", distinguishing=False, num=1)
         )
     )
 
@@ -127,10 +135,11 @@ def test_valid_key_val():
             for bad_key in ["_test", "__test"]:
                 badest = dict(
                     properties=dict(
-                        alias=1,
+                        alias=dict(type="string", distinguishing=False, num=1)
                     )
                 )
-                badest['properties'][bad_key] = bad_key
+                badest['properties'][bad_key] = dict(
+                    some=bad_key, type="int", distinguishing=False)
                 keys = Keychain(badest, mutable=mutab, extendable=extend)
                 assert_true(len(keys.keys()) == 1)
                 assert_true(len(keys.values()) == 1)
@@ -147,11 +156,11 @@ def test_valid_key_val():
 
         good = dict(
             properties=dict(
-                alias=1,
+                alias=dict(type="string", distinguishing=False, num=1)
             )
         )
         good_key = "new"
-        good['properties'][good_key] = 123
+        good['properties'][good_key] = dict(type='string', distinguishing=False, num=123)
         keys = Keychain(good, mutable=mutab, extendable=True)
         assert_true(len(keys.keys()) == 2)
         assert_true(len(keys.values()) == 2)
