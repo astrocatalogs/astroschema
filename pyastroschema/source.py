@@ -95,11 +95,6 @@ class Source(OrderedDict):
 
         s_keys = self._keychain.keys()
         o_keys = other._keychain.keys()
-        if ignore_case:
-            s_keys = [sk.lower() for sk in s_keys]
-            o_keys = [ok.lower() for ok in o_keys]
-
-        # NOTE: fix-speed
         keys = set(s_keys + o_keys)
         for ky in keys:
             kis = (ky in self)
