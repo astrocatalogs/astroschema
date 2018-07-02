@@ -40,7 +40,7 @@ def test_basics():
     print("Checking attribute access")
     for kk, vv in SIMPLEST_SCHEMA['properties'].items():
         # Get each key
-        temp = getattr(keys, kk)
+        temp = getattr(keys, kk.upper())
         # The key should be a string (subclass) equal to its name
         assert_true(temp == kk)
         for k2, v2 in vv.items():
@@ -54,22 +54,22 @@ def test_mutable():
     print("Testing mutable=True")
     for extend in [True, False]:
         keys = Keychain(SIMPLEST_SCHEMA, mutable=True, extendable=extend)
-        assert_true(keys.alias == "alias")
+        assert_true(keys.ALIAS == "alias")
 
         # Added general attribute should not count as a `Key`
-        keys.alias = "alias2"
-        assert_true(keys.alias == "alias2")
+        keys.ALIAS = "alias2"
+        assert_true(keys.ALIAS == "alias2")
         assert_true(len(keys.keys()) == 2)
 
     print("Testing mutable=False")
     for extend in [True, False]:
         keys = Keychain(SIMPLEST_SCHEMA, mutable=False, extendable=extend)
-        assert_true(keys.alias == "alias")
+        assert_true(keys.ALIAS == "alias")
 
         with assert_raises(RuntimeError):
-            keys.alias = "alias2"
+            keys.ALIAS = "alias2"
 
-        assert_true(keys.alias == "alias")
+        assert_true(keys.ALIAS == "alias")
         assert_true(len(keys.keys()) == 2)
 
     return

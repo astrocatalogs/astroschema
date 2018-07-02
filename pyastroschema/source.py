@@ -122,8 +122,8 @@ class Source(OrderedDict):
         # NOTE: speed-up comparison by getting distinguishing-specific list
         #    perhaps also specific list for `Key`s that are set
         for ky in keys:
-            s_dist = getattr(self._keychain, ky).distinguishing
-            o_dist = getattr(other._keychain, ky).distinguishing
+            s_dist = getattr(self._keychain, ky.upper()).distinguishing
+            o_dist = getattr(other._keychain, ky.upper()).distinguishing
             # If neither Key is distinguishing, then comparison doesnt matter
             if (not s_dist and not o_dist):
                 continue
