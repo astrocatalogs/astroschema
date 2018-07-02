@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/schema#",
     "title": "source",
     "description": "An item representing a bibliographic attribution or reference.",
-    "version": "0.1",
+    "version": "0.2",
     "type": "object",
     "properties": {
         "alias": {
@@ -18,7 +18,9 @@
         },
         "bibcode": {
             "type": "string",
-            "distinguishing": true
+            "distinguishing": true,
+            "minLength": 19,
+            "maxLength": 19
         },
         "arxivid": {
             "description": "ID number for the arXiv.",
