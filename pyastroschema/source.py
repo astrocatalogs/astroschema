@@ -119,7 +119,15 @@ class Source(OrderedDict):
         s_keys = self._keychain.keys()
         o_keys = other._keychain.keys()
         keys = set(s_keys + o_keys)
+        # NOTE: speed-up comparison by getting distinguishing-specific list
+        #    perhaps also specific list for `Key`s that are set
         for ky in keys:
+            s_dist = getattr(self._keychain, ky).distinguishing
+            o_dist = getattr(other._keychain, ky).distinguishing
+            # If neither Key is distinguishing, then comparison doesnt matter
+            if (not s_dist and not o_dist):
+                continue
+
             kis = (ky in self)
             kio = (ky in other)
             # If only one object has this parameter, not the same

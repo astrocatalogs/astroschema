@@ -82,6 +82,7 @@ def test_validation():
 def test_duplicate_comparison():
     print("test_source.py:test_duplicate_comparison()")
 
+    # Identical `Source`s should show as duplicates
     s1 = pas.source.Source(validate=False)
     s2 = pas.source.Source(validate=False)
     assert_false(s1 is s2)
@@ -96,15 +97,23 @@ def test_duplicate_comparison():
 
     s1 = pas.source.Source(**SIMPLEST_SOURCE)
     s2 = pas.source.Source(validate=False)
+    # Initialized with different values, duplicate should be false
     assert_false(s1.is_duplicate_of(s2))
     assert_false(s2.is_duplicate_of(s1))
+    # Change values to match
     for kk, vv in SIMPLEST_SOURCE.items():
         s2[kk] = vv
-
+    # Matching values should be duplicates
     assert_true(s1.is_duplicate_of(s2))
     assert_true(s2.is_duplicate_of(s1))
 
+    # 'alias' is a non-distinguishing parameter, should not affect duplicate test
     s2['alias'] = 20
+    assert_true(s1.is_duplicate_of(s2))
+    assert_true(s2.is_duplicate_of(s1))
+
+    # 'name' is a distinguishing parameter, should affect duplicate test
+    s2['name'] = "different"
     assert_false(s1.is_duplicate_of(s2))
     assert_false(s2.is_duplicate_of(s1))
 
