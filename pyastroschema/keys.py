@@ -29,6 +29,8 @@ class Keychain(object):
     """Store the named parameters associated with schema properties and entry values.
     """
 
+    _USE_UPPER_CASE = True
+
     def __init__(self, schema, mutable=False, extendable=True):
         """Initialize this `Keys` object using properties from given schema as keys.
 
@@ -48,8 +50,9 @@ class Keychain(object):
 
         # Store all of the property names to this object
         for prop_name, prop_vals in props.items():
+            use_name = prop_name.upper() if self._USE_UPPER_CASE else prop_name
             _key = Key(prop_name, **prop_vals)
-            setattr(self, prop_name, _key)
+            setattr(self, use_name, _key)
 
         # This must be set after changed are made, so that 'False' values will not lead to error
         self._mutable = mutable
@@ -81,9 +84,9 @@ class Keychain(object):
             if not hasattr(self, "_keys"):
                 self._keys = []
 
-            if name != value:
-                err = "The name '{}', of new `Key` '{}' must match the key!".format(name, value)
-                raise ValueError(err)
+            # if name != value:
+            #     err = "The name '{}', of new `Key` '{}' must match the key!".format(name, value)
+            #     raise ValueError(err)
 
             # Store valid new attributes to the keys and values lists
             if not hasattr(self, name):

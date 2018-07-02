@@ -26,6 +26,7 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
     - `source` `alias` should be an integer instead of a string (of an integer).
 
 - Decisions
+    - Upper-case vs lower-case key attribute names in `Keychain`
     - How do we deal with parameters that are used in astrocats, but not generically useful?
         - e.g. in `source` : `alias`, `secondary`, `private`, etc
         - Also internal aspects, e.g. `compare` as a part of any `astrocats.catalog.Key`
