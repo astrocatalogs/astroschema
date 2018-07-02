@@ -9,6 +9,9 @@ class Key(str):
     _REQUIRED = ['type', 'distinguishing']
 
     def __new__(cls, name, **kwargs):
+        # Enforce lower-case
+        if not name.islower():
+            raise ValueError("`Key` strings must be lower case!  '{}' invalid".format(name))
         return str.__new__(cls, name)
 
     def __init__(self, name, **kwargs):
@@ -42,18 +45,18 @@ class Keychain(object):
 
         """
         props = schema[SCHEMA_KEYS.PROPS]
-        # `_keys` must be created before keys will be stored internally in `setattr`
-        self._keys = []
-        self._values = []
 
         # Store all of the property names to this object
         for prop_name, prop_vals in props.items():
             _key = Key(prop_name, **prop_vals)
-            setattr(self, prop_name.upper(), _key)
+            setattr(self, prop_name, _key)
 
         # This must be set after changed are made, so that 'False' values will not lead to error
         self._mutable = mutable
         self._extendable = extendable
+        # NOTE: fix should changes be allowed at all?
+        # self._mutable = False
+        # self._extendable = False
         return
 
     def __setattr__(self, name, value):
@@ -74,36 +77,29 @@ class Keychain(object):
 
         # Only store attributes if `_keys` exists
         #    this is needed to prevent recursion when adding `_keys`
-        if hasattr(self, "_keys") and self._test_key_val(name, value):
+        if isinstance(value, Key):
+            if not hasattr(self, "_keys"):
+                self._keys = []
+
+            if name != value:
+                err = "The name '{}', of new `Key` '{}' must match the key!".format(name, value)
+                raise ValueError(err)
+
             # Store valid new attributes to the keys and values lists
             if not hasattr(self, name):
-                self._keys.append(name)
-                self._values.append(value)
+                self._keys.append(value)
             # Update existing attributes
             elif hasattr(self, name):
                 idx = self._keys.index(name)
-                self._values[idx] = value
+                self._keys[idx] = value
 
         # Actually store key-value pair as an attribute
         super(Keychain, self).__setattr__(name, value)
         return
 
-    def __contains__(self, key):
-        cont = (key in self.values())
-        return cont
-
     def keys(self):
         return self._keys
 
-    def values(self):
-        return self._values
-
-    @staticmethod
-    def _test_key_val(key, val):
-        """Determine if the given key-value pair is valid.
-        """
-        if key.startswith('_'):
-            return False
-        if callable(val):
-            return False
-        return True
+    def __contains__(self, key):
+        cont = (key in self._keys)
+        return cont
