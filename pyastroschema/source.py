@@ -72,12 +72,35 @@ class Source(OrderedDict):
         super(Source, self).__setitem__(name, value)
         return
 
-    @classmethod
-    def get_keychain(cls):
-        schema = utils.load_schema(cls.SCHEMA_NAME)
-        # Create a `Keychain` instance to store the properties described in this schema
-        keychain = keys.Keychain(schema, mutable=False, extendable=False)
-        return keychain
+    def __copy__(self):
+        """
+
+        Based on answer here: https://stackoverflow.com/a/15774013/230468
+        """
+        cls = self.__class__
+        result = cls.__new__(cls)
+        # Copy attributes
+        result.__dict__.update(self.__dict__)
+        # Copy dictionary entries
+        result.update(self)
+        return result
+
+    def __deepcopy__(self, memo):
+        """
+
+        Based on answer here: https://stackoverflow.com/a/15774013/230468
+        """
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memo[id(self)] = result
+        # Copy attributes
+        for kk, vv in self.__dict__.items():
+            setattr(result, kk, deepcopy(vv, memo))
+        # Copy dictionary entries
+        for kk, vv in self.items():
+            result[kk] = deepcopy(vv, memo)
+
+        return result
 
     def _get_keychain_inst(self):
         return self._keychain
@@ -125,32 +148,9 @@ class Source(OrderedDict):
         jstr = utils.json_dump_str(self)
         return jstr
 
-    def __copy__(self):
-        """
-
-        Based on answer here: https://stackoverflow.com/a/15774013/230468
-        """
-        cls = self.__class__
-        result = cls.__new__(cls)
-        # Copy attributes
-        result.__dict__.update(self.__dict__)
-        # Copy dictionary entries
-        result.update(self)
-        return result
-
-    def __deepcopy__(self, memo):
-        """
-
-        Based on answer here: https://stackoverflow.com/a/15774013/230468
-        """
-        cls = self.__class__
-        result = cls.__new__(cls)
-        memo[id(self)] = result
-        # Copy attributes
-        for kk, vv in self.__dict__.items():
-            setattr(result, kk, deepcopy(vv, memo))
-        # Copy dictionary entries
-        for kk, vv in self.items():
-            result[kk] = deepcopy(vv, memo)
-
-        return result
+    @classmethod
+    def get_keychain(cls):
+        schema = utils.load_schema(cls.SCHEMA_NAME)
+        # Create a `Keychain` instance to store the properties described in this schema
+        keychain = keys.Keychain(schema, mutable=False, extendable=False)
+        return keychain
