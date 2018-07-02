@@ -31,8 +31,8 @@ def test_basics():
     keys = source._keychain
     assert_true(source['alias'] == SIMPLEST_SOURCE['alias'])
     assert_true(source['name'] == SIMPLEST_SOURCE['name'])
-    assert_true(source[keys.ALIAS] == SIMPLEST_SOURCE['alias'])
-    assert_true(source[keys.NAME] == SIMPLEST_SOURCE['name'])
+    assert_true(source[keys.alias] == SIMPLEST_SOURCE['alias'])
+    assert_true(source[keys.name] == SIMPLEST_SOURCE['name'])
 
     return
 
@@ -72,7 +72,7 @@ def test_validation():
 
     # Should fail with deleted alias
     keys = source._keychain
-    del source[keys.ALIAS]
+    del source[keys.alias]
     with assert_raises(jsonschema.exceptions.ValidationError):
         source.validate()
 
