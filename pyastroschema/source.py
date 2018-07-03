@@ -147,9 +147,6 @@ class Source(OrderedDict):
                 s_val = s_val.lower()
                 o_val = o_val.lower()
 
-            # if s_val != o_val:
-            #     return False
-
             # If any `unique` attribute is the same, then they are duplicates
             if s_val == o_val:
                 return True
