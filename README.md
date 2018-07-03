@@ -14,13 +14,25 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 - A `struct` is an `astroschema` data structure that has a schema specification.  For example `source` is a particular `astroschema` `struct`, that has a particular `schema` specifying its structure.
 - An `entry` is data in the form of a `struct`, i.e. an instance of a `struct` filled with data.
 
+- `unique` vs. `distinguishing`
+    - A `unique` attribute is one that uniquely identifies what it is referencing, one-to-one.  If two things have different `unique` attributes they are different.  If they have the same `unique` attributes, they are the same.
+        - e.g. `bibcode` is `unique`, these `Source`s are the same:
+            - `{"name": "Open Supernova Catalog", "bibcode": "2017ApJ...835...64G", "alias": 0}`
+            - `{"name": "Guillochon+2017", "bibcode": "2017ApJ...835...64G", "alias": 1}`
+    - A `distinguishing` attribute is one that characterizes what it is referencing, not one-to-one.  If two things have different `distinguishing` attributes, they are not necessarily different.  If they have the same `distinguishing` attributes, they are not necessarily the same.
+        - e.g. `bibcode` is `unique`, these `Source`s are the same:
+            - `{"name": "Open Supernova Catalog", "bibcode": "2017ApJ...835...64G", "alias": 0}`
+            - `{"name": "Guillochon+2017", "bibcode": "2017ApJ...835...64G", "alias": 1}`
 
-## To-Do
+## To-Do / Questions
+
+- `source` : what are `name` and `reference` for?  Are they needed?
 
 - Name changes:
     - `source` ==> `reference`
         - `alias` ==> `idnum`
         - `reference` ==> `textcite`
+    - `is_duplicate_of` ==>  ???   this isn't checking for "duplicate" but for redundancy.
 
 - Changes:
     - `source` `alias` should be an integer instead of a string (of an integer).

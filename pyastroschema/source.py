@@ -119,12 +119,12 @@ class Source(OrderedDict):
         s_keys = self._keychain.keys()
         o_keys = other._keychain.keys()
         keys = set(s_keys + o_keys)
-        # NOTE: speed-up comparison by getting distinguishing-specific list
+        # NOTE: speed-up comparison by getting 'uniqe'-specific list
         #    perhaps also specific list for `Key`s that are set
         for ky in keys:
-            s_dist = getattr(self._keychain, ky.upper()).distinguishing
-            o_dist = getattr(other._keychain, ky.upper()).distinguishing
-            # If neither Key is distinguishing, then comparison doesnt matter
+            s_dist = getattr(self._keychain, ky.upper()).unique
+            o_dist = getattr(other._keychain, ky.upper()).unique
+            # If neither Key is unique, then comparison doesnt matter
             if (not s_dist and not o_dist):
                 continue
 
@@ -147,10 +147,17 @@ class Source(OrderedDict):
                 s_val = s_val.lower()
                 o_val = o_val.lower()
 
-            if s_val != o_val:
-                return False
+            # if s_val != o_val:
+            #     return False
 
-        return True
+            # If any `unique` attribute is the same, then they are duplicates
+            if s_val == o_val:
+                return True
+            # if any is different, they are not duplicates
+            # else:
+            #     return False
+
+        return False
 
     def to_json(self):
         jstr = utils.json_dump_str(self)

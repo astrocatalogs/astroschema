@@ -6,7 +6,7 @@ from . import SCHEMA_KEYS
 
 class Key(str):
     # NOTE: fix this should be specified in a meta-schema
-    _REQUIRED = ['type', 'distinguishing']
+    _REQUIRED = ['type', 'unique']
 
     def __new__(cls, name, **kwargs):
         # Enforce lower-case
