@@ -5,6 +5,7 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 ## Structure
 
 - `schema/`: the schema specifications themselves
+    - `metaschema/`: the metaschema specifying the structure of each astro-schema
 - `pyastroschema/`: the python module for interacting with astroschema
 - `tests/`: directory containing sample JSON files for testing schema validation
 - `astroschema.json`: description of each schema included in this package.
@@ -63,6 +64,18 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 
 ### Current
+
+
+### v0.2.0 - 2018-07-04
+
+- `schema/`
+    - `meta-schema/`
+        - `astro-schema_draft-0.json` [NEW-FILE]
+            - First version of a astro-schema specific meta-schema for validating all astro-schema schema.  Currently this takes the standard json-schema and extends it slightly: required the 'type' and 'unique' attributes for each 'property'.
+    - `source.json`
+        - Schema specification for `Source` objects.
+        - Currently: v0.4
+
 - `pyastroschema/`
     - `tests/`
         - `test_keychain.py`
@@ -71,6 +84,12 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
             - Basic tests for basic functionality of `Source` class.
             - Tests for both copy and deepcopy behavior.
 
+    - `__main__.py`
+        - `main()`
+            - This is the primary interface routine.
+            - Loads the astro-schema metaschema and validates it against the standard json-schema.
+            - Loads all astro-schema and validates them against both the meta-schema and the standard json-schema.
+            - Produces an 'index' output file listing the current included schema, and their version and modification information.
     - `keys.py`
         - Moved `Keychain` from `source.py` to here.
         - Added new `Key` class to hold each property key.
@@ -84,7 +103,8 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
     - `utils.py`
         - `json_load_str()` [new-function]
             - Load dictionary from json-formatted string.
-
+        - `get_relative_path()` [new-function]
+            - Convert from a full path to a path relative to a given reference path.
 
 ### v0.1.0 - 2018-06-28
 
