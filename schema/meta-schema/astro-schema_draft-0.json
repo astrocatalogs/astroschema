@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "title": "Core astro-schema meta-schema",
+    "description": "Extension of the json-schema with astro-schema specifications.",
+    "version": "0.4",
+    "allOf": [
+        {
+            "$ref": "http://json-schema.org/draft-06/schema#"
+        },
+        {
+            "properties": {
+                "type": { "type": "string" },
+                "unique": { "type": "boolean" },
+                "properties": {
+                    "patternProperties": {
+                        ".*": {
+                            "required": ["type", "unique"]
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
