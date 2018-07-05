@@ -1,12 +1,15 @@
 {
+  "title":"astro-schema index file",
   "description":"Index and summary of schema included in `astroschema`.",
   "filename":"astroschema_index.json",
-  "version":"0.0",
+  "version":"0.2.0",
   "index":{
     "source":{
+      "title":"source",
       "description":"An item representing a bibliographic attribution or reference.",
       "filename":"schema/source.json",
-      "version":"0.0"
+      "version":"0.4",
+      "updated":"2018-07-04 20:26:57"
     }
   }
 }
