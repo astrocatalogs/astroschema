@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "title": "quantity",
+    "description": "An item representing a numerical value.",
+    "version": "0.1",
+    "type": "object",
+    "properties": {
+        "value": {
+            "description": "The numerical value itself.",
+            "type": ["number", "string"],
+            "unique": true
+        },
+        "e_value": { "type": "number" },
+        "e_lower_value": { "type": "number" },
+        "e_upper_value": { "type": "number" },
+        "upper_limit": { "type": "boolean" },
+        "lower_limit": { "type": "boolean" },
+        "derived": { "type": "boolean" },
+        "description": { "type": "string", "unique": false },
+        "u_value": { "type": "string" },
+        "u_e_value": { "type": "string" },
+        "kind": { "type": "string" },
+        "source": { "type": "string", "unique": false }
+    },
+
+    "required": ["source", "value"]
+
+}
