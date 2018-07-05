@@ -16,17 +16,21 @@ from . import utils
 
 def main():
 
-    print("Loading schema filenames")
+    print("Loading schema")
     files = get_schema_filenames()
-    print("Validating schema")
     schemas = load_schemas(files)
 
-    print("Validating test files")
-    test_schemas(schemas)
+    print("Validating schema")
+    validate_schema(schemas)
+
+    print("\tschemas = ", list(schemas.keys()))
+
+    print("Testing schema against sample files")
+    # test_schemas(schemas)
 
     index_fname = PATHS.INDEX_JSON_FILE
     print("Writing summary to index file: '{}'".format(index_fname))
-    write_index_json(schemas, index_fname)
+    schemas_index(schemas, files, index_fname)
 
     return
 
@@ -57,7 +61,6 @@ def load_schemas(files):
 
     """
     schemas = OrderedDict()
-
     for ii, fname in enumerate(files):
         fname_base = os.path.basename(fname)
         if VERBOSE:
@@ -65,36 +68,32 @@ def load_schemas(files):
 
         # Load schema from file
         _schema = utils.json_load_file(fname)
-
         title = _schema[META_KEYS.TITLE]
-        desc = _schema[META_KEYS.DESC]
-        vers = _schema[META_KEYS.VERS]
-        # Get modification time of file
-        mtime = os.path.getmtime(fname)
-        # Convert to str via `datetime` instance for nice formatting
-        mtime = str(datetime.datetime.fromtimestamp(mtime))
-
-        # Load appropriate validator
-        validator = jsonschema.validators.validator_for(_schema)
-
-        # Validate schema itself
-        validator.check_schema(_schema)
-
-        # Get filename relative to `PATH_ASTROSCHEMA`
-        common_path = os.path.join(os.path.commonpath([fname, PATHS.ASTROSCHEMA]), '')
-        relpath = fname.split(common_path)[-1]
-
-        keys = [META_KEYS.TITLE, META_KEYS.DESC, META_KEYS.FNAME, META_KEYS.VERS,
-                META_KEYS.UPDATED, META_KEYS.SCHEMA]
-        vals = [title, desc, relpath, vers,
-                mtime, _schema]
-        this_schema = OrderedDict.fromkeys(keys)
-        for kk, vv in zip(keys, vals):
-            this_schema[kk] = vv
-
-        schemas[title] = this_schema
+        schemas[title] = _schema
 
     return schemas
+
+
+def validate_schema(schemas):
+    meta_schema = utils.json_load_file(PATHS.META_SCHEMA_FILE)
+
+    # Validate meta-schema itself
+    validator = jsonschema.validators.validator_for(meta_schema)
+    validator.check_schema(meta_schema)
+    if VERBOSE:
+        print("\tmeta-schema validation successful")
+
+    if VERBOSE:
+        print("\tValidating astro-schema")
+        for title, astroschema in schemas.items():
+            print("\t\t'{}'".format(title))
+            validator = jsonschema.validators.validator_for(astroschema)
+            validator.check_schema(astroschema)
+            print("\t\t\tvalidated against json-schema")
+            jsonschema.validate(astroschema, meta_schema)
+            print("\t\t\tvalidated against astroschema meta-schema")
+
+    return
 
 
 def test_schemas(schemas):
@@ -132,42 +131,63 @@ def test_schemas(schemas):
     return
 
 
-def write_index_json(schemas, fname):
-    """Write a summary of all schema to JSON index file.
+def schemas_index(schemas, file_names, index_fname):
     """
-    fname_base = os.path.basename(fname)
+    """
 
-    # Construct summary/index dictionary
-    # ----------------------------------------
-    schemas_index = OrderedDict()
+    # Construct index entry for each schema (file)
+    # ----------------------------------------------------
+    schemas_sub_index = OrderedDict()
     keys = [META_KEYS.DESC, META_KEYS.FNAME, META_KEYS.VERS]
-    for title, entry in schemas.items():
-        this = OrderedDict()
-        for kk in keys:
-            this[kk] = entry[kk]
-        schemas_index[title] = this
+    for (title, astroschema), fname in zip(schemas.items(), file_names):
+        # Get filename relative to `PATH_ASTROSCHEMA`
+        # common_path = os.path.join(os.path.commonpath([fname, PATHS.ASTROSCHEMA]), '')
+        # relpath = fname.split(common_path)[-1]
+        schema_file_relpath = utils.get_relative_path(fname, PATHS.ASTROSCHEMA)
+
+        title = astroschema[META_KEYS.TITLE]
+        desc = astroschema[META_KEYS.DESC]
+        vers = astroschema[META_KEYS.VERS]
+        # Get modification time of file
+        mtime = os.path.getmtime(fname)
+        #     Convert to str via `datetime` instance for nice formatting
+        mtime = str(datetime.datetime.fromtimestamp(mtime))
+
+        # Store target parameters to dictionary for this schema
+        keys = [META_KEYS.TITLE, META_KEYS.DESC, META_KEYS.FNAME,
+                META_KEYS.VERS, META_KEYS.UPDATED]
+        vals = [title, desc, schema_file_relpath,
+                vers, mtime]
+        index_entry_from_schema = OrderedDict()
+        for kk, vv in zip(keys, vals):
+            index_entry_from_schema[kk] = vv
+
+        schemas_sub_index[title] = index_entry_from_schema
 
     # Construct top-level dictionary including meta-data
     # --------------------------------------------------------------
     vers = utils.get_astroschema_version()
+    index_fname_rel = utils.get_relative_path(index_fname, PATHS.ASTROSCHEMA)
     if VERBOSE:
         print("\tastroschema version: '{}'".format(vers))
 
     index = OrderedDict()
+    index[META_KEYS.TITLE] = "astro-schema index file"
     index[META_KEYS.DESC] = INDEX_DESCRIPTION
-    index[META_KEYS.FNAME] = fname_base
+    index[META_KEYS.FNAME] = index_fname_rel
     index[META_KEYS.VERS] = vers
     # index[META_KEYS.UPDATED] = str(datetime.datetime.now())
-    index[META_KEYS.INDEX] = schemas_index
+    index[META_KEYS.INDEX] = schemas_sub_index
 
-    # Save to File
-    # ---------------------
-    utils.json_dump_file(index, fname)
+    # Write to File
+    # --------------------------
+    fname_base = os.path.basename(index_fname)
+    utils.json_dump_file(index, index_fname)
     if VERBOSE:
-        size_str = utils.get_file_size_str(fname)
+        size_str = utils.get_file_size_str(index_fname)
         print("\t{}, size: {}".format(fname_base, size_str))
 
-    return
+    return index
 
 
 if __name__ == "__main__":
