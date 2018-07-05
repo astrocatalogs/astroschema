@@ -111,3 +111,10 @@ def get_astroschema_version():
     with open(PATHS.ASTROSCHEMA_VERSION_FILE, 'r') as inp:
         vers = inp.read().strip()
     return vers
+
+
+def get_relative_path(path, relative_to):
+    # Get filename relative to `PATH_ASTROSCHEMA`
+    common_path = os.path.join(os.path.commonpath([path, relative_to]), '')
+    relpath = path.split(common_path)[-1]
+    return relpath
