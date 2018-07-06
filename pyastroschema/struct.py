@@ -8,6 +8,8 @@ import jsonschema
 from . import utils
 from . import keys
 
+VERBOSE = False
+
 
 class Struct(OrderedDict):
 
@@ -32,7 +34,6 @@ class Struct(OrderedDict):
             Key-value pairs to be stored to this dictionary during initialization.
 
         """
-        print("Struct.__init__")
         if len(args) > 0:
             err = "Only `kwargs` are allowed in initialization, no additional `args`!"
             raise RuntimeError(err)
@@ -121,9 +122,14 @@ class Struct(OrderedDict):
         jsonschema.validate(self, self._schema)
         return
 
-    def is_duplicate_of(self, other, ignore_case=True):
+    def is_duplicate_of(self, other, ignore_case=True, verbose=None):
+        if verbose is None:
+            verbose = VERBOSE
+
         # If these are not the same type, return False
         if type(other) is not type(self):
+            if verbose:
+                print("type mismatch")
             return False
 
         s_keys = self._keychain.keys()
@@ -142,6 +148,8 @@ class Struct(OrderedDict):
             kio = (ky in other)
             # If only one object has this parameter, not the same
             if kis != kio:
+                if verbose:
+                    print("key mismatch")
                 return False
 
             # If neither has parameter
@@ -151,6 +159,8 @@ class Struct(OrderedDict):
             s_val = self[ky]
             o_val = other[ky]
             if type(s_val) != type(o_val):
+                if verbose:
+                    print("value mismatch")
                 return False
 
             if ignore_case and isinstance(s_val, str):
@@ -159,12 +169,14 @@ class Struct(OrderedDict):
 
             # If any `unique` attribute is the same, then they are duplicates
             if s_val == o_val:
+                if verbose:
+                    print("unique value match")
                 return True
             # if any is different, they are not duplicates
-            # else:
-            #     return False
+            else:
+                return False
 
-        return False
+        return True
 
     def to_json(self):
         jstr = utils.json_dump_str(self)
