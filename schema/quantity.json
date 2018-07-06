@@ -6,23 +6,65 @@
     "type": "object",
     "properties": {
         "value": {
-            "description": "The numerical value itself.",
+            "description": "The numerical value associated with this Quantity.",
             "type": ["number", "string"],
             "unique": true
         },
-        "e_value": { "type": "number" },
-        "e_lower_value": { "type": "number" },
-        "e_upper_value": { "type": "number" },
-        "upper_limit": { "type": "boolean" },
-        "lower_limit": { "type": "boolean" },
-        "derived": { "type": "boolean" },
-        "description": { "type": "string", "unique": false },
-        "u_value": { "type": "string" },
-        "u_e_value": { "type": "string" },
-        "kind": { "type": "string" },
-        "source": { "type": "string", "unique": false }
+        "error_value": {
+            "description": "Symmetric, one-sigma error associated with this Quantity's value.",
+            "type": "number",
+            "unique": true
+        },
+        "error_upper": {
+            "description": "Upper (plus) one-sigma error on this Quantity's value.",
+            "type": "number",
+            "unique": true
+        },
+        "error_lower": {
+            "description": "Lower (minus) one-sigma error on this Quantity's value.",
+            "type": "number",
+            "unique": true
+        },
+        "upper_limit": {
+            "description": "Lower (minus) one-sigma error on this Quantity's value.",
+            "type": "boolean",
+            "unique": true
+        },
+        "lower_limit": {
+            "description": "Lower (minus) one-sigma error on this Quantity's value.",
+            "type": "boolean",
+            "unique": true
+        },
+        "derived": {
+            "description": "Whether or not this Quantity is derived from other parameters/observations.",
+            "type": "boolean",
+            "unique": true
+        },
+        "description": {
+            "description": "Any additional descriptive/meta information about this quantity.",
+            "type": "string",
+            "unique": false
+        },
+        "units_value": {
+            "description": "The units with which this Quantity's value is stored.",
+            "type": "string",
+            "unique": true
+        },
+        "units_error": {
+            "description": "The units with which this Quantity's errors are stored.",
+            "type": "string",
+            "unique": true
+        },
+        "kind": {
+            "type": "string",
+            "unique": true
+        },
+        "source": {
+            "type": "string",
+            "unique": false
+        }
     },
 
-    "required": ["source", "value"]
+    "required": ["value", "source"]
 
 }
