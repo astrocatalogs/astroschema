@@ -2,14 +2,21 @@
   "title":"astro-schema index file",
   "description":"Index and summary of schema included in `astroschema`.",
   "filename":"astroschema_index.json",
-  "version":"0.2.0",
+  "version":"0.2.1",
   "index":{
+    "quantity":{
+      "title":"quantity",
+      "description":"An item representing a numerical value.",
+      "filename":"schema/quantity.json",
+      "version":"0.1",
+      "updated":"2018-07-06 15:58:40"
+    },
     "source":{
       "title":"source",
       "description":"An item representing a bibliographic attribution or reference.",
       "filename":"schema/source.json",
       "version":"0.4",
-      "updated":"2018-07-04 20:26:57"
+      "updated":"2018-07-06 16:12:54"
     }
   }
 }
