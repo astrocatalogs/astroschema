@@ -9,15 +9,16 @@ from . import utils
 from . import keys
 
 
-class Source(OrderedDict):
+class Struct(OrderedDict):
 
-    SCHEMA_NAME = 'source'
-
-    def __init__(self, *args, parent=None, extendable=False, validate=True, **kwargs):
+    def __init__(self, schema, *args,
+                 parent=None, extendable=False, validate=True,
+                 **kwargs):
         """Initialize with parameters based on the associated schema.
 
         Arguments
         ---------
+        schema : str or dict,
         *args : None,
             NOT ALLOWED.  Only keyword-arguments (`kwargs`) can be used.
         parent : obj,
@@ -31,12 +32,21 @@ class Source(OrderedDict):
             Key-value pairs to be stored to this dictionary during initialization.
 
         """
+        print("Struct.__init__")
         if len(args) > 0:
-            raise RuntimeError("Only `kwargs` are allowed in initialization, no `args`!")
+            err = "Only `kwargs` are allowed in initialization, no additional `args`!"
+            raise RuntimeError(err)
 
         # Load the schema for this type of structure
         #    This will eventually be generalized to use an arbitrary schema
-        schema = utils.load_schema(self.SCHEMA_NAME)
+        if isinstance(schema, dict):
+            pass
+        elif isinstance(schema, str):
+            schema = utils.load_schema(schema)
+        else:
+            err = "Unrecognized `schema` type '{}': '{}'".format(type(schema), schema)
+            raise ValueError(err)
+
         # Create a `Keychain` instance to store the properties described in this schema
         keychain = keys.Keychain(schema, mutable=False, extendable=False)
 
@@ -69,7 +79,7 @@ class Source(OrderedDict):
             err = "'{}' not in `keychain`, and not extendable!".format(name)
             raise RuntimeError(err)
 
-        super(Source, self).__setitem__(name, value)
+        super(Struct, self).__setitem__(name, value)
         return
 
     def __copy__(self):
@@ -166,3 +176,26 @@ class Source(OrderedDict):
         # Create a `Keychain` instance to store the properties described in this schema
         keychain = keys.Keychain(schema, mutable=False, extendable=False)
         return keychain
+
+
+class Meta_Struct(Struct):
+
+    _SCHEMA_NAME = "source"
+
+    def __new__(cls, *args, **kwargs):
+        source = super(Meta_Struct, cls).__new__(cls)
+        return source
+
+    def __init__(self, *args, **kwargs):
+        super(Meta_Struct, self).__init__(self._SCHEMA_NAME, *args, **kwargs)
+        return
+
+
+class Source(Meta_Struct):
+
+    _SCHEMA_NAME = "source"
+
+
+class Quantity(Meta_Struct):
+
+    _SCHEMA_NAME = "quantity"
