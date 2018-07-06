@@ -12,8 +12,8 @@ import jsonschema
 
 from nose.tools import assert_true, assert_raises, assert_false  # , assert_equal,
 
-import pyastroschema as pas
-# from pyastroschema.source import Source
+# import pyastroschema as pas
+from pyastroschema.struct import Source
 
 
 SIMPLEST_SOURCE = dict(
@@ -26,7 +26,7 @@ def test_basics():
     # source_schema = pas.utils.load_schema('source')
 
     # Should work with alias and name
-    source = pas.source.Source(**SIMPLEST_SOURCE)
+    source = Source(**SIMPLEST_SOURCE)
 
     keys = source._keychain
     assert_true(source['alias'] == SIMPLEST_SOURCE['alias'])
@@ -44,19 +44,19 @@ def test_validation():
 
     # Should fail with no parameters
     with assert_raises(jsonschema.exceptions.ValidationError):
-        source = pas.source.Source()
+        source = Source()
 
     # Should fail with negative alias
     with assert_raises(jsonschema.exceptions.ValidationError):
-        source = pas.source.Source(name='Test', alias=-1)
+        source = Source(name='Test', alias=-1)
 
     # Should fail with negative alias
     with assert_raises(jsonschema.exceptions.ValidationError):
-        source = pas.source.Source(alias=0)
+        source = Source(alias=0)
 
     # Load parameters after initialization
     # ----------------------------------------------
-    source = pas.source.Source(validate=False)
+    source = Source(validate=False)
 
     # Should fail with no parameters
     with assert_raises(jsonschema.exceptions.ValidationError):
@@ -83,20 +83,20 @@ def test_duplicate_comparison():
     print("test_source.py:test_duplicate_comparison()")
 
     # Identical `Source`s should show as duplicates
-    s1 = pas.source.Source(validate=False)
-    s2 = pas.source.Source(validate=False)
+    s1 = Source(validate=False)
+    s2 = Source(validate=False)
     assert_false(s1 is s2)
     assert_true(s1.is_duplicate_of(s2))
     assert_true(s2.is_duplicate_of(s1))
 
-    s1 = pas.source.Source(**SIMPLEST_SOURCE)
-    s2 = pas.source.Source(**SIMPLEST_SOURCE)
+    s1 = Source(**SIMPLEST_SOURCE)
+    s2 = Source(**SIMPLEST_SOURCE)
     assert_false(s1 is s2)
     assert_true(s1.is_duplicate_of(s2))
     assert_true(s2.is_duplicate_of(s1))
 
-    s1 = pas.source.Source(**SIMPLEST_SOURCE)
-    s2 = pas.source.Source(validate=False)
+    s1 = Source(**SIMPLEST_SOURCE)
+    s2 = Source(validate=False)
     # Initialized with different values, duplicate should be false
     assert_false(s1.is_duplicate_of(s2))
     assert_false(s2.is_duplicate_of(s1))
@@ -117,8 +117,8 @@ def test_duplicate_comparison():
     assert_false(s1.is_duplicate_of(s2))
     assert_false(s2.is_duplicate_of(s1))
 
-    s1 = pas.source.Source(**SIMPLEST_SOURCE)
-    s2 = pas.source.Source(validate=False)
+    s1 = Source(**SIMPLEST_SOURCE)
+    s2 = Source(validate=False)
     s2['alias'] = s1['alias']
     assert_false(s1.is_duplicate_of(s2))
     assert_false(s2.is_duplicate_of(s1))
@@ -128,7 +128,7 @@ def test_duplicate_comparison():
 
 def test_copy_shallow():
 
-    s1 = pas.source.Source(validate=False, extendable=True, alias=2, alias_other=[3])
+    s1 = Source(validate=False, extendable=True, alias=2, alias_other=[3])
     s1.t1 = [5]
     s2 = copy.copy(s1)
 
@@ -173,7 +173,7 @@ def test_copy_shallow():
 
 def test_copy_deep():
 
-    s1 = pas.source.Source(validate=False, extendable=True, alias=2, alias_other=[3])
+    s1 = Source(validate=False, extendable=True, alias=2, alias_other=[3])
     s1.t1 = [5]
     s2 = copy.deepcopy(s1)
 
