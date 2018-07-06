@@ -58,4 +58,5 @@ class SCHEMA_KEYS:
     REQD = "required"
 
 from . import utils  # noqa
-from . import source  # noqa
+# from . import source  # noqa
+from . import struct  # noqa
