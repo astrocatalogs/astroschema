@@ -27,6 +27,12 @@ def load_schema(sname):
     schema_fname = os.path.join(PATHS.ASTROSCHEMA, schema_fname)
 
     schema = json_load_file(schema_fname)
+    title = schema['title']
+    if title != sname:
+        err = "Loaded schema title mismatch!  Target: '{}', Loaded: '{}'".format(
+            sname, title)
+        raise ValueError(err)
+
 
     return schema
 
