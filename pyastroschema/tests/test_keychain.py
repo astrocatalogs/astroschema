@@ -7,7 +7,7 @@ Can be run with:
 """
 # from __future__ import absolute_import, division, print_function, unicode_literals
 
-from nose.tools import assert_true, assert_raises  # , assert_false, assert_equal,
+from nose.tools import assert_true, assert_raises
 
 # import pyastroschema as pas
 from pyastroschema.keys import Keychain, Key
@@ -19,11 +19,11 @@ SIMPLEST_SCHEMA = dict(
         alias=dict(
             names={"type": "string"},
             type="string",
-            distinguishing=True
+            unique=True
         ),
         name=dict(
             type="string",
-            distinguishing=True
+            unique=True
         )
     )
 )
@@ -109,7 +109,7 @@ def test_extendable():
         keys = Keychain(SIMPLEST_SCHEMA, mutable=mutab, extendable=True)
         good_keys = SIMPLEST_SCHEMA['properties'].keys()
 
-        keys.test = Key("test", type='string', distinguishing=False)
+        keys.test = Key("test", type='string', unique=False)
         good_keys = list(good_keys) + ['test']
         print("\tChecking keys")
         # Should not be counted as a `Key` proper
@@ -122,7 +122,7 @@ def test_extendable():
 
         # should be able to add an arbitrary key
         with assert_raises(RuntimeError):
-            keys.test = Key("test", type='string', distinguishing=False)
+            keys.test = Key("test", type='string', unique=False)
 
         assert_true(len(keys.keys()) == 2)
 

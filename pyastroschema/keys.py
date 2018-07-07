@@ -67,9 +67,6 @@ class Keychain(object):
         # This must be set after changed are made, so that 'False' values will not lead to error
         self._mutable = mutable
         self._extendable = extendable
-        # NOTE: fix should changes be allowed at all?
-        # self._mutable = False
-        # self._extendable = False
         return
 
     def __setattr__(self, name, value):
@@ -93,10 +90,6 @@ class Keychain(object):
         if isinstance(value, Key):
             if not hasattr(self, "_keys"):
                 self._keys = []
-
-            # if name != value:
-            #     err = "The name '{}', of new `Key` '{}' must match the key!".format(name, value)
-            #     raise ValueError(err)
 
             # Store valid new attributes to the keys and values lists
             if not hasattr(self, name):

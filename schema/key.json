@@ -6,8 +6,14 @@
     "type": "object",
 
     "properties": {
-        "type": { "type": "string" },
-        "unique": { "type": "boolean" }
+        "type": {
+            "type": ["string", "array"],
+            "unique": true
+        },
+        "unique": {
+            "type": "boolean",
+            "unique": true
+        }
     },
 
     "required": ["type", "unique"]
