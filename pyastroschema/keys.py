@@ -1,12 +1,15 @@
 """
 """
 
-from . import SCHEMA_KEYS
+import os
+
+import jsonschema
+
+from . import SCHEMA_KEYS, PATHS
+from . import utils
 
 
 class Key(str):
-    # NOTE: fix this should be specified in a meta-schema
-    _REQUIRED = ['type', 'unique']
 
     def __new__(cls, name, **kwargs):
         # Enforce lower-case
@@ -16,13 +19,20 @@ class Key(str):
 
     def __init__(self, name, **kwargs):
         super(Key, self).__init__()
-        # NOTE: fix this should be specified by meta-schema
-        for req in self._REQUIRED:
-            if kwargs.get(req) is None:
-                raise ValueError("`Key` requires `{}`!".format(req))
-
         for kk, vv in kwargs.items():
             setattr(self, kk, vv)
+
+        # Validate
+        self.validate()
+        return
+
+    def validate(self):
+        """Check for consistency between the stored parameters and schema.
+        """
+        key_schema = os.path.join(PATHS.SCHEMA_DIR, "key.json")
+        schema = utils.json_load_file(key_schema)
+        jsonschema.validate(self.__dict__, schema)
+        return
 
 
 class Keychain(object):

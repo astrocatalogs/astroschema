@@ -15,7 +15,7 @@ _INDEX_JSON_FILENAME = "astroschema_index.json"
 _DIR_SCHEMA = "schema"
 _DIR_TESTS = "tests"
 _DIR_META_SCHEMA = "meta-schema"
-_META_SCHEMA_FILENAME = "astro-schema_draft-0.json"
+_META_SCHEMA_FILENAME = "meta-schema.json"
 
 INDEX_DESCRIPTION = "Index and summary of schema included in `astroschema`."
 
@@ -33,7 +33,7 @@ class PATHS:
     ASTROSCHEMA_VERSION_FILE = os.path.join(ASTROSCHEMA, _FNAME_VERSION)
     INDEX_JSON_FILE = os.path.join(ASTROSCHEMA, _INDEX_JSON_FILENAME)
 
-    META_SCHEMA_FILE = os.path.join(META_SCHEMA_DIR, _META_SCHEMA_FILENAME)
+    META_SCHEMA_FILE = os.path.join(SCHEMA_DIR, _META_SCHEMA_FILENAME)
 
 # print("Path: pyastroschema: '{}'".format(PATHS.PYASTROSCHEMA))
 # print("Path:   astroschema: '{}'".format(PATHS.ASTROSCHEMA))

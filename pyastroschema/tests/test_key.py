@@ -12,6 +12,8 @@ from nose.tools import assert_true, assert_raises   # , assert_false, assert_equ
 # import pyastroschema as pas
 from pyastroschema.keys import Key
 
+import jsonschema  # noqa
+from jsonschema.exceptions import ValidationError
 
 SIMPLEST_SCHEMA = dict(
     kitten=123,
@@ -19,28 +21,28 @@ SIMPLEST_SCHEMA = dict(
         alias=dict(
             names={"type": "string"},
             type="string",
-            distinguishing=True
+            unique=True
         ),
         name=dict(
             type="string",
-            distinguishing=True
+            unique=True
         )
     )
 )
 
 
 def test_basics():
-    t1 = Key("t1", type='string', distinguishing=False)
+    t1 = Key("t1", type='string', unique=False)
     print(t1)
     assert_true(t1 == "t1")
     assert_true(t1.type == "string")
-    assert_true(t1.distinguishing == False)
+    assert_true(t1.unique == False)
 
     for kk, vv in SIMPLEST_SCHEMA['properties'].items():
         temp = Key(kk, **vv)
         assert_true(temp == kk)
         assert_true(temp.type == vv['type'])
-        assert_true(temp.distinguishing == vv['distinguishing'])
+        assert_true(temp.unique == vv['unique'])
 
     return
 
@@ -48,19 +50,19 @@ def test_basics():
 def test_init_errors():
 
     # Missing required attributes should raise an error
-    with assert_raises(ValueError):
+    with assert_raises(ValidationError):
         t2 = Key("t2")
         print(t2)
-    with assert_raises(ValueError):
+    with assert_raises(ValidationError):
         t2 = Key("t2", type='integer')
         print(t2)
-    with assert_raises(ValueError):
-        t2 = Key("t2", distinguishing=True)
+    with assert_raises(ValidationError):
+        t2 = Key("t2", unique=True)
         print(t2)
 
     # Non-lower-case name should raise error
     with assert_raises(ValueError):
-        t2 = Key("HELLO", type='string', distinguishing=True)
+        t2 = Key("HELLO", type='string', unique=True)
         print(t2)
 
     return
@@ -68,29 +70,29 @@ def test_init_errors():
 
 def test_comparisons():
 
-    t1 = Key("t1", type='string', distinguishing=False)
-    t2 = Key("t2", type='string', distinguishing=False)
+    t1 = Key("t1", type='string', unique=False)
+    t2 = Key("t2", type='string', unique=False)
     assert_true(t1 != t2)
     keys = set([t1, t2])
     assert_true(len(keys) == 2)
 
-    t1 = Key("t1", type='string', distinguishing=False)
-    t2 = Key("t1", type='string', distinguishing=False)
+    t1 = Key("t1", type='string', unique=False)
+    t2 = Key("t1", type='string', unique=False)
     assert_true(t1 == t2)
     keys = set([t1, t2])
     print(keys)
     assert_true(len(keys) == 1)
 
     # Only the string name itself should be used for comparisons
-    t1 = Key("t1", type='string', distinguishing=False)
-    t2 = Key("t1", type='bool', distinguishing=False)
+    t1 = Key("t1", type='string', unique=False)
+    t2 = Key("t1", type='bool', unique=False)
     assert_true(t1 == t2)
     keys = set([t1, t2])
     print(keys)
     assert_true(len(keys) == 1)
 
-    t1 = Key("t1", type='string', distinguishing=False)
-    t2 = Key("t1", type='bool', distinguishing=True)
+    t1 = Key("t1", type='string', unique=False)
+    t2 = Key("t1", type='bool', unique=True)
     assert_true(t1 == t2)
     keys = set([t1, t2])
     print(keys)
