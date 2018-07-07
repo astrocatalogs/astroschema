@@ -47,6 +47,7 @@ def get_schema_filenames():
     if VERBOSE:
         print("\tSearching for files matching '{}'".format(schema_file_pattern))
     files = sorted(glob.glob(schema_file_pattern))
+    files = [ff for ff in files if not os.path.basename(ff).startswith('_')]
     if VERBOSE:
         print("\t\tFound {} schema".format(len(files)))
     return files

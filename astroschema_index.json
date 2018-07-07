@@ -4,13 +4,6 @@
   "filename":"astroschema_index.json",
   "version":"0.2.2",
   "index":{
-    "Core astro-schema meta-schema":{
-      "title":"Core astro-schema meta-schema",
-      "description":"Extension of the json-schema with astro-schema specifications.",
-      "filename":"schema/_meta-schema.json",
-      "version":"0.4",
-      "updated":"2018-07-07 13:52:06"
-    },
     "key":{
       "title":"key",
       "description":"`Key` objects describe key-value pairs in each entry.",
@@ -18,19 +11,26 @@
       "version":"0.4",
       "updated":"2018-07-07 14:13:01"
     },
+    "Core astro-schema meta-schema":{
+      "title":"Core astro-schema meta-schema",
+      "description":"Extension of the json-schema with astro-schema specifications.",
+      "filename":"schema/meta-schema.json",
+      "version":"0.4",
+      "updated":"2018-07-07 14:01:27"
+    },
     "quantity":{
       "title":"quantity",
       "description":"An item representing a numerical value.",
-      "filename":"schema/meta-schema.json",
+      "filename":"schema/quantity.json",
       "version":"0.1",
-      "updated":"2018-07-07 14:01:27"
+      "updated":"2018-07-06 15:58:40"
     },
     "source":{
       "title":"source",
       "description":"An item representing a bibliographic attribution or reference.",
-      "filename":"schema/quantity.json",
+      "filename":"schema/source.json",
       "version":"0.4",
-      "updated":"2018-07-06 15:58:40"
+      "updated":"2018-07-07 14:05:14"
     }
   }
 }
