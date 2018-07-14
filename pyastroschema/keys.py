@@ -3,10 +3,10 @@
 
 import os
 
-import jsonschema
+# import jsonschema
 
 from . import SCHEMA_KEYS, PATHS
-from . import utils
+from . import utils, validation
 
 
 class Key(str):
@@ -31,7 +31,10 @@ class Key(str):
         """
         key_schema = os.path.join(PATHS.SCHEMA_DIR, "key.json")
         schema = utils.json_load_file(key_schema)
-        jsonschema.validate(self.__dict__, schema)
+        # Use a custom validator that sets default values
+        validator = validation.Validator_Defaults(schema)
+        validator.validate(self.__dict__)
+        # jsonschema.validate(self.__dict__, schema)
         return
 
 

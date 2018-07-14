@@ -33,7 +33,9 @@ SIMPLEST_SCHEMA = dict(
 
 def test_basics():
     t1 = Key("t1", type='string', unique=False)
-    print(t1)
+    print("key = ", t1)
+    print("type = '{}', unique = '{}', distinguishing = '{}'".format(
+        t1.type, t1.unique, t1.distinguishing))
     assert_true(t1 == "t1")
     assert_true(t1.type == "string")
     assert_true(t1.unique == False)
@@ -49,6 +51,8 @@ def test_basics():
 
 def test_init_errors():
 
+    # NOTE: REMOVED this because defaults are now being set
+    '''
     # Missing required attributes should raise an error
     with assert_raises(ValidationError):
         t2 = Key("t2")
@@ -59,6 +63,7 @@ def test_init_errors():
     with assert_raises(ValidationError):
         t2 = Key("t2", unique=True)
         print(t2)
+    '''
 
     # Non-lower-case name should raise error
     with assert_raises(ValueError):

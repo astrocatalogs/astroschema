@@ -7,15 +7,22 @@
 
     "properties": {
         "type": {
-            "type": ["string", "array"],
-            "unique": true
+            "description": "the data type for the corresponding stored value.",
+            "unique": false,
+            "default": null
         },
         "unique": {
+            "description": "If an attribute is `unique`, then any other instance with the same value refers to the same object (i.e. is a duplicate).",
             "type": "boolean",
-            "unique": true
+            "unique": false,
+            "default": true
+        },
+        "distinguishing": {
+            "description": "If an attribute is `distinguishing`, then if its value is different from another instance, they are not the same objects (i.e. not a duplicate).",
+            "type": "boolean",
+            "unique": false,
+            "default": true
         }
-    },
-
-    "required": ["type", "unique"]
+    }
 
 }
