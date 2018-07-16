@@ -76,6 +76,7 @@ class Struct(OrderedDict):
         allowed to be stored.
 
         """
+        # name = Struct._parse_keyname(name)
         if (not self._extendable) and (name not in self._keychain):
             err = "'{}' not in `keychain`, and not extendable!".format(name)
             raise RuntimeError(err)
@@ -113,6 +114,14 @@ class Struct(OrderedDict):
 
         return result
 
+    '''
+    def __contains__(self, key):
+        """Compare the given `str` with the `str` representation of each internal `Key`.
+        """
+        cont = (key in [str(kk) for kk in self._keys])
+        return cont
+    '''
+
     def _get_keychain_inst(self):
         return self._keychain
 
@@ -123,6 +132,19 @@ class Struct(OrderedDict):
         return
 
     def is_duplicate_of(self, other, ignore_case=True, verbose=None):
+        """Compares this instance to another to determine if they are 'duplicates'.
+
+        NOTE: A 'duplicate' means that *certain* types of properties match, not (necessarily) that
+              all values are identical.
+
+        The `Key` values are compared between instances to determine 'duplicate' status.
+        The `unique` and `distinguishing` properties of each `Key` are used to determine how the
+        instances compare to eachother.  If any `unique` element matches, the instances are
+        duplicates.  If any `distinguishing` elements are mismatched, the instances are not
+        duplicates.  Currently not checking is done to make sure these tests are consistent.  By
+        default, object are *not* duplicates.
+
+        """
         if verbose is None:
             verbose = VERBOSE
 
@@ -132,51 +154,78 @@ class Struct(OrderedDict):
                 print("type mismatch")
             return False
 
+        DEFAULT_BEHAVIOR = False
+
         s_keys = self._keychain.keys()
         o_keys = other._keychain.keys()
         keys = set(s_keys + o_keys)
         # NOTE: speed-up comparison by getting 'uniqe'-specific list
         #    perhaps also specific list for `Key`s that are set
         for ky in keys:
-            s_dist = getattr(self._keychain, ky.upper()).unique
-            o_dist = getattr(other._keychain, ky.upper()).unique
-            # If neither Key is unique, then comparison doesnt matter
-            if (not s_dist and not o_dist):
+            if verbose:
+                print("key: '{}'".format(ky))
+            # note: this may produce error if a key-chain mismatch occurs... not sure if possible
+            s_key = getattr(self._keychain, ky.upper())
+            o_key = getattr(other._keychain, ky.upper())
+            # Make sure the two versions of this key are identical
+            # if s_key != o_key:
+            if not s_key.equals(o_key, identical=True):
+                if verbose:
+                    print("key mismatch!")
+                err = "key mismatch occurred! '{}' --- '{}'".format(repr(self), repr(other))
+                raise RuntimeError(err)
+
+            # If neither Key is unique or distinguishing, then comparison doesnt matter
+            s_uniq = s_key.unique
+            o_uniq = o_key.unique
+            s_dist = s_key.distinguishing
+            o_dist = o_key.distinguishing
+            # note: only 2 checks are needed here, as above both versions of key are compared
+            if (not s_dist and not o_dist and not s_uniq and not o_uniq):
+                if verbose:
+                    print("not unique or distinguishing")
                 continue
 
-            kis = (ky in self)
-            kio = (ky in other)
+            # key must be unique of distinguishing to matter
+            kis = (str(ky) in self) and (s_uniq or s_dist)
+            kio = (str(ky) in other) and (o_uniq or o_dist)
             # If only one object has this parameter, not the same
             if kis != kio:
                 if verbose:
-                    print("key mismatch")
+                    print("instances do not have the same keys")
                 return False
 
             # If neither has parameter
             if not kis:
+                if verbose:
+                    print("kis: {}, {}".format((ky in self), kis))
+                    print("kio: {}, {}".format((ky in other), kio))
+                    print("key absent")
                 continue
 
+            # Already established that both instances have this key; get the values
             s_val = self[ky]
             o_val = other[ky]
-            if type(s_val) != type(o_val):
+            # established that keys are either unique or distinguishing; thus diff means not dup
+            if s_val != o_val:
                 if verbose:
                     print("value mismatch")
                 return False
-
-            if ignore_case and isinstance(s_val, str):
-                s_val = s_val.lower()
-                o_val = o_val.lower()
-
-            # If any `unique` attribute is the same, then they are duplicates
-            if s_val == o_val:
+            # If the same, and unique, then yes duplicates
+            elif (s_uniq or o_uniq):
                 if verbose:
                     print("unique value match")
                 return True
-            # if any is different, they are not duplicates
+            # If not unique and values match, indeterminate... continue
             else:
-                return False
+                if verbose:
+                    print("non-'unique' matching")
+                pass
 
-        return True
+        if verbose:
+            print("No determinant (mis)matches, returning default: '{}'".format(DEFAULT_BEHAVIOR))
+
+        return DEFAULT_BEHAVIOR
 
     def to_json(self):
         jstr = utils.json_dump_str(self)
