@@ -2,66 +2,78 @@
     "$schema": "http://json-schema.org/schema#",
     "title": "quantity",
     "description": "An item representing a numerical value.",
-    "version": "0.1",
+    "version": "0.2",
     "type": "object",
     "properties": {
         "value": {
             "description": "The numerical value associated with this Quantity.",
             "type": ["number", "string"],
-            "unique": true
+            "unique": false,
+            "distinguishing": true
         },
         "error_value": {
             "description": "Symmetric, one-sigma error associated with this Quantity's value.",
             "type": "number",
-            "unique": true
+            "unique": false,
+            "distinguishing": true
         },
         "error_upper": {
             "description": "Upper (plus) one-sigma error on this Quantity's value.",
             "type": "number",
-            "unique": true
+            "unique": false,
+            "distinguishing": true
         },
         "error_lower": {
             "description": "Lower (minus) one-sigma error on this Quantity's value.",
             "type": "number",
-            "unique": true
+            "unique": false,
+            "distinguishing": true
         },
         "upper_limit": {
             "description": "Lower (minus) one-sigma error on this Quantity's value.",
             "type": "boolean",
-            "unique": true
+            "unique": false,
+            "distinguishing": true
         },
         "lower_limit": {
             "description": "Lower (minus) one-sigma error on this Quantity's value.",
             "type": "boolean",
-            "unique": true
+            "unique": false,
+            "distinguishing": true
         },
         "derived": {
             "description": "Whether or not this Quantity is derived from other parameters/observations.",
             "type": "boolean",
-            "unique": true
+            "unique": false,
+            "distinguishing": true
         },
         "description": {
             "description": "Any additional descriptive/meta information about this quantity.",
             "type": "string",
-            "unique": false
+            "unique": false,
+            "distinguishing": false
         },
         "units_value": {
             "description": "The units with which this Quantity's value is stored.",
             "type": "string",
-            "unique": true
+            "unique": false,
+            "distinguishing": true
         },
         "units_error": {
             "description": "The units with which this Quantity's errors are stored.",
             "type": "string",
-            "unique": true
+            "unique": false,
+            "distinguishing": true
         },
         "kind": {
             "type": "string",
-            "unique": true
+            "unique": false,
+            "distinguishing": true
         },
         "source": {
             "type": "string",
-            "unique": false
+            "unique": false,
+            "distinguishing": false
         }
     },
 

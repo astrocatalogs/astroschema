@@ -2,13 +2,14 @@
     "$schema": "http://json-schema.org/schema#",
     "title": "source",
     "description": "An item representing a bibliographic attribution or reference.",
-    "version": "0.4",
+    "version": "0.5",
     "type": "object",
     "properties": {
         "alias": {
             "description": "The unique identifier for this source.",
             "type": ["integer", "string"],
             "unique": false,
+            "distinguishing": false,
             "anyOf": [
                 { "type": "string", "minLength": 1 },
                 { "type": "number", "minimum": 0 }
@@ -17,44 +18,53 @@
         "name": {
             "description": "Description designation for this source.",
             "type": "string",
-            "unique": true
+            "unique": false,
+            "distinguishing": true
         },
         "bibcode": {
             "type": "string",
             "unique": true,
+            "distinguishing": true,
             "minLength": 19,
             "maxLength": 19
         },
         "arxivid": {
             "description": "ID number for the arXiv.",
             "type": "string",
-            "unique": true
+            "unique": true,
+            "distinguishing": true
         },
         "doi": {
             "description": "Digital Object Identifier (DOI) for this source.",
             "type": "string",
-            "unique": true
+            "unique": true,
+            "distinguishing": true
         },
         "url": {
             "type": "string",
+            "format": "uri",
             "unique": false,
-            "format": "uri"
+            "distinguishing": false
         },
         "acknowledgment": {
             "type": "string",
-            "unique": false
+            "unique": false,
+            "distinguishing": false
         },
         "reference": {
             "type": "string",
-            "unique": false
+            "unique": false,
+            "distinguishing": false
         },
         "secondary": {
             "type": "boolean",
-            "unique": false
+            "unique": false,
+            "distinguishing": false
         },
         "private": {
             "type": "boolean",
-            "unique": false
+            "unique": false,
+            "distinguishing": false
         }
     },
 
