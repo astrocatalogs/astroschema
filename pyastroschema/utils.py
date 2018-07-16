@@ -33,7 +33,6 @@ def load_schema(sname):
             sname, title)
         raise ValueError(err)
 
-
     return schema
 
 
