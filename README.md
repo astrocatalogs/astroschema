@@ -29,6 +29,8 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 - `source` : what are `name` and `reference` for?  Are they needed?
 
+- To save memory: have instances share certain class attributes, i.e. all `Source` instances should share the same object for the schema, perhaps for `Keychain` also?
+
 - Name changes:
     - `source` ==> `reference`
         - `alias` ==> `idnum`
@@ -36,7 +38,6 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
     - `is_duplicate_of` ==>  ???   this isn't checking for "duplicate" but for redundancy.
 
 - Changes:
-    - `source` `alias` should be an integer instead of a string (of an integer).
 
 - Decisions
     - Upper-case vs lower-case key attribute names in `Keychain`
