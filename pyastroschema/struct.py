@@ -192,11 +192,11 @@ class Struct(OrderedDict):
 
 class Meta_Struct(Struct):
 
-    _SCHEMA_NAME = "source"
+    _SCHEMA_NAME = None
 
     def __new__(cls, *args, **kwargs):
-        source = super(Meta_Struct, cls).__new__(cls)
-        return source
+        struct = super(Meta_Struct, cls).__new__(cls)
+        return struct
 
     def __init__(self, *args, **kwargs):
         super(Meta_Struct, self).__init__(self._SCHEMA_NAME, *args, **kwargs)
