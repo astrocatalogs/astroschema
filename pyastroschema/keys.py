@@ -11,6 +11,9 @@ from . import utils, validation
 
 class Key(str):
 
+    __key_schema_fname = os.path.join(PATHS.SCHEMA_DIR, "key.json")
+    __key_schema = utils.json_load_file(__key_schema_fname)
+
     def __new__(cls, name, **kwargs):
         # Enforce lower-case
         if not name.islower():
@@ -26,16 +29,28 @@ class Key(str):
         self.validate()
         return
 
+    def __repr__(self):
+        prop_names = self.schema['properties'].keys()
+        prop_list = []
+        for pn in prop_names:
+            if hasattr(self, pn):
+                prop_list.append("{}: '{}'".format(pn, getattr(self, pn)))
+
+        rv = "'{}': ({})".format(str(self), ", ".join(prop_list))
+        return rv
+
     def validate(self):
         """Check for consistency between the stored parameters and schema.
         """
-        key_schema = os.path.join(PATHS.SCHEMA_DIR, "key.json")
-        schema = utils.json_load_file(key_schema)
         # Use a custom validator that sets default values
-        validator = validation.Validator_Defaults(schema)
+        validator = validation.Validator_Defaults(self.__key_schema)
         validator.validate(self.__dict__)
         # jsonschema.validate(self.__dict__, schema)
         return
+
+    @property
+    def schema(self):
+        return self.__key_schema
 
 
 class Keychain(object):
