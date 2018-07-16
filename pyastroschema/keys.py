@@ -27,6 +27,8 @@ class Key(str):
 
         # Validate
         self.validate()
+        # Other code depends on the `str` representation being equal to the name, check that here
+        assert str(self) == name, "self does not match `name`!"
         return
 
     def __repr__(self):
@@ -39,6 +41,33 @@ class Key(str):
         rv = "'{}': ({})".format(str(self), ", ".join(prop_list))
         return rv
 
+    '''
+    def __eq__(self, other):
+        """Use the `str` and `repr` methods to check equality between `Keys`.
+        """
+        if str(self) != str(other):
+            return False
+
+        if repr(self) != repr(other):
+            return False
+
+        return True
+
+    def __ne__(self, other):
+        """Uses the `eq` method to check for inequality.
+        """
+        return not(self.__eq__)
+    '''
+
+    '''
+    def __hash__(self):
+        """Use the `str` representation of this instance as the hash argument.
+
+        Required as `eq` method as been overriden.
+        """
+        return hash(str(self))
+    '''
+
     def validate(self):
         """Check for consistency between the stored parameters and schema.
         """
@@ -47,6 +76,20 @@ class Key(str):
         validator.validate(self.__dict__)
         # jsonschema.validate(self.__dict__, schema)
         return
+
+    def equals(self, other, identical=False):
+        """Use the `str` and `repr` methods to check equality between `Keys`.
+        """
+        if identical:
+            if repr(self) == repr(other):
+                return True
+            else:
+                return False
+        else:
+            if str(self) == str(other):
+                return True
+            else:
+                return False
 
     @property
     def schema(self):
@@ -125,5 +168,8 @@ class Keychain(object):
         return self._keys
 
     def __contains__(self, key):
+        """Compare the given `str` with the `str` representation of each internal `Key`.
+        """
+        # cont = (key in [str(kk) for kk in self._keys])
         cont = (key in self._keys)
         return cont
