@@ -141,8 +141,7 @@ class Struct(OrderedDict):
         The `unique` and `distinguishing` properties of each `Key` are used to determine how the
         instances compare to eachother.  If any `unique` element matches, the instances are
         duplicates.  If any `distinguishing` elements are mismatched, the instances are not
-        duplicates.  Currently not checking is done to make sure these tests are consistent.  By
-        default, object are *not* duplicates.
+        duplicates.  Currently not checking is done to make sure these tests are consistent.
 
         """
         if verbose is None:
@@ -154,7 +153,7 @@ class Struct(OrderedDict):
                 print("type mismatch")
             return False
 
-        DEFAULT_BEHAVIOR = False
+        DEFAULT_BEHAVIOR = True
 
         s_keys = self._keychain.keys()
         o_keys = other._keychain.keys()
