@@ -29,6 +29,10 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 - `source` : what are `name` and `reference` for?  Are they needed?
 
+- Need to do some sort of type checking to make sure "string" values representing numbers are convertable to numbers... that or start using numerical values or something.
+
+- Each type of `Struct` should actually be a class-factory that has pre-loaded the target schema to then check against the creation of new instances.  i.e. when calling `Source()`, it should *not* then call the parent `Struct()`, load the schema, etc etc.  Instead it should have the schema already loaded (and validated!) and just create a new instance from there.
+
 - To save memory: have instances share certain class attributes, i.e. all `Source` instances should share the same object for the schema, perhaps for `Keychain` also?
 
 - Name changes:
