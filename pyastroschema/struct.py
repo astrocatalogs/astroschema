@@ -1,5 +1,6 @@
 """Eventually this will be generalized from 'source' specifically to any 'struct'.
 """
+import os
 from copy import deepcopy
 from collections import OrderedDict
 
@@ -21,6 +22,9 @@ class Struct(OrderedDict):
         Arguments
         ---------
         schema : str or dict,
+            This can be a schema specification itself (i.e. a `dict`) or it can be a string which
+            either gives the name of the target schema (e.g. `source` or `quantity`) or it can be
+            the file-path from which to load a schema (e.g. `../schema/source.json`).
         *args : None,
             NOT ALLOWED.  Only keyword-arguments (`kwargs`) can be used.
         parent : obj,
@@ -39,7 +43,6 @@ class Struct(OrderedDict):
             raise RuntimeError(err)
 
         # Load the schema for this type of structure
-        #    This will eventually be generalized to use an arbitrary schema
         if isinstance(schema, dict):
             pass
         elif isinstance(schema, str):
@@ -47,6 +50,10 @@ class Struct(OrderedDict):
         else:
             err = "Unrecognized `schema` type '{}': '{}'".format(type(schema), schema)
             raise ValueError(err)
+
+        # Validate the schema itself
+        validator = jsonschema.validators.validator_for(schema)
+        validator.check_schema(schema)
 
         # Create a `Keychain` instance to store the properties described in this schema
         keychain = keys.Keychain(schema, mutable=False, extendable=False)
