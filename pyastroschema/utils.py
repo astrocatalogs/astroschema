@@ -14,6 +14,11 @@ def load_schema_index():
 
 
 def load_schema(sname):
+
+    if os.path.exists(sname):
+        schema = json_load_file(sname)
+        return schema
+
     index = load_schema_index()
     index = index[META_KEYS.INDEX]
     if sname not in index.keys():
