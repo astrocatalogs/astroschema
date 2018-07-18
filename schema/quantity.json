@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/schema#",
     "title": "quantity",
     "description": "An item representing a numerical value.",
-    "version": "0.2",
+    "version": "0.3",
     "type": "object",
     "properties": {
         "value": {
@@ -13,19 +13,19 @@
         },
         "error_value": {
             "description": "Symmetric, one-sigma error associated with this Quantity's value.",
-            "type": "number",
+            "type": ["number", "string"],
             "unique": false,
             "distinguishing": true
         },
         "error_upper": {
             "description": "Upper (plus) one-sigma error on this Quantity's value.",
-            "type": "number",
+            "type": ["number", "string"],
             "unique": false,
             "distinguishing": true
         },
         "error_lower": {
             "description": "Lower (minus) one-sigma error on this Quantity's value.",
-            "type": "number",
+            "type": ["number", "string"],
             "unique": false,
             "distinguishing": true
         },
