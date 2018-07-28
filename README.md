@@ -29,6 +29,8 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 - WARNING: some keys don't match up directly, i.e. "FLUX_DENSITY" vs. 'fluxdensity'
 
+- Instead of `u_` and `e_` attributes, make `quantity` subclasses that require (or have) associated units and/or errors...
+
 - Why are so many `Entry` quantities actually lists without being 'listable'?!
 
 - `source`
@@ -83,6 +85,11 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 ### Current
 
+- `pyastroschema`
+    - `__init__.py`
+        - `PATHS`
+            - `test_dir()` [NEW-METHOD]
+                - Return the directory of test json files for specific schema.
 
 
 ### v0.3.0 - 2018-07-28

@@ -35,6 +35,23 @@ class PATHS:
 
     META_SCHEMA_FILE = os.path.join(SCHEMA_DIR, _META_SCHEMA_FILENAME)
 
+    @classmethod
+    def test_dir(cls, name, good=False, bad=False):
+        td = os.path.join(cls.TESTS_DIR, name, "")
+        if not os.path.exists(td):
+            err = "Test directory for '{}' does not exist!  '{}'".format(name, td)
+            raise ValueError(err)
+
+        if good and bad:
+            raise ValueError("Can only select either `good` or `bad`!")
+        elif good:
+            td = os.path.join(td, "good", "")
+        elif bad:
+            td = os.path.join(td, "bad", "")
+
+        return td
+
+
 # print("Path: pyastroschema: '{}'".format(PATHS.PYASTROSCHEMA))
 # print("Path:   astroschema: '{}'".format(PATHS.ASTROSCHEMA))
 # print("Path:        schema: '{}'".format(PATHS.SCHEMA_DIR))
