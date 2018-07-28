@@ -1,7 +1,7 @@
 """
 """
 import sys
-# import copy
+import copy
 import glob
 from collections import OrderedDict
 
@@ -10,12 +10,29 @@ import pyastroschema as pas
 import jsonschema
 
 # fname = "entry_1.json"
-fname = "entry_2.json"
+# fname = "entry.json"
+fname = "photometry.json"
 schema = pas.utils.json_load_file("/Users/lzkelley/Research/catalogs/astroschema/schema/" + fname)
 
-# print(schema)
+# print(pas.utils.json_dump_str(schema))
 validator = jsonschema.validators.validator_for(schema)
 validator.check_schema(schema)
+
+
+test = dict(
+    time="45481.00",
+    # flux="232.324234",
+    magnitude="9.0",
+    frequency="123",
+    # u_frequency="GHz",
+    u_flux="erg/s",
+    source="1"
+)
+
+jsonschema.validate(test, schema)
+
+print("Done")
+sys.exit(0)
 
 
 '''

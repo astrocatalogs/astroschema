@@ -86,10 +86,19 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 ### Current
 
 - `pyastroschema`
+    - `tests/`
+        - `test_photometry.py` [NEW-FILE]
+            - Unittests for the 'photometry' schema and class.
+            - Include tests for some of the complex 'dependencies' and requirements in the schema.
+
     - `__init__.py`
         - `PATHS`
             - `test_dir()` [NEW-METHOD]
                 - Return the directory of test json files for specific schema.
+
+- `schema/`
+    - `photometry.json`
+        - Added dependencies which were coded manually into `astrocats` `Photometry` class, for example requiring frequency, band or energy when flux is included.
 
 
 ### v0.3.0 - 2018-07-28
