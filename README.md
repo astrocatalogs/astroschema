@@ -80,7 +80,67 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 ## Change Log
 
 
+
 ### Current
+
+
+
+### v0.3.0 - 2018-07-28
+
+- `CONVERSION.md` [NEW-FILE]
+    - File for documenting conversion procedures from `astrocats` to `astroschema`.
+- `README.md`
+    - Lots of new 'to-do' items and issues that need to be addressed.
+
+- `schema/`
+    - `entry.json` [NEW-FILE]
+        - Specifications for a catalog entry (names, sources, quantities, etc).  Based on the `astrocats` `Entry` class.
+    - `key.json` [NEW-FILE]
+        - Schema specification for individual 'keys' of general astroschema schema.  Used with `meta-schema.json`.
+    - `meta-schema.json` <== `meta-schema/astro-schema_draft-0.json`
+        - Schema specification that the properties of all other schema match the `key.json` schema.
+    - `photometry.json` [NEW-FILE]
+        - Schema specifying photometric quantities.  Based on the `astrocats` `Photometry` class.
+    - `quantity.json` [NEW-FILE]
+        - Schema specifying core 'quantities' which are the data points for entries and composite data values (e.g. `photometry`).
+    - `spectrum.json` [NEW-FILE]
+        - Schema specifying spectrum quantities.  Based on the `astrocats` `Spectrum` class.
+    - `source.json`
+        - Use both a 'unique' and 'distinguishing' attributes.  A 'unique' attribute is one that uniquely defines what it is referring to (i.e. if two 'unique' attributes match, then these are referring to the same object).  A 'distinguishing' attribute is one that can be used to compare two instances (based on the `astrocats` concept of 'comparable' values).  If two 'distinguishing' values are different, then the objects are different; if they are the same, the objects *may* be the same.
+
+- `pyastroschema/`
+    - `tests/`
+        - `test_entry.py` [NEW-FILE]
+            - Simplest tests on the new 'entry' schema.
+        - `test_key.py`
+            - Minor updates for changes to the `Key` class.
+        - `test_keychain.py`
+            - Minor updates for changes to the `KeyChain` class.
+        - `test_quantity.py` [NEW-FILE]
+            - Basic testing of new 'quantity' schema.
+        - `test_source.py`
+            - Minor updates for changes to from `Source` standalone class to `Source(Struct)` subclass.
+            
+    - `keys.py`
+        - `Key`
+            - Use `json` validation instead of manual checking (e.g. of requirements).
+            - `validate()` [NEW-METHOD]
+                - Load a custom validator that not only validates but sets default values.  See `validation.py`.
+            - `equals()` [NEW-METHOD]
+                - Compare two keys each-other (analogous to astrocats `is_duplicate_of` methods).  Has optional `identical` argument to determine precision of comparison.
+    - `schema.py` [NEW-FILE]
+        - Beginning of class to represent schema themselves.
+        - NOTE: non-operational.
+    - `struct.py` <== `source.py`
+        - What was previously the `Source` class has been generalized into the `Struct` class which can then be used for any data-structured.
+        - `Struct` [NEW-CLASS]
+            - Generalized class structure to apply to any catalog-object that is schema-specified.  This is analogous (and largely based on) the `astrocats.catdict.CatDict` class.
+            - On initialization, the class uses its corresponding schema to generate a `Keychain` populated with `Key` instances that describe each property of this class.  Validation is performed using jsonschema.
+        - `Meta_Struct` [NEW-CLASS]
+            - Subclass of `Struct` which is designed to be used for further subclassing to construct particular types of object, e.g. `Source`, `Quantity`, etc.  `Meta_Struct` is used as the method to specify the schema describing/constraining the particular structure.
+    - `validation.py` [NEW-FILE]
+        - Create a jsonschema validator instance with extended functionality to set default values of parameters.  Currently used to set default `Key` attributes.
+
 
 
 ### v0.2.0 - 2018-07-04
@@ -122,6 +182,8 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
             - Load dictionary from json-formatted string.
         - `get_relative_path()` [new-function]
             - Convert from a full path to a path relative to a given reference path.
+
+
 
 ### v0.1.0 - 2018-06-28
 
