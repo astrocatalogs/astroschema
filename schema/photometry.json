@@ -5,167 +5,186 @@
     "version": "0.1",
     "type": "object",
 
+    "definitions": {
+        "NUMERIC": {
+            "type": ["number", "string"]
+        },
+        "NUMERIC_LIST": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "$ref": "#/definitions/NUMERIC"
+            }
+        },
+        "NUMERIC_LISTABLE": {
+            "anyOf": [
+                {"$ref": "#/definitions/NUMERIC"},
+                {"$ref": "#/definitions/NUMERIC_LIST"}
+            ]
+        }
+    },
+
     "properties": {
 
         "time": {
 			"description": "",
-			"type": ["number", "string"],
+			"$ref": "#/definitions/NUMERIC_LISTABLE",
 			"listable": true,
 			"priority": 10
 		},
 
         "magnitude": {
 			"description": "",
-			"type": ["number", "string"],
+			"$ref": "#/definitions/NUMERIC",
 			"priority": 9
 		},
         "flux": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "fluxdensity": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "count_rate": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "luminosity": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "zero_point": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "upper_limit_sigma": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "energy": {
 			"description": "",
-			"type": ["number", "string"],
+			"$ref": "#/definitions/NUMERIC_LISTABLE",
 			"listable": true
 		},
         "frequency": {
 			"description": "",
-			"type": ["number", "string"],
+			"$ref": "#/definitions/NUMERIC_LISTABLE",
 			"listable": true
 		},
         "wavelength": {
 			"description": "",
-			"type": ["number", "string"],
+			"$ref": "#/definitions/NUMERIC_LISTABLE",
 			"listable": true
 		},
         "nhmw": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "photon_index": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "unabsorbed_flux": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "exposure_time": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "off_axis_angle": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "extraction_radius": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_count_rate": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_flux": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_flux_density": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_luminosity": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_magnitude": {
 			"description": "",
-			"type": ["number", "string"],
+			"$ref": "#/definitions/NUMERIC",
 			"priority": 7
 		},
         "e_time": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_unabsorbed_flux": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_lower_unabsorbed_flux": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_upper_unabsorbed_flux": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_lower_count_rate": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_upper_count_rate": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_lower_magnitude": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_upper_magnitude": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_lower_flux": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_upper_flux_density": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_lower_flux_density": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_upper_flux": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_lower_luminosity": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_upper_luminosity": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_lower_time": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
         "e_upper_time": {
 			"description": "",
-			"type": ["number", "string"]
+			"$ref": "#/definitions/NUMERIC"
 		},
 
         "model": {
