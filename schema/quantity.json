@@ -68,10 +68,11 @@
         "kind": {
             "type": "string",
             "unique": false,
-            "distinguishing": true
+            "distinguishing": true,
+            "minLength": 1
         },
         "source": {
-            "type": "string",
+            "type": ["string", "integer"],
             "unique": false,
             "distinguishing": false
         }
