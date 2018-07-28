@@ -21,6 +21,17 @@
                 {"$ref": "#/definitions/NUMERIC"},
                 {"$ref": "#/definitions/NUMERIC_LIST"}
             ]
+        },
+        "FLUX_REQUIREMENTS": {
+            "anyOf": [
+                {"required": ["frequency"]},
+                {"required": ["band"]},
+                {"required": ["energy"]}
+            ],
+            "dependencies": {
+                "frequency": { "required": ["u_frequency"] },
+                "energy": { "required": ["u_energy"] }
+            }
         }
     },
 
@@ -262,7 +273,7 @@
 			"description": "",
 			"type": "string"
 		},
-        "u_flux_density": {
+        "u_fluxdensity": {
 			"description": "",
 			"type": "string"
 		},
@@ -343,23 +354,46 @@
 
     },
 
-    "anyOf": [
-        { "required": ["source"]},
-        { "required": ["model"]}
+    "allOf": [
+        {
+            "anyOf": [
+                { "required": ["source"]},
+                { "required": ["model"]}
+            ]
+        },
+
+        {
+            "anyOf": [
+                { "required": ["time"]},
+                { "required": ["host"]}
+            ]
+        },
+
+        {
+            "anyOf": [
+                { "required": ["magnitude"]},
+                { "required": ["flux"]},
+                { "required": ["unabsorbed_flux"]},
+                { "required": ["fluxdensity"]},
+                { "required": ["count_rate"]},
+                { "required": ["luminosity"]}
+            ]
+        }
     ],
 
-    "anyOf": [
-        { "required": ["time"]},
-        { "required": ["host"]}
-    ],
-
-    "anyOf": [
-        { "required": ["magnitude"]},
-        { "required": ["flux"]},
-        { "required": ["unabsorbed_flux"]},
-        { "required": ["fluxdensity"]},
-        { "required": ["count_rate"]},
-        { "required": ["luminosity"]}
-    ]
+    "dependencies": {
+        "flux": {
+            "allOf": [
+                {"required": ["u_flux"]},
+                {"$ref": "#definitions/FLUX_REQUIREMENTS"}
+            ]
+        },
+        "fluxdensity": {
+            "allOf": [
+                {"required": ["u_fluxdensity"]},
+                {"$ref": "#definitions/FLUX_REQUIREMENTS"}
+            ]
+        }
+    }
 
 }
