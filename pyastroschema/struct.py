@@ -1,5 +1,6 @@
 """Eventually this will be generalized from 'source' specifically to any 'struct'.
 """
+
 import os
 from copy import deepcopy
 from collections import OrderedDict
@@ -266,3 +267,18 @@ class Source(Meta_Struct):
 class Quantity(Meta_Struct):
 
     _SCHEMA_NAME = "quantity"
+
+
+class Photometry(Meta_Struct):
+
+    _SCHEMA_NAME = "photometry"
+
+
+class Spectrum(Meta_Struct):
+
+    _SCHEMA_NAME = "spectrum"
+
+
+class Entry(Meta_Struct):
+
+    _SCHEMA_NAME = "entry"
