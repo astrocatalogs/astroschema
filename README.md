@@ -27,7 +27,11 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 ## To-Do / Questions
 
-- `source` : what are `name` and `reference` for?  Are they needed?
+- `source`
+    - what are `name` and `reference` for?  Are they needed?
+
+- `quantity`
+    - `source` needs a `minLength`
 
 - Need to do some sort of type checking to make sure "string" values representing numbers are convertable to numbers... that or start using numerical values or something.
 
@@ -40,6 +44,8 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
         - `alias` ==> `idnum`
         - `reference` ==> `textcite`
     - `is_duplicate_of` ==>  ???   this isn't checking for "duplicate" but for redundancy.
+    - `quantity`
+        - `source` ==> `source_alias`
 
 - Changes:
 
