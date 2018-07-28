@@ -1,0 +1,240 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "title": "entry",
+    "description": "An item representing a complete catalog entry.",
+    "version": "0.2",
+    "type": "object",
+
+    "definitions": {
+        "QUANTITY": {
+            "$ref": "file:/Users/lzkelley/Research/catalogs/astroschema/schema/quantity.json"
+        },
+        "SOURCE": {
+            "$ref": "file:/Users/lzkelley/Research/catalogs/astroschema/schema/source.json"
+        }
+    },
+
+    "properties": {
+        "name": {
+            "description": "Standard designation for this Entry.",
+            "type": "string",
+            "unique": false,
+            "distinguishing": true
+        },
+        "errors": {
+            "description": "Known issues/problems with this Entry or some of its data.",
+            "type": "null",
+            "unique": false,
+            "distinguishing": true
+        },
+
+        "sources": {
+            "description": "Bibliographic attributions describing the sources of this Entry's data.",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "$ref": "#/definitions/SOURCE"
+            }
+        },
+        "photometry": {
+            "description": "",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "$ref": "#/definitions/QUANTITY"
+            }
+        },
+        "spectra": {
+            "description": "",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "$ref": "#/definitions/QUANTITY"
+            }
+        },
+
+        "alias": {
+            "type": "array",
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "minItems": 1,
+            "items": {
+                "$ref": "#/definitions/QUANTITY"
+            }
+        },
+        "comoving_dist": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "kind_preference": true,
+            "replace_better": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "dec": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "discover_date": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "replace_better": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "discoverer": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "distinct_from": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "ebv": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "replace_better": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "av_circum": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "replace_better": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "host": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "host_dec": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "host_offset_ang": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "host_offset_dist": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "host_ra": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "host_redshift": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "kind_preference": true,
+            "replace_better": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "host_velocity": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "kind_preference": true,
+            "replace_better": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "host_lum_dist": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "kind_preference": true,
+            "replace_better": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "host_comoving_dist": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "kind_preference": true,
+            "replace_better": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "lum_dist": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "kind_preference": true,
+            "replace_better": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "max_abs_mag": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "max_app_mag": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "max_band": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "max_date": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "replace_better": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "models": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "ra": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "redshift": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "kind_preference": true,
+            "replace_better": true,
+            "$ref": "#/definitions/QUANTITY"
+        },
+        "velocity": {
+            "description": "",
+            "unique": false,
+            "distinguishing": true,
+            "kind_preference": true,
+            "replace_better": true,
+            "$ref": "#/definitions/QUANTITY"
+        }
+
+    },
+
+    "required": ["name", "sources"]
+}

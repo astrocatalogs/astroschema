@@ -1,0 +1,211 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "title": "entry",
+    "description": "An item representing a complete catalog entry.",
+    "version": "0.2",
+    "type": "object",
+
+    "properties": {
+        "meta": {
+            "type": "object",
+            "properties": {
+                "errors": {
+                    "description": "",
+                    "type": "null",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "name": {
+                    "description": "Standard designation for this Entry",
+                    "type": "string",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "sources": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "file:/Users/lzkelley/Research/catalogs/astroschema/schema/source.json"
+                    }
+                }
+            },
+
+            "required": ["name", "sources"]
+        },
+
+        "quantities": {
+            "type": "object",
+            "properties": {
+                "alias": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "comoving_dist": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true,
+                    "kind_preference": true,
+                    "replace_better": true
+                },
+                "dec": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "discover_date": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true,
+                    "replace_better": true
+                },
+                "discoverer": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "distinct_from": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "ebv": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true,
+                    "replace_better": true
+                },
+                "av_circum": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true,
+                    "replace_better": true
+                },
+                "host": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "host_dec": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "host_offset_ang": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "host_offset_dist": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "host_ra": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "host_redshift": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true,
+                    "kind_preference": true,
+                    "replace_better": true
+                },
+                "host_velocity": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true,
+                    "kind_preference": true,
+                    "replace_better": true
+                },
+                "host_lum_dist": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true,
+                    "kind_preference": true,
+                    "replace_better": true
+                },
+                "host_comoving_dist": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true,
+                    "kind_preference": true,
+                    "replace_better": true
+                },
+                "lum_dist": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true,
+                    "kind_preference": true,
+                    "replace_better": true
+                },
+                "max_abs_mag": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "max_app_mag": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "max_band": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "max_date": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true,
+                    "replace_better": true
+                },
+                "models": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "photometry": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "ra": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "redshift": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true,
+                    "kind_preference": true,
+                    "replace_better": true
+                },
+                "spectra": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true
+                },
+                "velocity": {
+                    "description": "",
+                    "unique": false,
+                    "distinguishing": true,
+                    "kind_preference": true,
+                    "replace_better": true
+                }
+            },
+
+            "patternProperties": {
+                ".*": {
+                    "$ref": "file:/Users/lzkelley/Research/catalogs/astroschema/schema/quantity.json"
+                }
+            }
+
+        }
+    },
+
+    "required": ["meta"]
+}
