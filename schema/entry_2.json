@@ -11,6 +11,9 @@
         },
         "SOURCE": {
             "$ref": "file:/Users/lzkelley/Research/catalogs/astroschema/schema/source.json"
+        },
+        "PHOTOMETRY": {
+            "$ref": "file:/Users/lzkelley/Research/catalogs/astroschema/schema/photometry.json"
         }
     },
 
@@ -41,7 +44,7 @@
             "type": "array",
             "minItems": 1,
             "items": {
-                "$ref": "#/definitions/QUANTITY"
+                "$ref": "#/definitions/PHOTOMETRY"
             }
         },
         "spectra": {
