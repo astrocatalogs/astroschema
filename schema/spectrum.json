@@ -135,19 +135,24 @@
 
     },
 
-    "anyOf": [
-        { "required": ["source"]},
-        { "required": ["filename"]}
-    ],
-
-    "anyOf": [
-        { "required": ["u_fluxes"]},
-        { "required": ["filename"]}
-    ],
-
-    "anyOf": [
-        { "required": ["u_wavelengths"]},
-        { "required": ["filename"]}
+    "allOf": [
+        {
+            "anyOf": [
+                { "required": ["source"]},
+                { "required": ["filename"]}
+            ],
+        },
+        {
+            "anyOf": [
+                { "required": ["u_fluxes"]},
+                { "required": ["filename"]}
+            ],
+        },
+        {
+            "anyOf": [
+                { "required": ["u_wavelengths"]},
+                { "required": ["filename"]}
+            ]
+        }
     ]
-
 }
