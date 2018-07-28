@@ -1,0 +1,346 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "title": "photometry",
+    "description": "An item representing a single photometric data-point.",
+    "version": "0.1",
+    "type": "object",
+
+    "properties": {
+
+        "time": {
+			"description": "",
+			"type": "date-time",
+			"listable": true,
+			"priority": 10
+		},
+
+        "magnitude": {
+			"description": "",
+			"type": "number",
+			"priority": 9
+		},
+        "flux": {
+			"description": "",
+			"type": "number"
+		},
+        "flux_density": {
+			"description": "",
+			"type": "number"
+		},
+        "count_rate": {
+			"description": "",
+			"type": "number"
+		},
+        "luminosity": {
+			"description": "",
+			"type": "number"
+		},
+        "zero_point": {
+			"description": "",
+			"type": "number"
+		},
+        "upper_limit_sigma": {
+			"description": "",
+			"type": "number"
+		},
+        "energy": {
+			"description": "",
+			"type": "number",
+			"listable": true
+		},
+        "frequency": {
+			"description": "",
+			"type": "number",
+			"listable": true
+		},
+        "wavelength": {
+			"description": "",
+			"type": "number",
+			"listable": true
+		},
+        "nhmw": {
+			"description": "",
+			"type": "number"
+		},
+        "photon_index": {
+			"description": "",
+			"type": "number"
+		},
+        "unabsorbed_flux": {
+			"description": "",
+			"type": "number"
+		},
+        "exposure_time": {
+			"description": "",
+			"type": "number"
+		},
+        "off_axis_angle": {
+			"description": "",
+			"type": "number"
+		},
+        "extraction_radius": {
+			"description": "",
+			"type": "number"
+		},
+        "e_count_rate": {
+			"description": "",
+			"type": "number"
+		},
+        "e_flux": {
+			"description": "",
+			"type": "number"
+		},
+        "e_flux_density": {
+			"description": "",
+			"type": "number"
+		},
+        "e_luminosity": {
+			"description": "",
+			"type": "number"
+		},
+        "e_magnitude": {
+			"description": "",
+			"type": "number",
+			"priority": 7
+		},
+        "e_time": {
+			"description": "",
+			"type": "number"
+		},
+        "e_unabsorbed_flux": {
+			"description": "",
+			"type": "number"
+		},
+        "e_lower_unabsorbed_flux": {
+			"description": "",
+			"type": "number"
+		},
+        "e_upper_unabsorbed_flux": {
+			"description": "",
+			"type": "number"
+		},
+        "e_lower_count_rate": {
+			"description": "",
+			"type": "number"
+		},
+        "e_upper_count_rate": {
+			"description": "",
+			"type": "number"
+		},
+        "e_lower_magnitude": {
+			"description": "",
+			"type": "number"
+		},
+        "e_upper_magnitude": {
+			"description": "",
+			"type": "number"
+		},
+        "e_lower_flux": {
+			"description": "",
+			"type": "number"
+		},
+        "e_upper_flux_density": {
+			"description": "",
+			"type": "number"
+		},
+        "e_lower_flux_density": {
+			"description": "",
+			"type": "number"
+		},
+        "e_upper_flux": {
+			"description": "",
+			"type": "number"
+		},
+        "e_lower_luminosity": {
+			"description": "",
+			"type": "number"
+		},
+        "e_upper_luminosity": {
+			"description": "",
+			"type": "number"
+		},
+        "e_lower_time": {
+			"description": "",
+			"type": "number"
+		},
+        "e_upper_time": {
+			"description": "",
+			"type": "number"
+		},
+
+        "model": {
+			"description": "",
+			"type": "string",
+			"distinguishing": false
+		},
+        "realization": {
+			"description": "",
+			"type": "string",
+			"priority": 15
+		},
+        "source": {
+			"description": "",
+			"type": "string",
+			"distinguishing": false
+		},
+        "telescope": {
+			"description": "",
+			"type": "string",
+			"distinguishing": false
+		},
+        "instrument": {
+			"description": "",
+			"type": "string",
+			"distinguishing": false
+		},
+        "mode": {
+			"description": "",
+			"type": "string",
+			"distinguishing": false
+		},
+        "band": {
+			"description": "",
+			"type": "string",
+			"priority": 8
+		},
+        "observatory": {
+			"description": "",
+			"type": "string",
+			"distinguishing": false
+		},
+        "observer": {
+			"description": "",
+			"type": "string",
+			"distinguishing": false
+		},
+        "survey": {
+			"description": "",
+			"type": "string",
+			"distinguishing": false
+		},
+        "band_set": {
+			"description": "",
+			"type": "string"
+		},
+        "system": {
+			"description": "",
+			"type": "string"
+		},
+        "description": {
+			"description": "",
+			"type": "string",
+			"distinguishing": false
+		},
+        "u_count_rate": {
+			"description": "",
+			"type": "string"
+		},
+        "u_time": {
+			"description": "",
+			"type": "string"
+		},
+        "u_flux": {
+			"description": "",
+			"type": "string"
+		},
+        "u_flux_density": {
+			"description": "",
+			"type": "string"
+		},
+        "u_frequency": {
+			"description": "",
+			"type": "string"
+		},
+        "u_wavelength": {
+			"description": "",
+			"type": "string"
+		},
+        "u_energy": {
+			"description": "",
+			"type": "string"
+		},
+        "u_luminosity": {
+			"description": "",
+			"type": "string"
+		},
+        "u_exposure_time": {
+			"description": "",
+			"type": "string"
+		},
+        "u_off_axis_angle": {
+			"description": "",
+			"type": "string"
+		},
+        "u_extraction_radius": {
+			"description": "",
+			"type": "string"
+		},
+
+        "scorrected": {
+			"description": "",
+			"type": "boolean"
+		},
+        "kcorrected": {
+			"description": "",
+			"type": "boolean"
+		},
+        "mcorrected": {
+			"description": "",
+			"type": "boolean"
+		},
+        "synthetic": {
+			"description": "",
+			"type": "boolean"
+		},
+        "simulated": {
+			"description": "",
+			"type": "boolean"
+		},
+        "upper_limit": {
+			"description": "",
+			"type": "boolean",
+			"priority": 6
+		},
+        "lower_limit": {
+			"description": "",
+			"type": "boolean"
+		},
+        "host": {
+			"description": "",
+			"type": "boolean"
+		},
+        "includes_host": {
+			"description": "",
+			"type": "boolean"
+		},
+        "rest_frame": {
+			"description": "",
+			"type": "boolean"
+		},
+        "host_nh_corr": {
+			"description": "",
+			"type": "boolean"
+		},
+
+    },
+
+    "anyOf": [
+        { "required": ["source"]},
+        { "required": ["model"]}
+    ],
+
+    "anyOf": [
+        { "required": ["time"]},
+        { "required": ["host"]}
+    ],
+
+    "anyOf": [
+        { "required": ["magnitude"]},
+        { "required": ["flux"]},
+        { "required": ["unabsorbed_flux"]},
+        { "required": ["flux_density"]},
+        { "required": ["count_rate"]},
+        { "required": ["luminosity"]}
+    ],
+
+}
