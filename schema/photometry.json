@@ -9,163 +9,163 @@
 
         "time": {
 			"description": "",
-			"type": "date-time",
+			"type": ["number", "string"],
 			"listable": true,
 			"priority": 10
 		},
 
         "magnitude": {
 			"description": "",
-			"type": "number",
+			"type": ["number", "string"],
 			"priority": 9
 		},
         "flux": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
-        "flux_density": {
+        "fluxdensity": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "count_rate": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "luminosity": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "zero_point": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "upper_limit_sigma": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "energy": {
 			"description": "",
-			"type": "number",
+			"type": ["number", "string"],
 			"listable": true
 		},
         "frequency": {
 			"description": "",
-			"type": "number",
+			"type": ["number", "string"],
 			"listable": true
 		},
         "wavelength": {
 			"description": "",
-			"type": "number",
+			"type": ["number", "string"],
 			"listable": true
 		},
         "nhmw": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "photon_index": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "unabsorbed_flux": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "exposure_time": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "off_axis_angle": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "extraction_radius": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_count_rate": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_flux": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_flux_density": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_luminosity": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_magnitude": {
 			"description": "",
-			"type": "number",
+			"type": ["number", "string"],
 			"priority": 7
 		},
         "e_time": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_unabsorbed_flux": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_lower_unabsorbed_flux": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_upper_unabsorbed_flux": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_lower_count_rate": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_upper_count_rate": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_lower_magnitude": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_upper_magnitude": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_lower_flux": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_upper_flux_density": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_lower_flux_density": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_upper_flux": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_lower_luminosity": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_upper_luminosity": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_lower_time": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
         "e_upper_time": {
 			"description": "",
-			"type": "number"
+			"type": ["number", "string"]
 		},
 
         "model": {
@@ -320,7 +320,7 @@
         "host_nh_corr": {
 			"description": "",
 			"type": "boolean"
-		},
+		}
 
     },
 
@@ -338,9 +338,9 @@
         { "required": ["magnitude"]},
         { "required": ["flux"]},
         { "required": ["unabsorbed_flux"]},
-        { "required": ["flux_density"]},
+        { "required": ["fluxdensity"]},
         { "required": ["count_rate"]},
         { "required": ["luminosity"]}
-    ],
+    ]
 
 }
