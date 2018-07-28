@@ -27,11 +27,17 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 ## To-Do / Questions
 
+- WARNING: some keys don't match up directly, i.e. "FLUX_DENSITY" vs. 'fluxdensity'
+
+- Why are so many `Entry` quantities actually lists without being 'listable'?!
+
 - `source`
     - what are `name` and `reference` for?  Are they needed?
 
 - `quantity`
     - `source` needs a `minLength`
+
+- Handle date-time representations.  Either use custom regex-based parsing or convert everything to json-schema compatible time-specification... or use specialized, new schema
 
 - Need to do some sort of type checking to make sure "string" values representing numbers are convertable to numbers... that or start using numerical values or something.
 
