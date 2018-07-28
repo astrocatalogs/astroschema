@@ -1,6 +1,6 @@
 """
 """
-
+import sys
 # import copy
 import glob
 from collections import OrderedDict
@@ -8,7 +8,6 @@ from collections import OrderedDict
 import json
 import pyastroschema as pas
 import jsonschema
-
 
 # fname = "entry_1.json"
 fname = "entry_2.json"
@@ -58,6 +57,9 @@ print("Done")
 path = "/Users/lzkelley/Research/catalogs/astrocats/astrocats/testcat/output/testcat-output/"
 files = sorted(glob.glob(path + "*.json"))
 for ii, ff in enumerate(files):
+    # if ii != 946:
+    #     continue
+
     print("\n{:4d}: '{}'".format(ii, ff))
     # entry = pas.utils.json_load_file(ff)
     with open(ff, 'r') as inp:
