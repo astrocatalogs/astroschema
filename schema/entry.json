@@ -69,16 +69,19 @@
             "type": "string",
             "unique": false,
             "distinguishing": true,
+            "no_source": true,
             "minLength": 3
         },
         "errors": {
             "description": "Known issues/problems with this Entry or some of its data.",
+            "no_source": true,
             "unique": false,
             "distinguishing": true
         },
 
         "sources": {
             "description": "Bibliographic attributions describing the sources of this Entry's data.",
+            "no_source": true,
             "$ref": "#/definitions/SOURCE_LIST"
         },
         "photometry": {
@@ -114,7 +117,7 @@
             "distinguishing": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
-        "discover_date": {
+        "discoverdate": {
             "description": "",
             "unique": false,
             "distinguishing": true,
@@ -217,25 +220,25 @@
             "replace_better": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
-        "max_abs_mag": {
+        "maxabsmag": {
             "description": "",
             "unique": false,
             "distinguishing": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
-        "max_app_mag": {
+        "maxappmag": {
             "description": "",
             "unique": false,
             "distinguishing": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
-        "max_band": {
+        "maxband": {
             "description": "",
             "unique": false,
             "distinguishing": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
-        "max_date": {
+        "maxdate": {
             "description": "",
             "unique": false,
             "distinguishing": true,
@@ -282,16 +285,16 @@
         "explosion_date": {
             "type": "string"
         },
-        "max_visual_abs_mag": {
+        "maxvisualabsmag": {
             "$ref": "#/definitions/NUMERIC"
         },
-        "max_visual_app_mag": {
+        "maxvisualappmag": {
             "$ref": "#/definitions/NUMERIC"
         },
-        "max_visual_band": {
+        "maxvisualband": {
             "type": "string"
         },
-        "max_visual_date": {
+        "maxvisualdate": {
             "type": "string",
             "replace_better": true
         },
