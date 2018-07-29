@@ -173,3 +173,16 @@ class Keychain(object):
         # cont = (key in [str(kk) for kk in self._keys])
         cont = (key in self._keys)
         return cont
+
+    # @classmethod
+    # def get_key_by_name(cls, name):
+    def get_key_by_name(self, name, create_if_missing=True):
+        try:
+            idx = self.keys().index(name)
+        except ValueError as err:
+            if create_if_missing:
+                return Key(name)
+
+            raise ValueError("`Keychain` does not have a key for '{}'! " + str(err)) from err
+
+        return self._keys[idx]

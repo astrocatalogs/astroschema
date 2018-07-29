@@ -95,6 +95,11 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
         - `PATHS`
             - `test_dir()` [NEW-METHOD]
                 - Return the directory of test json files for specific schema.
+    - `keys.py`
+        - `Keychain`
+            - `get_key_by_name()` [NEW-METHOD]
+                - Based on related method in astrocats.
+                - Get the key in this keychain based no its name.
 
 - `schema/`
     - `photometry.json`
