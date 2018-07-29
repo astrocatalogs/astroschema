@@ -19,7 +19,8 @@
             "description": "Description designation for this source.",
             "type": "string",
             "unique": false,
-            "distinguishing": true
+            "distinguishing": true,
+            "minLength": 3
         },
         "bibcode": {
             "type": "string",
