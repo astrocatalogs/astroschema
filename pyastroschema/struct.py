@@ -239,10 +239,10 @@ class Struct(OrderedDict):
         return jstr
 
     @classmethod
-    def get_keychain(cls):
+    def get_keychain(cls, mutable=False, extendable=False):
         schema = utils.load_schema(cls._SCHEMA_NAME)
         # Create a `Keychain` instance to store the properties described in this schema
-        keychain = keys.Keychain(schema, mutable=False, extendable=False)
+        keychain = keys.Keychain(schema, mutable=mutable, extendable=extendable)
         return keychain
 
 
