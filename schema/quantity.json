@@ -4,28 +4,35 @@
     "description": "An item representing a numerical value.",
     "version": "0.3",
     "type": "object",
+
+    "definitions": {
+        "NUMERIC": {
+            "type": ["number", "string"]
+        }
+    },
+
     "properties": {
         "value": {
             "description": "The numerical value associated with this Quantity.",
-            "type": ["number", "string"],
+            "$ref": "#/definitions/NUMERIC",
             "unique": false,
             "distinguishing": true
         },
         "error_value": {
             "description": "Symmetric, one-sigma error associated with this Quantity's value.",
-            "type": ["number", "string"],
+            "$ref": "#/definitions/NUMERIC",
             "unique": false,
             "distinguishing": true
         },
         "error_upper": {
             "description": "Upper (plus) one-sigma error on this Quantity's value.",
-            "type": ["number", "string"],
+            "$ref": "#/definitions/NUMERIC",
             "unique": false,
             "distinguishing": true
         },
         "error_lower": {
             "description": "Lower (minus) one-sigma error on this Quantity's value.",
-            "type": ["number", "string"],
+            "$ref": "#/definitions/NUMERIC",
             "unique": false,
             "distinguishing": true
         },
@@ -72,10 +79,21 @@
             "minLength": 1
         },
         "source": {
-            "type": ["string", "integer"],
+            "$ref": "#/definitions/NUMERIC",
             "unique": false,
             "distinguishing": false
+        },
+        "prob": {
+            "$ref": "#/definitions/NUMERIC"
+        },
+        "model": {
+            "type": "string",
+            "distinguishing": false
+        },
+        "realization": {
+            "type": "string"
         }
+
     },
 
     "required": ["value", "source"]
