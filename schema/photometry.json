@@ -57,7 +57,7 @@
 			"description": "",
 			"$ref": "#/definitions/NUMERIC"
 		},
-        "count_rate": {
+        "countrate": {
 			"description": "",
 			"$ref": "#/definitions/NUMERIC"
 		},
@@ -92,11 +92,11 @@
 			"description": "",
 			"$ref": "#/definitions/NUMERIC"
 		},
-        "photon_index": {
+        "photonindex": {
 			"description": "",
 			"$ref": "#/definitions/NUMERIC"
 		},
-        "unabsorbed_flux": {
+        "unabsorbedflux": {
 			"description": "",
 			"$ref": "#/definitions/NUMERIC"
 		},
@@ -112,7 +112,7 @@
 			"description": "",
 			"$ref": "#/definitions/NUMERIC"
 		},
-        "e_count_rate": {
+        "e_countrate": {
 			"description": "",
 			"$ref": "#/definitions/NUMERIC"
 		},
@@ -137,15 +137,15 @@
 			"description": "",
 			"$ref": "#/definitions/NUMERIC"
 		},
-        "e_unabsorbed_flux": {
+        "e_unabsorbedflux": {
 			"description": "",
 			"$ref": "#/definitions/NUMERIC"
 		},
-        "e_lower_unabsorbed_flux": {
+        "e_lower_unabsorbedflux": {
 			"description": "",
 			"$ref": "#/definitions/NUMERIC"
 		},
-        "e_upper_unabsorbed_flux": {
+        "e_upper_unabsorbedflux": {
 			"description": "",
 			"$ref": "#/definitions/NUMERIC"
 		},
@@ -248,7 +248,7 @@
 			"type": "string",
 			"distinguishing": false
 		},
-        "band_set": {
+        "bandset": {
 			"description": "",
 			"type": "string"
 		},
@@ -261,7 +261,7 @@
 			"type": "string",
 			"distinguishing": false
 		},
-        "u_count_rate": {
+        "u_countrate": {
 			"description": "",
 			"type": "string"
 		},
@@ -326,12 +326,12 @@
 			"description": "",
 			"type": "boolean"
 		},
-        "upper_limit": {
+        "upperlimit": {
 			"description": "",
 			"type": "boolean",
 			"priority": 6
 		},
-        "lower_limit": {
+        "lowerlimit": {
 			"description": "",
 			"type": "boolean"
 		},
@@ -373,7 +373,7 @@
             "anyOf": [
                 { "required": ["magnitude"]},
                 { "required": ["flux"]},
-                { "required": ["unabsorbed_flux"]},
+                { "required": ["unabsorbedflux"]},
                 { "required": ["fluxdensity"]},
                 { "required": ["count_rate"]},
                 { "required": ["luminosity"]}
