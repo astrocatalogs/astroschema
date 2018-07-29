@@ -1,0 +1,14 @@
+{
+    "time":"50434.0",
+    "filename":"sn1996cb-19961217.flm",
+    "u_fluxes":"erg/s/cm^2/Angstrom",
+    "u_time":"MJD",
+    "u_wavelengths":"Angstrom",
+    "data":[
+        [
+            "3700.0000",
+            "0.78484756"
+        ]
+    ],
+    "source":"1,2"
+}
