@@ -274,8 +274,8 @@
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
 
-        "claimed_type": {
-            "type": "string",
+        "claimedtype": {
+            "$ref": "#/definitions/QUANTITY_LISTABLE",
             "kind_preference": ["spectroscopic", "photometric"],
             "replace_better": true
         },
