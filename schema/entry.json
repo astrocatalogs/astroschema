@@ -6,6 +6,9 @@
     "type": "object",
 
     "definitions": {
+        "NUMERIC": {
+            "type": ["number", "string"]
+        },
         "QUANTITY": {
             "$ref": "file:/Users/lzkelley/Research/catalogs/astroschema/schema/quantity.json"
         },
@@ -51,6 +54,12 @@
             "items": {
                 "$ref": "#/definitions/SPECTRUM"
             }
+        },
+        "DIST_PREF_KINDS": {
+            "kind_preference": ["heliocentric", "cmb", "spectroscopic", "photometric", "host", "cluster"]
+        },
+        "HOST_DIST_PREF_KINDS": {
+            "kind_preference": ["heliocentric", "cmb", "spectroscopic", "photometric", "host", "cluster"]
         }
     },
 
@@ -59,7 +68,8 @@
             "description": "Standard designation for this Entry.",
             "type": "string",
             "unique": false,
-            "distinguishing": true
+            "distinguishing": true,
+            "minLength": 3
         },
         "errors": {
             "description": "Known issues/problems with this Entry or some of its data.",
@@ -94,7 +104,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "kind_preference": true,
+            "$ref": "#/definitions/DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
@@ -171,7 +181,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "kind_preference": true,
+            "$ref": "#/definitions/HOST_DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
@@ -179,7 +189,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "kind_preference": true,
+            "$ref": "#/definitions/HOST_DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
@@ -187,7 +197,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "kind_preference": true,
+            "$ref": "#/definitions/HOST_DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
@@ -195,7 +205,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "kind_preference": true,
+            "$ref": "#/definitions/HOST_DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
@@ -203,7 +213,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "kind_preference": true,
+            "$ref": "#/definitions/DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
@@ -248,7 +258,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "kind_preference": true,
+            "$ref": "#/definitions/DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
@@ -256,10 +266,36 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "kind_preference": true,
+            "$ref": "#/definitions/DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
-        }
+        },
+
+        "claimed_type": {
+            "type": "string",
+            "kind_preference": ["spectroscopic", "photometric"],
+            "replace_better": true
+        },
+        "discovery_date": {
+            "type": "string"
+        },
+        "explosion_date": {
+            "type": "string"
+        },
+        "max_visual_abs_mag": {
+            "$ref": "#/definitions/NUMERIC"
+        },
+        "max_visual_app_mag": {
+            "$ref": "#/definitions/NUMERIC"
+        },
+        "max_visual_band": {
+            "type": "string"
+        },
+        "max_visual_date": {
+            "type": "string",
+            "replace_better": true
+        },
+        "errors": {}
 
     },
 
