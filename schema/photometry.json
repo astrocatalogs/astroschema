@@ -120,7 +120,7 @@
 			"description": "",
 			"$ref": "#/definitions/NUMERIC"
 		},
-        "e_flux_density": {
+        "e_fluxdensity": {
 			"description": "",
 			"$ref": "#/definitions/NUMERIC"
 		},
