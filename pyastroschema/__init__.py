@@ -4,6 +4,8 @@
 __version__ = "0.4.0"
 
 import os
+from jsonschema import ValidationError  # noqa
+
 
 # Basic hard-coded Parameters
 # -------------------------------------
@@ -52,11 +54,6 @@ class PATHS:
         return td
 
 
-# print("Path: pyastroschema: '{}'".format(PATHS.PYASTROSCHEMA))
-# print("Path:   astroschema: '{}'".format(PATHS.ASTROSCHEMA))
-# print("Path:        schema: '{}'".format(PATHS.SCHEMA_DIR))
-
-
 class META_KEYS:
     FNAME = "filename"
     TITLE = "title"
@@ -75,5 +72,4 @@ class SCHEMA_KEYS:
     REQD = "required"
 
 from . import utils  # noqa
-# from . import source  # noqa
 from . import struct  # noqa
