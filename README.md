@@ -87,6 +87,15 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 ### Current
 
+- `pyastroschema`
+    - `validation.py`
+        - `PAS_Validator()` <== `Default_Validator()`
+            - New customized validator that not only sets defaults (as before) but also checks the `"numeric"` 'format' specifier.
+            - Tests added for behavior.
+    - `tests/`
+        - `test_validation.py` [NEW-FILE]
+            - Tests for new `PAS_Validator()` method (and customized class).
+
 
 ### v0.4.0 - 2018-07-30
 

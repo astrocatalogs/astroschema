@@ -1,11 +1,16 @@
 """
 """
 
+# from numbers import Number
+from past.builtins import basestring
+
+from jsonschema import FormatChecker
+# from jsonschema.exceptions import ValidationError
 from jsonschema import validators
 from jsonschema import Draft4Validator as Validator
 
 
-def extend_with_default(validator_class):
+def _extend_with_default(validator_class):
     """Take a given validator and add behavior to set default values if they are given.
 
     See: http://python-jsonschema.readthedocs.io/en/latest/faq/
@@ -24,7 +29,35 @@ def extend_with_default(validator_class):
     return validators.extend(validator_class, {"properties": set_defaults})
 
 
-Validator_Defaults = extend_with_default(Validator)
+_PAS_Validator = _extend_with_default(Validator)
+
+# Create a new format checker instance.
+format_checker = FormatChecker()
+
+
+# Register a new format checker that checks for numerical values of the proper format
+#     NOTE: list of valid numeric values is *not* accepted
+@format_checker.checks('numeric')
+def contains_numeric_value(value):
+    if isinstance(value, list):
+        return False
+
+    if isinstance(value, basestring) and ' ' in value:
+        return False
+
+    try:
+        float(value)
+    except ValueError:
+        return False
+
+    return True
+
+
+# Create a new instance of your custom validator. Add a custom type.
+def PAS_Validator(schema):
+    pas_valid = _PAS_Validator(schema, format_checker=format_checker)
+    return pas_valid
+
 
 '''
 # Example usage:
@@ -34,4 +67,27 @@ schema = {'properties': {'foo': {'default': 'bar'}}}
 # will not work because the metaschema contains `default` directives.
 DefaultValidatingDraft6Validator(schema).validate(obj)
 assert obj == {'foo': 'bar'}
+'''
+
+'''
+# Define custom validators. Each must take exactly 4 arguments as below.
+def is_positive(validator, value, instance, schema):
+    if not isinstance(instance, Number):
+        yield ValidationError("%r is not a number" % (instance))
+
+    if value and instance <= 0:
+        yield ValidationError("%r is not positive integer" % (instance))
+    elif not value and instance > 0:
+        yield ValidationError("%r is not negative integer nor zero" % (instance))
+
+# Add your custom validators among existing ones.
+all_validators = dict(Draft4Validator.VALIDATORS)
+all_validators["is_positive"] = is_positive
+
+# Create a new validator class. It will use your new validators and the schema
+# defined above.
+MyValidator = validators.create(
+    meta_schema=Draft4Validator.META_SCHEMA,
+    validators=all_validators
+)
 '''
