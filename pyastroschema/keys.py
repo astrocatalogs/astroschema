@@ -45,7 +45,6 @@ class Key(str):
         # Use a custom validator that sets default values
         validator = validation.Validator_Defaults(self.__key_schema)
         validator.validate(self.__dict__)
-        # jsonschema.validate(self.__dict__, schema)
         return
 
     def equals(self, other, identical=False):
