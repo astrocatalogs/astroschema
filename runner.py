@@ -9,6 +9,63 @@ import json
 import pyastroschema as pas
 import jsonschema
 
+from nose.tools import assert_true, assert_raises, assert_false
+
+
+'''
+schema = {
+    "anyOf": [
+        {
+            "type": ["number", "string"],
+            "format": "numeric"
+        },
+        {
+            "type": "array",
+            "items": {
+                "type": ["number", "string"],
+                "format": "numeric"
+            }
+        }
+    ]
+
+}
+
+validator = jsonschema.validators.validator_for(schema)
+validator.check_schema(schema)
+
+pas_valid = pas.validation.PAS_Validator(schema)
+pas_valid.validate(2.234)
+pas_valid.validate("2.234")
+pas_valid.validate("2.23e4")
+pas_valid.validate("-2.23e4")
+
+pas_valid.validate([2.234, 12.32])
+pas_valid.validate(["2.234", "-9e12"])
+pas_valid.validate([23.23e2, "-9e12"])
+
+with assert_raises(pas.ValidationError):
+    pas_valid.validate(" 2.234")
+
+with assert_raises(pas.ValidationError):
+    pas_valid.validate([12, " 2.234"])
+
+with assert_raises(pas.ValidationError):
+    pas_valid.validate([12, "2.234", "hello"])
+
+with assert_raises(pas.ValidationError):
+    pas_valid.validate("2.234 ")
+
+with assert_raises(pas.ValidationError):
+    pas_valid.validate("2p234")
+
+with assert_raises(pas.ValidationError):
+    pas_valid.validate("h")
+
+sys.exit(0)
+'''
+
+
+
 # fname = "entry_1.json"
 # fname = "entry.json"
 fname = "photometry.json"
