@@ -27,6 +27,8 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 ## To-Do / Questions
 
+- Add some sort of `numeric` tag, and add checking of number-convertibility to a custom validator
+
 - WARNING: some keys don't match up directly, i.e. "FLUX_DENSITY" vs. 'fluxdensity'.  In cases where this has caused errors I've used the version corresponding to json-file values (e.g. 'fluxdensity' is the way its used in json, so I stick with that), and create an extra keychain attribute in the appropriate `astrocats` class (e.g. in `astrocats.catalog.photometry` I add `PHOTOMETRY.FLUX_DENSITY = PHOTOMETRY.FLUXDENSITY` for the time being.
 
 - Instead of `u_` and `e_` attributes, make `quantity` subclasses that require (or have) associated units and/or errors...
