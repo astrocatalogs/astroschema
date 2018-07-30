@@ -3,8 +3,6 @@
 
 import os
 
-# import jsonschema
-
 from . import SCHEMA_KEYS, PATHS
 from . import utils, validation
 
@@ -40,33 +38,6 @@ class Key(str):
 
         rv = "'{}': ({})".format(str(self), ", ".join(prop_list))
         return rv
-
-    '''
-    def __eq__(self, other):
-        """Use the `str` and `repr` methods to check equality between `Keys`.
-        """
-        if str(self) != str(other):
-            return False
-
-        if repr(self) != repr(other):
-            return False
-
-        return True
-
-    def __ne__(self, other):
-        """Uses the `eq` method to check for inequality.
-        """
-        return not(self.__eq__)
-    '''
-
-    '''
-    def __hash__(self):
-        """Use the `str` representation of this instance as the hash argument.
-
-        Required as `eq` method as been overriden.
-        """
-        return hash(str(self))
-    '''
 
     def validate(self):
         """Check for consistency between the stored parameters and schema.
@@ -174,8 +145,6 @@ class Keychain(object):
         cont = (key in self._keys)
         return cont
 
-    # @classmethod
-    # def get_key_by_name(cls, name):
     def get_key_by_name(self, name, create_if_missing=True):
         try:
             idx = self.keys().index(name)
