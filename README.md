@@ -87,11 +87,19 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 ### Current
 
+
+### v0.4.0 - 2018-07-30
+
+- FIX: Numerous aspects of the structure schema changed (e.g. variable names, new parameters) for consistency with `astrocats`.  This is temporary.  These should all be restored back / removed later.
+
 - `pyastroschema`
     - `tests/`
         - `test_photometry.py` [NEW-FILE]
             - Unittests for the 'photometry' schema and class.
             - Include tests for some of the complex 'dependencies' and requirements in the schema.
+        - `test_spectrum.py` [NEW-FILE]
+            - Unittests for the 'spectrum' schema and class.
+            - Include tests for some of the complex dependencies and requirements in the schema.
 
     - `__init__.py`
         - `PATHS`
@@ -102,10 +110,27 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
             - `get_key_by_name()` [NEW-METHOD]
                 - Based on related method in astrocats.
                 - Get the key in this keychain based no its name.
+    - `struct.py`
+        - `Struct`
+            - `get_keychain()`
+                - Allow `mutable` and `extendable` arguments to be passed through this method.
+        - `Photometry` [NEW-CLASS]
+            - New subclass of `Struct` with associated `photometry.json` schema.
+        - `Spectrum` [NEW-CLASS]
+            - New subclass of `Struct` with associated `spectrum.json` schema.
+        - `Entry` [NEW-CLASS]
+            - New subclass of `Struct` with associated `entry.json` schema.
 
 - `schema/`
     - `photometry.json`
         - Added dependencies which were coded manually into `astrocats` `Photometry` class, for example requiring frequency, band or energy when flux is included.
+    - `entry.json`
+        - FIX: temporary addition of '...PREF_KINDS' parameters for `astrocats` consistency.
+    - `key.json`
+        - FIX: temporary changes for `astrocats` compatibility.
+    - `spectrum.json`
+        - BUG: fixed some incorrect requirements logic.
+        - Added more complex requirements/dependencies logic that was hardcoded into `astrocats` `Spectrum` class.
 
 
 ### v0.3.0 - 2018-07-28
