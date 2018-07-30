@@ -33,7 +33,7 @@ class Key(str):
         prop_names = self.schema['properties'].keys()
         prop_list = []
         for pn in prop_names:
-            if hasattr(self, pn):
+            if hasattr(self, pn) and not callable(getattr(self, pn)):
                 prop_list.append("{}: '{}'".format(pn, getattr(self, pn)))
 
         rv = "'{}': ({})".format(str(self), ", ".join(prop_list))
@@ -43,13 +43,15 @@ class Key(str):
         """Check for consistency between the stored parameters and schema.
         """
         # Use a custom validator that sets default values
-        validator = validation.Validator_Defaults(self.__key_schema)
+        validator = validation.PAS_Validator(self.__key_schema)
         validator.validate(self.__dict__)
         return
 
     def equals(self, other, identical=False):
         """Use the `str` and `repr` methods to check equality between `Keys`.
         """
+        print("`Key.equals()`: \n\t'{}',\n\t'{}',\n\t'{}',\n\t'{}'".format(
+            repr(self), repr(other), str(self), str(other)))
         if identical:
             if repr(self) == repr(other):
                 return True
