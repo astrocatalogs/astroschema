@@ -7,8 +7,7 @@ from collections import OrderedDict
 
 import jsonschema
 
-from . import utils
-from . import keys
+from . import utils, keys, validation
 
 VERBOSE = False
 
@@ -55,6 +54,10 @@ class Struct(OrderedDict):
         # Validate the schema itself
         validator = jsonschema.validators.validator_for(schema)
         validator.check_schema(schema)
+
+        # Load custom validator
+        # NOTE: FIX this should be a class attribute or something...
+        self._validator = validation.PAS_Validator(schema)
 
         # Create a `Keychain` instance to store the properties described in this schema
         keychain = keys.Keychain(schema, mutable=False, extendable=False)
@@ -136,7 +139,8 @@ class Struct(OrderedDict):
     def validate(self):
         """Check for consistency between the stored parameters and schema.
         """
-        jsonschema.validate(self, self._schema)
+        # jsonschema.validate(self, self._schema)
+        self._validator.validate(self)
         return
 
     def is_duplicate_of(self, other, ignore_case=True, verbose=None):
