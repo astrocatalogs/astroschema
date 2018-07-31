@@ -27,6 +27,8 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 ## To-Do / Questions
 
+- Currently `Quantity/value` is any-type (at least to accomodate aliases, perhaps other uses?), but should this be changed to numeric?
+
 - Add some sort of `numeric` tag, and add checking of number-convertibility to a custom validator
 
 - Revise 'time' type/format checking...  Dont forget edge cases of months-only and BC.
@@ -108,6 +110,10 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
         - `PAS_Validator()` <== `Default_Validator()`
             - New customized validator that not only sets defaults (as before) but also checks the `"numeric"` 'format' specifier.
             - Tests added for behavior.
+
+- `schema`
+    - `quantity.json`
+        - FIX: Changed `value` from being numeric to being any-type.  This is to accommodate 'alias' values in `astrocats`... not sure if this should remain or be changed.
 
 
 ### v0.4.0 - 2018-07-30
