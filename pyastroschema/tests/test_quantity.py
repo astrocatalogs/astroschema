@@ -58,8 +58,13 @@ NAW_QUANT_4 = dict(
     source=0
 )
 
+NAW_QUANT_5 = dict(
+    value="hello",
+    source="0"
+)
+
 YES_QUANTS = [YES_QUANT_0, YES_QUANT_1, YES_QUANT_2]
-NAW_QUANTS = [NAW_QUANT_0, NAW_QUANT_1, NAW_QUANT_2, NAW_QUANT_3, NAW_QUANT_4]
+NAW_QUANTS = [NAW_QUANT_0, NAW_QUANT_1, NAW_QUANT_2, NAW_QUANT_3, NAW_QUANT_4, NAW_QUANT_5]
 
 
 def test_basics():
