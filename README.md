@@ -113,7 +113,8 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 - `schema`
     - `quantity.json`
-        - FIX: Changed `value` from being numeric to being any-type.  This is to accommodate 'alias' values in `astrocats`... not sure if this should remain or be changed.
+        - BUG, FIX: Changed `value` from being numeric to being any-type.  This is to accommodate 'alias' values in `astrocats`... not sure if this should remain or be changed.
+        - BUG, FIX: Changed `source` from being numeric to being any-type.  This is to accommodate strings like `"1,3,4"` currently used in astrocats.  This should be fixed in the future.
 
 
 ### v0.4.0 - 2018-07-30

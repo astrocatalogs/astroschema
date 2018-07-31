@@ -79,7 +79,7 @@
             "minLength": 1
         },
         "source": {
-            "$ref": "#/definitions/NUMERIC",
+            "type": ["string", "number"],
             "unique": false,
             "distinguishing": false
         },
