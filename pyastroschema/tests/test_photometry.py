@@ -13,7 +13,7 @@ import copy
 
 import jsonschema
 
-from nose.tools import assert_true, assert_raises, assert_false  # , assert_equal,
+from nose.tools import assert_true, assert_raises, assert_false
 
 import pyastroschema as pas
 from pyastroschema.struct import Photometry
@@ -21,7 +21,7 @@ from pyastroschema.struct import Photometry
 # Good
 # -----------------
 YES_0 = dict(
-    time="Tuesday",
+    time="12312412.23",
     magnitude=3.14,
     source="0"
 )

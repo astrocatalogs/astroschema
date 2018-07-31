@@ -89,6 +89,8 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 ### Current
 
+- Add new 'format' schema specifications including 'numeric' and 'astrotime'.
+
 - `pyastroschema`
     - `tests/`
         - `test_validation.py` [NEW-FILE]

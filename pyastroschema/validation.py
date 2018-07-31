@@ -36,7 +36,7 @@ format_checker = FormatChecker()
 
 
 # Register a new format checker that checks for numerical values of the proper format
-#     NOTE: list of valid numeric values is *not* accepted
+#     NOTE: list of valid numeric values is *not* accepted, must be specified in schema
 @format_checker.checks('numeric')
 def contains_numeric_value(value):
     if isinstance(value, list):
@@ -48,6 +48,19 @@ def contains_numeric_value(value):
     try:
         float(value)
     except ValueError:
+        return False
+
+    return True
+
+
+# Register a new format checker that checks for numerical values of the proper format
+#     NOTE: list of valid numeric values is *not* accepted, must be specified in schema
+@format_checker.checks('astrotime')
+def is_astrotime_compatible(value):
+    if isinstance(value, list):
+        return False
+
+    if (not contains_numeric_value(value)) and (('-' not in value) and ('/' not in value)):
         return False
 
     return True
