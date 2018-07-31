@@ -50,8 +50,8 @@ class Key(str):
     def equals(self, other, identical=False):
         """Use the `str` and `repr` methods to check equality between `Keys`.
         """
-        print("`Key.equals()`: \n\t'{}',\n\t'{}',\n\t'{}',\n\t'{}'".format(
-            repr(self), repr(other), str(self), str(other)))
+        # print("`Key.equals()`: \n\t'{}',\n\t'{}',\n\t'{}',\n\t'{}'".format(
+        #     repr(self), repr(other), str(self), str(other)))
         if identical:
             if repr(self) == repr(other):
                 return True
