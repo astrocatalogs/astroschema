@@ -25,11 +25,16 @@ class Key(str):
 
         # Validate
         self.validate()
+        self._repr = repr(self)
         # Other code depends on the `str` representation being equal to the name, check that here
         assert str(self) == name, "self does not match `name`!"
+        self._immutable = True
         return
 
     def __repr__(self):
+        if hasattr(self, '_repr'):
+            return self._repr
+
         prop_names = self.schema['properties'].keys()
         prop_list = []
         for pn in prop_names:
@@ -38,6 +43,11 @@ class Key(str):
 
         rv = "'{}': ({})".format(str(self), ", ".join(prop_list))
         return rv
+
+    def __setattr__(self, name, value):
+        if hasattr(self, '_immutable'):
+            raise AttributeError("Once `Key` is constructed, it is immutable!")
+        return super(Key, self).__setattr__(name, value)
 
     def validate(self):
         """Check for consistency between the stored parameters and schema.

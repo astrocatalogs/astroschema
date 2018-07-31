@@ -100,6 +100,9 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
     - `keys.py`
         - `Key`
+            - Changed `Key` instances to be immutable.  Once they are created their attributes cannot be changed.
+            - `__repr__()`
+                - Cache the result of `repr` on initialization to save time.  Depends on `Key` being immutable.
             - `equals()`
                 - BUG: in comparison, built-in methods could be compared which would fail, e.g. `format` method of str.
     - `struct.py`
