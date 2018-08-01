@@ -14,7 +14,13 @@ def load_schema_index():
 
 
 def load_schema(sname):
+    """
 
+    Returns
+    -------
+    schema : odict
+
+    """
     if os.path.exists(sname):
         schema = json_load_file(sname)
         return schema
@@ -22,7 +28,7 @@ def load_schema(sname):
     index = load_schema_index()
     index = index[META_KEYS.INDEX]
     if sname not in index.keys():
-        err = "Schema name '{}' not found in index!".format(sname)
+        err = "Schema '{}' does not exist as a file, and is not found in the index!".format(sname)
         raise ValueError(err)
 
     # Load the meta-data for this particular schema
@@ -34,8 +40,7 @@ def load_schema(sname):
     schema = json_load_file(schema_fname)
     title = schema['title']
     if title != sname:
-        err = "Loaded schema title mismatch!  Target: '{}', Loaded: '{}'".format(
-            sname, title)
+        err = "Loaded schema title mismatch!  Target: '{}', Loaded: '{}'".format(sname, title)
         raise ValueError(err)
 
     return schema
@@ -128,3 +133,40 @@ def get_relative_path(path, relative_to):
     common_path = os.path.join(os.path.commonpath([path, relative_to]), '')
     relpath = path.split(common_path)[-1]
     return relpath
+
+
+def get_schema_odict(schema):
+    """Make sure the given schema is an `odict`.
+
+    If it is a filename (str) load the schema odict.
+
+    """
+
+    # Load the schema for this type of structure
+    if isinstance(schema, dict):
+        pass
+    elif isinstance(schema, str):
+        schema = load_schema(schema)
+    else:
+        err = "Unrecognized `schema` type '{}': '{}'".format(type(schema), schema)
+        raise ValueError(err)
+
+    return schema
+
+
+def get_list_of_schema(schema):
+    """Make sure the given schema is a list of `odict`.
+    """
+
+    if isinstance(schema, dict):
+        schema_list = [schema]
+    elif isinstance(schema, str):
+        schema_list = [schema]
+    elif isinstance(schema, list):
+        schema_list = schema
+    else:
+        err = "`schema` type '{}' not allowed!".format(type(schema))
+        raise ValueError(err)
+
+    schema_list = [get_schema_odict(sch) for sch in schema_list]
+    return schema_list

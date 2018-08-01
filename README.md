@@ -129,6 +129,8 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
         - `test_photometry.py` [NEW-FILE]
             - Unittests for the 'photometry' schema and class.
             - Include tests for some of the complex 'dependencies' and requirements in the schema.
+        - `test_schemadict.py` [NEW-FILE]
+            - Basic construction unittests for the new `SchemaDict` class.
         - `test_spectrum.py` [NEW-FILE]
             - Unittests for the 'spectrum' schema and class.
             - Include tests for some of the complex dependencies and requirements in the schema.
@@ -142,6 +144,13 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
             - `get_key_by_name()` [NEW-METHOD]
                 - Based on related method in astrocats.
                 - Get the key in this keychain based no its name.
+    - `schema.py`
+        - `JSONOrderedDict` [NEW-CLASS]
+            - This wrapper around an `OrderedDict` class to add some json methods (e.g. loading/saving to/from strings)
+            - `extend()` [NEW-FUNCTION]
+                - Function that will add the elements from a second `dict` into the first, without overwriting existing parameters (like `update()` does).
+        - `SchemaDict` [NEW-CLASS]
+            - Subclass of `JSONOrderedDict` designed to contain schema.  Adds validation methods.  Can be initialized from numerous schema, in which case `extend()` is used to combine them.
     - `struct.py`
         - `Struct`
             - `get_keychain()`
@@ -152,6 +161,11 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
             - New subclass of `Struct` with associated `spectrum.json` schema.
         - `Entry` [NEW-CLASS]
             - New subclass of `Struct` with associated `entry.json` schema.
+    - `utils.py`
+        - `get_schema_odict()` [NEW-FUNCTION
+            - Function that will return an `OrderedDict` given a filename, indexed schema-name, or odict.
+        - `get_list_of_schema()` [NEW-FUNCTION]
+            - Returns a list of odict schema given one or more specified by filename, str, or odict.
 
 - `schema/`
     - `photometry.json`
