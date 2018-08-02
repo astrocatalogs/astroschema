@@ -36,6 +36,11 @@ YES_QUANT_2 = dict(
     source=0
 )
 
+YES_QUANT_3 = dict(
+    value="hello",
+    source="0"
+)
+
 NAW_QUANT_0 = dict(
     value=3.14
 )
@@ -58,13 +63,8 @@ NAW_QUANT_4 = dict(
     source=0
 )
 
-NAW_QUANT_5 = dict(
-    value="hello",
-    source="0"
-)
-
-YES_QUANTS = [YES_QUANT_0, YES_QUANT_1, YES_QUANT_2]
-NAW_QUANTS = [NAW_QUANT_0, NAW_QUANT_1, NAW_QUANT_2, NAW_QUANT_3, NAW_QUANT_4, NAW_QUANT_5]
+YES_QUANTS = [YES_QUANT_0, YES_QUANT_1, YES_QUANT_2, YES_QUANT_3]
+NAW_QUANTS = [NAW_QUANT_0, NAW_QUANT_1, NAW_QUANT_2, NAW_QUANT_3, NAW_QUANT_4]
 
 
 def test_basics():
@@ -84,7 +84,7 @@ def test_basics():
             print("\t", quant)
 
     quant = Quantity(**YES_QUANT_0)
-    keys = quant._keychain
+    keys = quant.keychain
     assert_true(quant['value'] == YES_QUANT_0['value'])
     assert_true(quant['source'] == YES_QUANT_0['source'])
 

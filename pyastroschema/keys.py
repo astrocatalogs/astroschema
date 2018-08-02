@@ -3,8 +3,8 @@
 
 import os
 
-from . import SCHEMA_KEYS, PATHS
-from . import utils, validation
+from . import PATHS
+from . import utils, validation, schema
 
 
 class Key(str):
@@ -84,7 +84,7 @@ class Keychain(object):
 
     _USE_UPPER_CASE = True
 
-    def __init__(self, schema, mutable=False, extendable=True):
+    def __init__(self, schema_source, mutable=False, extendable=True):
         """Initialize this `Keys` object using properties from given schema as keys.
 
         Arguments
@@ -99,7 +99,12 @@ class Keychain(object):
             This setting does not affect whether existing key-value pairs can be modified.
 
         """
-        props = schema[SCHEMA_KEYS.PROPS]
+        if isinstance(schema_source, schema.SchemaDict):
+            schema_dict = schema_source
+        else:
+            schema_dict = schema.SchemaDict(schema_source)
+
+        props = schema_dict.properties
 
         # Store all of the property names to this object
         for prop_name, prop_vals in props.items():
@@ -107,7 +112,9 @@ class Keychain(object):
             _key = Key(prop_name, **prop_vals)
             setattr(self, use_name, _key)
 
-        # This must be set after changed are made, so that 'False' values will not lead to error
+        self._schema = schema_dict
+
+        # These must be set after changed are made, so that 'False' values will not lead to error
         self._mutable = mutable
         self._extendable = extendable
         return

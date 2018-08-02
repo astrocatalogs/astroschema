@@ -45,6 +45,8 @@ class SchemaDict(JSONOrderedDict):
             for sch in schema_list[1:]:
                 self.extend(sch, check_conflict=True)
 
+        self.finalize()
+
         self._validator = None
         self._changed = True
 
@@ -55,6 +57,15 @@ class SchemaDict(JSONOrderedDict):
     def __set__(self, key, val):
         self._changed = True
         return super(SchemaDict).__set__(key, val)
+
+    @classmethod
+    def to_SchemaDict(cls, data):
+        # If object is already a `SchemaDict`, return it
+        if isinstance(data, cls):
+            return data
+
+        # Otherwise, create a new `SchemaDict`
+        return cls(data)
 
     @property
     def properties(self):
@@ -76,6 +87,9 @@ class SchemaDict(JSONOrderedDict):
             self._validator.validate(data)
 
         return
+
+    def finalize(self):
+        pass
 
 
 def _extend(aa, bb, copy_type='deep', check_conflict=False):

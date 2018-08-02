@@ -74,15 +74,14 @@ def test_bad():
             quant = Spectrum(**qkw)
             print("\t", quant)
 
-    # Shopuld not allow unknown quantities
+    # Requires 'u_flux'
     test = dict(
-        time="Tuesday",
+        time="213.123123",
         flux=3.14,
         source="0",
-        hello="goodbye"
     )
 
-    with assert_raises(RuntimeError):
+    with assert_raises(jsonschema.ValidationError):
         quant = Spectrum(**test)
 
     return

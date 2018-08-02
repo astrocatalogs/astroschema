@@ -92,9 +92,16 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 ### Current
 
 - Add new 'format' schema specifications including 'numeric' and 'astrotime'.
+- New `SchemaDict` class that stores schema specifications in `Struct` classes.  Provides internal validation method.
+    - NOTE: `SchemaDict` has *not* been integrated into the `Key` class yet, but it is stored to each `Keychain`.
+- `Struct` subclasses have been upgraded to use protected class-attributes (i.e. shared) to store schema information.  A wrapper (`struct.set_struct_schema()`) and class factor method (`struct.Struct.construct()`) have been added to provide a customization API for derived classes.
 
 - `pyastroschema`
     - `tests/`
+        - `test_schemadict.py` [NEW-FILE]
+            - Basic construction unittests for the new `SchemaDict` class.
+        - `test_struct.py` [NEW-FILE]
+            - Basic tests for `Struct` class, specifically making sure that subclass works as expected, and with new `SchemaDict` class.
         - `test_validation.py` [NEW-FILE]
             - Tests for new `PAS_Validator()` method (and customized class).
 
@@ -105,10 +112,28 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
                 - Cache the result of `repr` on initialization to save time.  Depends on `Key` being immutable.
             - `equals()`
                 - BUG: in comparison, built-in methods could be compared which would fail, e.g. `format` method of str.
+    - `schema.py`
+        - `JSONOrderedDict` [NEW-CLASS]
+            - This wrapper around an `OrderedDict` class to add some json methods (e.g. loading/saving to/from strings)
+            - `extend()` [NEW-FUNCTION]
+                - Function that will add the elements from a second `dict` into the first, without overwriting existing parameters (like `update()` does).
+        - `SchemaDict` [NEW-CLASS]
+            - Subclass of `JSONOrderedDict` designed to contain schema.  Adds validation methods.  Can be initialized from numerous schema, in which case `extend()` is used to combine them.
     - `struct.py`
+        - All of the derived structures (subclasses of `Struct`) now use the decorator instead of subclassing with `Meta_Struct`.
         - `Struct`
+            - Added `keychain`, `schema` and `extendable` as protected `property` values.
+            - Changed to inherits from `schema.JSONOrderedDict` to get the nice json-based import/export methods.
+            - `construct()` [NEW-METHOD]
+                - Factory method which uses `struct.set_struct_schema` to create a custom sub-class of `Struct` for later instantiation.
+            - `get_keychain()` [REMOVED]
+                - Deprecated in favor of `keychain` `property`.
+            - `to_json()` [REMOVED]
+                - Deprecated in favor of inherited `JSONOrderedDict` methods.
             - `validate()`
-                - BUG: custom validator wasnt being used.
+                - BUG: custom validator wasnt being used.  Now calls internal `SchemaDict` for validation.
+        - `Meta_Struct` [REMOVED]
+            - Deprecated in favor of new subclassing procedures.
     - `validation.py`
         - `PAS_Validator()` <== `Default_Validator()`
             - New customized validator that not only sets defaults (as before) but also checks the `"numeric"` 'format' specifier.
@@ -129,8 +154,6 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
         - `test_photometry.py` [NEW-FILE]
             - Unittests for the 'photometry' schema and class.
             - Include tests for some of the complex 'dependencies' and requirements in the schema.
-        - `test_schemadict.py` [NEW-FILE]
-            - Basic construction unittests for the new `SchemaDict` class.
         - `test_spectrum.py` [NEW-FILE]
             - Unittests for the 'spectrum' schema and class.
             - Include tests for some of the complex dependencies and requirements in the schema.
@@ -144,13 +167,6 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
             - `get_key_by_name()` [NEW-METHOD]
                 - Based on related method in astrocats.
                 - Get the key in this keychain based no its name.
-    - `schema.py`
-        - `JSONOrderedDict` [NEW-CLASS]
-            - This wrapper around an `OrderedDict` class to add some json methods (e.g. loading/saving to/from strings)
-            - `extend()` [NEW-FUNCTION]
-                - Function that will add the elements from a second `dict` into the first, without overwriting existing parameters (like `update()` does).
-        - `SchemaDict` [NEW-CLASS]
-            - Subclass of `JSONOrderedDict` designed to contain schema.  Adds validation methods.  Can be initialized from numerous schema, in which case `extend()` is used to combine them.
     - `struct.py`
         - `Struct`
             - `get_keychain()`

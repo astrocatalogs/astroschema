@@ -1,22 +1,41 @@
 """Eventually this will be generalized from 'source' specifically to any 'struct'.
 """
 
-import os
 from copy import deepcopy
-from collections import OrderedDict
 
-import jsonschema
-
-from . import utils, keys, validation
+from . import keys, schema
 
 VERBOSE = False
 
+EXTENDABLE = True
 
-class Struct(OrderedDict):
 
-    def __init__(self, schema, *args,
-                 parent=None, extendable=False, validate=True,
-                 **kwargs):
+def set_struct_schema(schema_source, extendable=None,
+                      extensions=[], updates=[], schema_class=schema.SchemaDict):
+    if extendable is None:
+        extendable = EXTENDABLE
+
+    def wrapper(cls):
+        schema_dict = schema_class(schema_source)
+        for ext in extensions:
+            schema_dict.extend(ext, check_conflict=True)
+        for upd in updates:
+            schema_dict.update(upd)
+        cls._SCHEMA = schema_dict
+        cls._KEYCHAIN = keys.Keychain(schema_dict, mutable=False, extendable=extendable)
+        cls._extendable = extendable
+        return cls
+
+    return wrapper
+
+
+class Struct(schema.JSONOrderedDict):
+
+    # __SCHEMA = None
+    # __KEYCHAIN = None
+    # __extendable = True
+
+    def __init__(self, *args, parent=None, validate=True, **kwargs):
         """Initialize with parameters based on the associated schema.
 
         Arguments
@@ -42,32 +61,15 @@ class Struct(OrderedDict):
             err = "Only `kwargs` are allowed in initialization, no additional `args`!"
             raise RuntimeError(err)
 
-        # Load the schema for this type of structure
-        if isinstance(schema, dict):
-            pass
-        elif isinstance(schema, str):
-            schema = utils.load_schema(schema)
-        else:
-            err = "Unrecognized `schema` type '{}': '{}'".format(type(schema), schema)
-            raise ValueError(err)
+        _schema = getattr(self, "_SCHEMA", None)
+        if (_schema is None) or (not isinstance(_schema, schema.SchemaDict)):
+            raise ValueError("`_SCHEMA` is a required attribute and must be a `SchemaDict`!")
 
-        # Validate the schema itself
-        validator = jsonschema.validators.validator_for(schema)
-        validator.check_schema(schema)
+        _keychain = getattr(self, "_KEYCHAIN", None)
+        if (_keychain is None) or (not isinstance(_keychain, keys.Keychain)):
+            raise ValueError("`_KEYCHAIN` is a required attribute and must be a `Keychain`!")
 
-        # Load custom validator
-        # NOTE: FIX this should be a class attribute or something...
-        self._validator = validation.PAS_Validator(schema)
-
-        # Create a `Keychain` instance to store the properties described in this schema
-        keychain = keys.Keychain(schema, mutable=False, extendable=False)
-
-        self._schema = schema
-        self._keychain = keychain
-        self._extendable = extendable
-        # NOTE: Reconsider having parent... is it still needed?
         self._parent = parent
-        self.get_keychain = self._get_keychain_inst
 
         # Store parameters passed during initialization
         # NOTE: this is fine for `source`, but perhaps this should be a deepcopy for other objects?
@@ -88,7 +90,7 @@ class Struct(OrderedDict):
 
         """
         # name = Struct._parse_keyname(name)
-        if (not self._extendable) and (name not in self._keychain):
+        if (not self.extendable) and (name not in self.keychain):
             err = "'{}' not in `keychain`, and not extendable!".format(name)
             raise RuntimeError(err)
 
@@ -125,22 +127,31 @@ class Struct(OrderedDict):
 
         return result
 
-    '''
-    def __contains__(self, key):
-        """Compare the given `str` with the `str` representation of each internal `Key`.
-        """
-        cont = (key in [str(kk) for kk in self._keys])
-        return cont
-    '''
+    @classmethod
+    def construct(cls, schema_source, **kwargs):
+        struct_class = set_struct_schema(schema_source, **kwargs)(Struct)
+        return struct_class
 
-    def _get_keychain_inst(self):
-        return self._keychain
+    @property
+    def keychain(self):
+        return self._KEYCHAIN
+
+    @property
+    def schema(self):
+        return self._SCHEMA
+
+    @property
+    def extendable(self):
+        return self._extendable
 
     def validate(self):
         """Check for consistency between the stored parameters and schema.
         """
         # jsonschema.validate(self, self._schema)
-        self._validator.validate(self)
+        # self._validator.validate(self)
+
+        # Use the validator in the stored `SchemaDict` instance to validate `self`
+        self.schema.validate(self)
         return
 
     def is_duplicate_of(self, other, ignore_case=True, verbose=None):
@@ -167,8 +178,8 @@ class Struct(OrderedDict):
 
         DEFAULT_BEHAVIOR = True
 
-        s_keys = self._keychain.keys()
-        o_keys = other._keychain.keys()
+        s_keys = self.keychain.keys()
+        o_keys = other.keychain.keys()
         keys = set(s_keys + o_keys)
         # NOTE: speed-up comparison by getting 'uniqe'-specific list
         #    perhaps also specific list for `Key`s that are set
@@ -176,10 +187,9 @@ class Struct(OrderedDict):
             if verbose:
                 print("key: '{}'".format(ky))
             # note: this may produce error if a key-chain mismatch occurs... not sure if possible
-            s_key = getattr(self._keychain, ky.upper())
-            o_key = getattr(other._keychain, ky.upper())
+            s_key = getattr(self.keychain, ky.upper())
+            o_key = getattr(other.keychain, ky.upper())
             # Make sure the two versions of this key are identical
-            # if s_key != o_key:
             if not s_key.equals(o_key, identical=True):
                 if verbose:
                     print("key mismatch!")
@@ -238,51 +248,28 @@ class Struct(OrderedDict):
 
         return DEFAULT_BEHAVIOR
 
-    def to_json(self):
-        jstr = utils.json_dump_str(self)
-        return jstr
 
-    @classmethod
-    def get_keychain(cls, mutable=False, extendable=False):
-        schema = utils.load_schema(cls._SCHEMA_NAME)
-        # Create a `Keychain` instance to store the properties described in this schema
-        keychain = keys.Keychain(schema, mutable=mutable, extendable=extendable)
-        return keychain
+# Source = Struct.construct("source")
+@set_struct_schema("source")
+class Source(Struct):
+    pass
 
 
-class Meta_Struct(Struct):
-
-    _SCHEMA_NAME = None
-
-    def __new__(cls, *args, **kwargs):
-        struct = super(Meta_Struct, cls).__new__(cls)
-        return struct
-
-    def __init__(self, *args, **kwargs):
-        super(Meta_Struct, self).__init__(self._SCHEMA_NAME, *args, **kwargs)
-        return
+@set_struct_schema("quantity")
+class Quantity(Struct):
+    pass
 
 
-class Source(Meta_Struct):
-
-    _SCHEMA_NAME = "source"
-
-
-class Quantity(Meta_Struct):
-
-    _SCHEMA_NAME = "quantity"
+@set_struct_schema("photometry")
+class Photometry(Struct):
+    pass
 
 
-class Photometry(Meta_Struct):
-
-    _SCHEMA_NAME = "photometry"
-
-
-class Spectrum(Meta_Struct):
-
-    _SCHEMA_NAME = "spectrum"
+@set_struct_schema("spectrum")
+class Spectrum(Struct):
+    pass
 
 
-class Entry(Meta_Struct):
-
-    _SCHEMA_NAME = "entry"
+@set_struct_schema("entry")
+class Entry(Struct):
+    pass

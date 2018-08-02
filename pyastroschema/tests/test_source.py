@@ -28,7 +28,7 @@ def test_basics():
     # Should work with alias and arxivid
     source = Source(**SIMPLEST_SOURCE)
 
-    keys = source._keychain
+    keys = source.keychain
     assert_true(source['alias'] == SIMPLEST_SOURCE['alias'])
     assert_true(source['arxivid'] == SIMPLEST_SOURCE['arxivid'])
     print('alias' in source)
@@ -76,7 +76,7 @@ def test_validation():
         assert_true(source[kk] == vv)
 
     # Should fail with deleted alias
-    keys = source._keychain
+    keys = source.keychain
     del source[keys.ALIAS]
     with assert_raises(jsonschema.exceptions.ValidationError):
         source.validate()

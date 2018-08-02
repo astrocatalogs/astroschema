@@ -34,12 +34,12 @@ NAW_0 = dict(
 )
 
 NAW_1 = dict(
-    time="Tuesday",
+    time="2018-01-01",
     source="0"
 )
 
 NAW_2 = dict(
-    time="Tuesday",
+    time="2018-01-01",
     flux=3.14
 )
 
@@ -69,15 +69,15 @@ def test_bad():
             quant = Photometry(**qkw)
             print("\t", quant)
 
-    # Shopuld not allow unknown quantities
+    # `u_flux` is required
     test = dict(
-        time="Tuesday",
+        time="2018-01-01",
         flux=3.14,
         source="0",
         hello="goodbye"
     )
 
-    with assert_raises(RuntimeError):
+    with assert_raises(jsonschema.ValidationError):
         quant = Photometry(**test)
 
     return
