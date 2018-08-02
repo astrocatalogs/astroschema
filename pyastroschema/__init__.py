@@ -1,7 +1,7 @@
 """Python module for interaction with astroschema.
 """
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 import os
 from jsonschema import ValidationError  # noqa

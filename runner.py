@@ -1,15 +1,69 @@
 """
 """
+
+
 import sys
 import copy
 import glob
 from collections import OrderedDict
+
+import numpy as np
 
 import json
 import pyastroschema as pas
 import jsonschema
 
 from nose.tools import assert_true, assert_raises, assert_false
+
+
+# struct = pas.struct.Struct()
+source = pas.struct.Source()
+
+sys.exit(0)
+
+
+
+'''
+def store(num):
+    def _wrap(cls):
+        setattr(cls, 'n', num)
+        setattr(cls, 'a', np.arange(num))
+        return cls
+
+    return _wrap
+
+
+@store(5)
+class Test:
+
+    def __init__(self, name):
+        self._name = name
+        # print(self.n, self.a)
+
+    @property
+    def name(self):
+        return self._name
+
+
+print("Creating")
+t1 = Test('abc')
+t2 = Test('zyx')
+
+print("Created")
+for tt in [t1, t2]:
+    print(tt, tt.name, ":", tt.n, tt.a)
+    print(id(tt.name), id(tt.n), id(tt.a))
+
+print((t1.a == t2.a), (t1.n == t2.n))
+print((t1.a is t2.a), (t1.n is t2.n))
+
+print("Fail")
+t1.name = "hello"
+
+sys.exit(0)
+'''
+
+
 
 
 '''

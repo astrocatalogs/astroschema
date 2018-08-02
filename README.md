@@ -91,6 +91,10 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 ### Current
 
+
+
+### v0.5.0 - 2018-08-02
+
 - Add new 'format' schema specifications including 'numeric' and 'astrotime'.
 - New `SchemaDict` class that stores schema specifications in `Struct` classes.  Provides internal validation method.
     - NOTE: `SchemaDict` has *not* been integrated into the `Key` class yet, but it is stored to each `Keychain`.
