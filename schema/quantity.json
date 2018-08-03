@@ -72,28 +72,11 @@
             "unique": false,
             "distinguishing": true
         },
-        "kind": {
-            "type": "string",
-            "unique": false,
-            "distinguishing": true,
-            "minLength": 1
-        },
         "source": {
             "type": ["string", "number"],
             "unique": false,
             "distinguishing": false
-        },
-        "prob": {
-            "$ref": "#/definitions/NUMERIC"
-        },
-        "model": {
-            "type": "string",
-            "distinguishing": false
-        },
-        "realization": {
-            "type": "string"
         }
-
     },
 
     "required": ["value", "source"]

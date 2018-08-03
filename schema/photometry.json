@@ -212,16 +212,6 @@
 			"$ref": "#/definitions/NUMERIC"
 		},
 
-        "model": {
-			"description": "",
-			"type": "string",
-			"distinguishing": false
-		},
-        "realization": {
-			"description": "",
-			"type": "string",
-			"priority": 15
-		},
         "source": {
 			"description": "",
 			"type": "string",
@@ -329,14 +319,6 @@
 			"type": "boolean"
 		},
         "mcorrected": {
-			"description": "",
-			"type": "boolean"
-		},
-        "synthetic": {
-			"description": "",
-			"type": "boolean"
-		},
-        "simulated": {
 			"description": "",
 			"type": "boolean"
 		},

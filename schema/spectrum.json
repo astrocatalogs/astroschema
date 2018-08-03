@@ -82,14 +82,6 @@
 			"type": "string",
 			"distinguishing": false
 		},
-        "model": {
-			"type": "string",
-			"distinguishing": false
-		},
-        "realization": {
-			"type": "string",
-			"priority": 15
-		},
         "source": {
 			"type": "string",
 			"distinguishing": false

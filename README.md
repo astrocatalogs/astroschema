@@ -91,6 +91,8 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 ### Current
 
+- Modified numerous schema to remove `astrocats` specific properties: [`photometry`, `quantity`, `source`, `spectrum`].
+
 
 
 ### v0.5.0 - 2018-08-02
@@ -100,7 +102,7 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
     - NOTE: `SchemaDict` has *not* been integrated into the `Key` class yet, but it is stored to each `Keychain`.
 - `Struct` subclasses have been upgraded to use protected class-attributes (i.e. shared) to store schema information.  A wrapper (`struct.set_struct_schema()`) and class factor method (`struct.Struct.construct()`) have been added to provide a customization API for derived classes.
 
-- `pyastroschema`
+- `pyastroschema/`
     - `tests/`
         - `test_schemadict.py` [NEW-FILE]
             - Basic construction unittests for the new `SchemaDict` class.
@@ -143,10 +145,11 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
             - New customized validator that not only sets defaults (as before) but also checks the `"numeric"` 'format' specifier.
             - Tests added for behavior.
 
-- `schema`
+- `schema/`
     - `quantity.json`
         - BUG, FIX: Changed `value` from being numeric to being any-type.  This is to accommodate 'alias' values in `astrocats`... not sure if this should remain or be changed.
         - BUG, FIX: Changed `source` from being numeric to being any-type.  This is to accommodate strings like `"1,3,4"` currently used in astrocats.  This should be fixed in the future.
+
 
 
 ### v0.4.0 - 2018-07-30
