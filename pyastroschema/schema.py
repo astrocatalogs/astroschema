@@ -7,6 +7,9 @@ import jsonschema
 
 from pyastroschema import utils, validation
 
+import warnings
+warnings.showwarning = utils.warn_with_traceback
+
 
 class JSONOrderedDict(OrderedDict):
 
@@ -90,6 +93,27 @@ class SchemaDict(JSONOrderedDict):
 
     def finalize(self):
         pass
+
+    def extend(self, schema, **kwargs):
+        data = utils.get_schema_odict(schema)
+        data_keys = list(data.keys())
+
+        # NOTE: FIX: Temporary warnings for actions outside of currently tested usage
+        # ---------------------------------------------------------------------------------
+        # Warn if there is no 'properties'
+        if "properties" not in data_keys:
+            warn = "`SchemaDict.extend()` designed to add 'properties', which is not found!"
+            warnings.warn(warn)
+        else:
+            data_keys.remove("properties")
+
+        # Warn if there are keys *besides* 'properties'
+        if len(data_keys) > 0:
+            warn = "`SchemaDict.extend()` designed to *only* add 'properties'; other keys found!"
+            warnings.warn(warn)
+
+        super(SchemaDict, self).extend(schema, **kwargs)
+        return
 
 
 def _extend(aa, bb, copy_type='deep', check_conflict=False):

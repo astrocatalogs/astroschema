@@ -7,7 +7,7 @@ Can be run with:
 """
 # from __future__ import absolute_import, division, print_function, unicode_literals
 # import copy
-
+import warnings
 import json
 import os
 # import jsonschema
@@ -115,7 +115,10 @@ def test_create_from_multiple():
     )
 
     print("\n1+2 = ")
-    schema = SchemaDict([SCHEMA_1, SCHEMA_2])
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        schema = SchemaDict([SCHEMA_1, SCHEMA_2])
+
     print(schema)
     props = schema.properties
     assert_true('alias' in props)

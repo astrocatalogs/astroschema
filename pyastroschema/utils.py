@@ -170,3 +170,21 @@ def get_list_of_schema(schema):
 
     schema_list = [get_schema_odict(sch) for sch in schema_list]
     return schema_list
+
+
+def warn_with_traceback(message, category, filename, lineno, file=None, line=None):
+    """
+
+    See: https://stackoverflow.com/a/22376126/230468
+
+    Add this to use: `warnings.showwarning = warn_with_traceback`
+
+    """
+    import traceback
+    import warnings
+    import sys
+
+    log = file if hasattr(file, 'write') else sys.stderr
+    traceback.print_stack(file=log)
+    log.write(warnings.formatwarning(message, category, filename, lineno, line))
+    return

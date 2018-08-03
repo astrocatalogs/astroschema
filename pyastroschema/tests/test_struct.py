@@ -6,6 +6,8 @@ Can be run with:
 
 """
 
+import warnings
+
 from nose.tools import assert_true, assert_raises
 
 import pyastroschema as pas
@@ -169,7 +171,9 @@ def test_struct_extend():
     # Extend should fail if it produces a conflict
     # ----------------------------------------------------------
     with assert_raises(ValueError):
-        Test_Struct = struct.Struct.construct(SCHEMA_0, extensions=[SCHEMA_2])
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            Test_Struct = struct.Struct.construct(SCHEMA_0, extensions=[SCHEMA_2])
 
     return
 
