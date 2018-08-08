@@ -99,6 +99,7 @@ class SchemaDict(JSONOrderedDict):
         data_keys = list(data.keys())
 
         # NOTE: FIX: Temporary warnings for actions outside of currently tested usage
+        #     Once this is resolved, remove this (overriding) method
         # ---------------------------------------------------------------------------------
         # Warn if there is no 'properties'
         if "properties" not in data_keys:
@@ -106,6 +107,9 @@ class SchemaDict(JSONOrderedDict):
             warnings.warn(warn)
         else:
             data_keys.remove("properties")
+
+        if "definitions" in data_keys:
+            data_keys.remove("definitions")
 
         # Warn if there are keys *besides* 'properties'
         if len(data_keys) > 0:
