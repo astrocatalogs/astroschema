@@ -221,37 +221,6 @@
             "replace_better": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
-        "maxabsmag": {
-            "description": "",
-            "unique": false,
-            "distinguishing": true,
-            "$ref": "#/definitions/QUANTITY_LISTABLE"
-        },
-        "maxappmag": {
-            "description": "",
-            "unique": false,
-            "distinguishing": true,
-            "$ref": "#/definitions/QUANTITY_LISTABLE"
-        },
-        "maxband": {
-            "description": "",
-            "unique": false,
-            "distinguishing": true,
-            "$ref": "#/definitions/QUANTITY_LISTABLE"
-        },
-        "maxdate": {
-            "description": "",
-            "unique": false,
-            "distinguishing": true,
-            "replace_better": true,
-            "$ref": "#/definitions/QUANTITY_LISTABLE"
-        },
-        "models": {
-            "description": "",
-            "unique": false,
-            "distinguishing": true,
-            "$ref": "#/definitions/QUANTITY_LISTABLE"
-        },
         "ra": {
             "description": "",
             "unique": false,
@@ -274,30 +243,8 @@
             "replace_better": true,
             "$ref": "#/definitions/QUANTITY_LISTABLE"
         },
-
-        "claimedtype": {
-            "$ref": "#/definitions/QUANTITY_LISTABLE",
-            "kind_preference": ["spectroscopic", "photometric"],
-            "replace_better": true
-        },
         "discovery_date": {
             "type": "string"
-        },
-        "explosion_date": {
-            "type": "string"
-        },
-        "maxvisualabsmag": {
-            "$ref": "#/definitions/NUMERIC"
-        },
-        "maxvisualappmag": {
-            "$ref": "#/definitions/NUMERIC"
-        },
-        "maxvisualband": {
-            "type": "string"
-        },
-        "maxvisualdate": {
-            "type": "string",
-            "replace_better": true
         },
         "errors": {}
 
