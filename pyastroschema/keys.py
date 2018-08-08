@@ -27,7 +27,11 @@ class Key(str):
         self.validate()
         self._repr = repr(self)
         # Other code depends on the `str` representation being equal to the name, check that here
-        assert str(self) == name, "self does not match `name`!"
+        if str(self) != name:
+            print(repr(self))
+            err = "self ('{}') does not match `name` ('{}')!".format(self, name)
+            raise ValueError(err)
+
         self._immutable = True
         return
 
@@ -39,10 +43,12 @@ class Key(str):
         prop_list = []
         for pn in prop_names:
             if hasattr(self, pn) and not callable(getattr(self, pn)):
-                prop_list.append("{}: '{}'".format(pn, getattr(self, pn)))
+                prop_list.append("{}={}".format(pn, getattr(self, pn)))
 
-        rv = "'{}': ({})".format(str(self), ", ".join(prop_list))
-        return rv
+        prop_list = ", ".join(prop_list)
+        ret = "Key('{}', {})".format(self, prop_list)
+        # ret = "'{}': ({})".format(str(self), ", ".join(prop_list))
+        return ret
 
     def __setattr__(self, name, value):
         if hasattr(self, '_immutable'):
@@ -152,6 +158,12 @@ class Keychain(object):
         # Actually store key-value pair as an attribute
         super(Keychain, self).__setattr__(name, value)
         return
+
+    def __repr__(self):
+        rv = ["'{}'".format(kk) for kk in self.keys()]
+        rv = ",".join(rv)
+        rv = "Keychain({})".format(rv)
+        return rv
 
     def keys(self):
         return self._keys
