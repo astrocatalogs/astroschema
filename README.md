@@ -27,6 +27,12 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 ## To-Do / Questions
 
+- Replace `add_*` methods in `Entry` with a single `Add` method that figures it out.
+- Add a universal `Key` attribute that says what type of schema it should be validated against, and also what type of `class` (e.g. in Astrocats) should be used to load/save it.
+- Separate particular catalogs (e.g. blackhole) from the overall `astrocats` package.
+    - Make a copy of all schema in output of particular package.
+    - Reorganize the whole `astrocats` structure... especially for importing / (sub)commands... so convoluted right now.
+
 - Currently `Quantity/value` is any-type (at least to accomodate aliases, perhaps other uses?), but should this be changed to numeric?
 
 - Add some sort of `numeric` tag, and add checking of number-convertibility to a custom validator
