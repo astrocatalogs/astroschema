@@ -94,9 +94,16 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 - Modified numerous schema to remove `astrocats` specific properties: [`photometry`, `quantity`, `source`, `spectrum`].
 
 - `pyastroschema/`
+    - `schema.py`
+        - `JSONOrderedDict`
+            - Add hooks to sort before `dump` and `dumps` commands by passing sorting function.
     - `utils.py`
         - `warn_with_traceback()` [NEW-FUNCTION]
             - Modify the `warnings` module to provide tracebacks
+
+- `schema/`
+    - `entry.json`
+        - Removed astrocats specific fields.
 
 
 ### v0.5.0 - 2018-08-02
