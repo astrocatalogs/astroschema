@@ -90,6 +90,7 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 - Add python2 compatibility.
 
+- *To use relative file paths, have to set a `RefResolver` in the python `jsonschema` package to the appropriate directory.  Also need to set the `id` of each schema file to be that files name so that internal references still work!*
 
 ## Change Log
 
