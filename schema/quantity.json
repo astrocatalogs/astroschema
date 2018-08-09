@@ -1,16 +1,10 @@
 {
     "$schema": "http://json-schema.org/schema#",
+    "id": "quantity.json",
     "title": "quantity",
     "description": "An item representing a numerical value.",
     "version": "0.3",
     "type": "object",
-
-    "definitions": {
-        "NUMERIC": {
-            "type": ["number", "string"],
-            "format": "numeric"
-        }
-    },
 
     "properties": {
         "value": {
@@ -20,19 +14,19 @@
         },
         "error_value": {
             "description": "Symmetric, one-sigma error associated with this Quantity's value.",
-            "$ref": "#/definitions/NUMERIC",
+            "$ref": "file:defs.json#/definitions/NUMERIC",
             "unique": false,
             "distinguishing": true
         },
         "error_upper": {
             "description": "Upper (plus) one-sigma error on this Quantity's value.",
-            "$ref": "#/definitions/NUMERIC",
+            "$ref": "file:defs.json#/definitions/NUMERIC",
             "unique": false,
             "distinguishing": true
         },
         "error_lower": {
             "description": "Lower (minus) one-sigma error on this Quantity's value.",
-            "$ref": "#/definitions/NUMERIC",
+            "$ref": "file:defs.json#/definitions/NUMERIC",
             "unique": false,
             "distinguishing": true
         },

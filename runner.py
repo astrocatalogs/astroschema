@@ -1,7 +1,7 @@
 """
 """
 
-
+import os
 import sys
 import copy
 import glob
@@ -16,11 +16,51 @@ import jsonschema
 from nose.tools import assert_true, assert_raises, assert_false
 
 
+fname = "./test/test.json"
+schema = pas.utils.json_load_file(fname)
+print(schema)
+
+path = os.path.abspath(os.path.dirname(__file__))
+resolver = jsonschema.RefResolver('file://{}/test/'.format(path), None)
+
+# print(pas.utils.json_dump_str(schema))
+validator = jsonschema.validators.validator_for(schema)
+validator.check_schema(schema)
+
+s1 = dict(
+    name="Tony",
+    number=1
+)
+
+f1 = dict(
+    name="Bob",
+    number="1"
+)
+
+f2 = dict(
+    name=2,
+    number="1"
+)
+
+print("test succ")
+jsonschema.validate(s1, schema, resolver=resolver)
+
+print("test fail")
+with assert_raises(pas.ValidationError):
+    jsonschema.validate(f1, schema, resolver=resolver)
+
+with assert_raises(pas.ValidationError):
+    jsonschema.validate(f2, schema, resolver=resolver)
+
+sys.exit(0)
+
+
+'''
 # struct = pas.struct.Struct()
 source = pas.struct.Source()
 
 sys.exit(0)
-
+'''
 
 
 '''
@@ -257,7 +297,7 @@ jsonschema.validate(SIMPLEST_SCHEMA, META_SCHEMA)
 
 # keys = pas.source.Source.get_keychain()
 
-# schema = pas.utils.load_schema('source')
+# schema = pas.utils.load_schema_dict('source')
 # keys = pas.keys.Keychain(schema, mutable=False, extendable=True)
 
 '''

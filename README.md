@@ -109,8 +109,11 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
             - Modify the `warnings` module to provide tracebacks
 
 - `schema/`
+    - Restructure schema to reference new `defs.json` file.  Added `'id'` attributes with each files name so that both relative and internal references will work; this is likely a bug in the python `jsonschema` package.
     - `entry.json`
         - Removed astrocats specific fields.
+    - `defs.json` [NEW-FILE]
+        - New file specifically for schema definitions, references from other schema files.
 
 
 ### v0.5.0 - 2018-08-02
