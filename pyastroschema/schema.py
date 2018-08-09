@@ -1,5 +1,6 @@
 """
 """
+import os
 import copy
 from collections import OrderedDict
 
@@ -35,7 +36,8 @@ class JSONOrderedDict(OrderedDict):
     def extend(self, schema, **kwargs):
         """Add elements from `schema` not present in self (recursively).
         """
-        data = utils.get_schema_odict(schema)
+        # data = utils.get_schema_odict(schema)
+        data = JSONOrderedDict(schema)
         _extend(self, data, **kwargs)
         return
 
@@ -43,6 +45,13 @@ class JSONOrderedDict(OrderedDict):
 class SchemaDict(JSONOrderedDict):
 
     def __init__(self, schema={}):
+        """
+        Path is used for RefResolver (using relative paths in schema).
+        """
+        schema, schema_path = _get_schema_dict_and_path_str(schema)
+        super(SchemaDict, self).__init__(schema)
+
+        '''
         schema_list = utils.get_list_of_schema(schema)
         super(SchemaDict, self).__init__(**schema_list[0])
         # Extend `self` with any additional schema
@@ -50,10 +59,20 @@ class SchemaDict(JSONOrderedDict):
             for sch in schema_list[1:]:
                 self.extend(sch, check_conflict=True)
 
+        if path is None:
+            path = os.path.join(os.path.abspath(os.path.dirname(schema)), "")
+            # If the `path` doesnt look good, use the current working directory
+            if (not os.path.exists(schema)) or (len(path) == 0) or (not os.path.isdir(path)):
+                path = os.path.curdir
+                path = os.path.join(os.path.abspath(path), "")
+        '''
+
         self.finalize()
 
         self._validator = None
+        self._ref_resolver = None
         self._changed = True
+        self._ref_path = schema_path
 
         # Validate the schema itself
         self.validate()
@@ -86,7 +105,13 @@ class SchemaDict(JSONOrderedDict):
         else:
             # Construct and cache a validator
             if (self._validator is None) or (self._changed):
-                self._validator = validation.PAS_Validator(self)
+                path = self._ref_path
+                if path is None:
+                    resolver = None
+                else:
+                    _path = 'file://{}/'.format(path)
+                    resolver = jsonschema.RefResolver(_path, None)
+                self._validator = validation.PAS_Validator(self, resolver=resolver)
                 self._changed = False
 
             self._validator.validate(data)
@@ -97,7 +122,10 @@ class SchemaDict(JSONOrderedDict):
         pass
 
     def extend(self, schema, **kwargs):
-        data = utils.get_schema_odict(schema)
+        kwargs.setdefault("check_conflict", True)
+        # data = utils.get_schema_odict(schema)
+        # schema, schema_path = _get_schema_dict_and_path_str(schema)
+        data = SchemaDict(schema)
         data_keys = list(data.keys())
 
         # NOTE: FIX: Temporary warnings for actions outside of currently tested usage
@@ -119,6 +147,11 @@ class SchemaDict(JSONOrderedDict):
             warnings.warn(warn)
 
         super(SchemaDict, self).extend(schema, **kwargs)
+        return
+
+    def update(self, schema):
+        data = SchemaDict(schema)
+        super(SchemaDict, self).update(data)
         return
 
 
@@ -148,6 +181,20 @@ def _extend(aa, bb, copy_type='deep', check_conflict=False):
                 raise ValueError("Unrecognized `copy_type` = '{}'!".format(copy_type))
 
     return aa
+
+
+def _get_schema_dict_and_path_str(schema):
+    if isinstance(schema, dict):
+        schema_path = None
+    elif isinstance(schema, str):
+        # A string specification can be a path, or name of the schema-file and the standard
+        # path will be assumed
+        schema, schema_path = utils.load_schema_dict(schema)
+    else:
+        err = "`schema` type '{}' not allowed!".format(type(schema))
+        raise ValueError(err)
+
+    return schema, schema_path
 
 
 def main():

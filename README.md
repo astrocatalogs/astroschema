@@ -101,12 +101,28 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 - Modified numerous schema to remove `astrocats` specific properties: [`photometry`, `quantity`, `source`, `spectrum`].
 
 - `pyastroschema/`
+    - [1] Using the `defs.json` file now, and relative paths in schema references, requires validators to use `jsonschema.RefResolver` objects with the base path.  To do this, when creating `struct.SchemaDict` instances, the schema specification should be the absolute file-path.  The method `utils.load_schema_dict` now returns the path to the schema also.  The methods `utils.get_schema_odict` and `utils.get_list_of_schema` have been deprecated (commented out for now), to simplify what types of arguments are acceptable.
+
     - `schema.py`
         - `JSONOrderedDict`
             - Add hooks to sort before `dump` and `dumps` commands by passing sorting function.
+        - `SchemaDict`
+            - No longer accepts a list of schema as argument.  Schema must be combined using either `extend` or `update` methods.
+            - Simplified initialization to limit acceptable arguments (see [1]).
+            - Store the schema path and a constructed `jsonschema.RefResolver` when possible (see [1]).
+            - `extend()`
+                - Set the `check_conflict` parameter to True by default.
+            - `update()` [NEW-FUNCTION]
+                - Added wrapper around `JSONOrderedDict.update()` to first convert argument to `SchemaDict`.
+    - `struct.py`
+        - 
     - `utils.py`
         - `warn_with_traceback()` [NEW-FUNCTION]
             - Modify the `warnings` module to provide tracebacks
+        - `get_schema_odict()` [REMOVED]
+            - See [1]
+        - `get_list_of_schema()` [REMOVED]
+            - See [1]
 
 - `schema/`
     - Restructure schema to reference new `defs.json` file.  Added `'id'` attributes with each files name so that both relative and internal references will work; this is likely a bug in the python `jsonschema` package.

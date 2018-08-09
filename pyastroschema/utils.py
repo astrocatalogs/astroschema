@@ -13,7 +13,7 @@ def load_schema_index():
     return index
 
 
-def load_schema(sname):
+def load_schema_dict(sname):
     """
 
     Returns
@@ -23,7 +23,8 @@ def load_schema(sname):
     """
     if os.path.exists(sname):
         schema = json_load_file(sname)
-        return schema
+        path = os.path.join(os.path.abspath(os.path.dirname(sname)), "")
+        return schema, path
 
     index = load_schema_index()
     index = index[META_KEYS.INDEX]
@@ -38,12 +39,13 @@ def load_schema(sname):
     schema_fname = os.path.join(PATHS.ASTROSCHEMA, schema_fname)
 
     schema = json_load_file(schema_fname)
+    path = os.path.join(os.path.abspath(os.path.dirname(schema_fname)), "")
     title = schema['title']
     if title != sname:
         err = "Loaded schema title mismatch!  Target: '{}', Loaded: '{}'".format(sname, title)
         raise ValueError(err)
 
-    return schema
+    return schema, path
 
 
 def json_dump_str(odict, **kwargs):
@@ -135,6 +137,7 @@ def get_relative_path(path, relative_to):
     return relpath
 
 
+'''
 def get_schema_odict(schema):
     """Make sure the given schema is an `odict`.
 
@@ -146,7 +149,7 @@ def get_schema_odict(schema):
     if isinstance(schema, dict):
         pass
     elif isinstance(schema, str):
-        schema = load_schema(schema)
+        schema = load_schema_dict(schema)
     else:
         err = "Unrecognized `schema` type '{}': '{}'".format(type(schema), schema)
         raise ValueError(err)
@@ -170,6 +173,7 @@ def get_list_of_schema(schema):
 
     schema_list = [get_schema_odict(sch) for sch in schema_list]
     return schema_list
+'''
 
 
 def warn_with_traceback(message, category, filename, lineno, file=None, line=None):
