@@ -46,7 +46,8 @@ NAW_2 = dict(
 YES = [YES_0]
 NAW = [NAW_0, NAW_1, NAW_2]
 
-photometry_schema = pas.utils.load_schema('photometry')
+photometry_schema, path = pas.utils.load_schema_dict('photometry')
+RESOLVER = jsonschema.RefResolver('file://{}'.format(path), None)
 
 
 def test_good():
@@ -88,7 +89,7 @@ def test_flux_dependencies():
     def run_test(test):
         print("successful test = ", test)
         Photometry(**test)
-        jsonschema.validate(test, photometry_schema)
+        jsonschema.validate(test, photometry_schema, resolver=RESOLVER)
 
         keys = list(test.keys())
         for kk in keys:
@@ -96,7 +97,7 @@ def test_flux_dependencies():
             dup.pop(kk)
             print("removed '{}', should fail...".format(kk))
             with assert_raises(jsonschema.exceptions.ValidationError):
-                jsonschema.validate(dup, photometry_schema)
+                jsonschema.validate(dup, photometry_schema, resolver=RESOLVER)
             with assert_raises(jsonschema.exceptions.ValidationError):
                 Photometry(**dup)
 
@@ -134,13 +135,13 @@ def test_flux_dependencies():
     )
 
     Photometry(**test)
-    jsonschema.validate(test, photometry_schema)
+    jsonschema.validate(test, photometry_schema, resolver=RESOLVER)
 
     # 'frequency' should also not be required at all with 'magnitude'
     test.pop('frequency')
 
     Photometry(**test)
-    jsonschema.validate(test, photometry_schema)
+    jsonschema.validate(test, photometry_schema, resolver=RESOLVER)
 
     return
 
@@ -154,7 +155,7 @@ def test():
         print("\t{:3d}: '{}'".format(ii, good))
         gt = pas.utils.json_load_file(good)
 
-        jsonschema.validate(gt, photometry_schema)
+        jsonschema.validate(gt, photometry_schema, resolver=RESOLVER)
 
     pat_bad = os.path.join(pas.PATHS.test_dir("photometry", bad=True), "*.json")
     tests_bad = sorted(glob.glob(pat_bad))
@@ -165,6 +166,6 @@ def test():
         bt = pas.utils.json_load_file(bad)
 
         with assert_raises(jsonschema.exceptions.ValidationError):
-            jsonschema.validate(bt, photometry_schema)
+            jsonschema.validate(bt, photometry_schema, resolver=RESOLVER)
 
     return

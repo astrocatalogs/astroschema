@@ -41,12 +41,6 @@ def test_create_from_dict():
     assert_true('name' in props)
     assert_false('hello' in props)
 
-    schema = SchemaDict([SIMPLEST_SCHEMA])
-    props = schema.properties
-    assert_true('alias' in props)
-    assert_true('name' in props)
-    assert_false('hello' in props)
-
     return
 
 
@@ -72,12 +66,6 @@ def test_create_from_str():
 def test_create_from_file():
     schema_path = os.path.join(pas.PATHS.SCHEMA_DIR, 'source.json')
     schema = SchemaDict(schema_path)
-    props = schema.properties
-    assert_true('alias' in props)
-    assert_true('arxivid' in props)
-    assert_false('hello' in props)
-
-    schema = SchemaDict([schema_path])
     props = schema.properties
     assert_true('alias' in props)
     assert_true('arxivid' in props)
@@ -117,7 +105,9 @@ def test_create_from_multiple():
     print("\n1+2 = ")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        schema = SchemaDict([SCHEMA_1, SCHEMA_2])
+        # schema = SchemaDict([SCHEMA_1, SCHEMA_2])
+        schema = SchemaDict(SCHEMA_1)
+        schema.extend(SCHEMA_2)
 
     print(schema)
     props = schema.properties
@@ -135,11 +125,15 @@ def test_create_from_multiple():
     )
 
     print("\n2+3 = ")
-    schema = SchemaDict([SCHEMA_2, SCHEMA_3])
+    # schema = SchemaDict([SCHEMA_2, SCHEMA_3])
+    schema = SchemaDict(SCHEMA_2)
+    schema.extend(SCHEMA_3)
     print(schema)
 
     SCHEMA_3['properties']['name']['type'] = 'number'
     with assert_raises(ValueError):
-        schema = SchemaDict([SCHEMA_2, SCHEMA_3])
+        # schema = SchemaDict([SCHEMA_2, SCHEMA_3])
+        schema = SchemaDict(SCHEMA_2)
+        schema.extend(SCHEMA_3)
 
     return

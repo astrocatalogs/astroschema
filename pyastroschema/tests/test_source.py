@@ -23,7 +23,7 @@ SIMPLEST_SOURCE = dict(
 
 
 def test_basics():
-    # source_schema = pas.utils.load_schema('source')
+    # source_schema = pas.utils.load_schema_dict('source')
 
     # Should work with alias and arxivid
     source = Source(**SIMPLEST_SOURCE)

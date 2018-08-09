@@ -51,7 +51,13 @@ NAW_0 = dict(
 YES = [YES_0, YES_1, YES_2]
 NAW = [NAW_0]
 
-spectrum_schema = pas.utils.load_schema('spectrum')
+spectrum_schema, path = pas.utils.load_schema_dict('spectrum')
+RESOLVER = jsonschema.RefResolver('file://{}'.format(path), None)
+
+
+def validate(obj, schema):
+    jsonschema.validate(obj, schema, resolver=RESOLVER)
+    return
 
 
 def test_good():
@@ -91,12 +97,12 @@ def test_data_dependencies():
 
     def check_good(test):
         Spectrum(**test)
-        jsonschema.validate(test, spectrum_schema)
+        validate(test, spectrum_schema)
         return
 
     def check_bad(test):
         with assert_raises(jsonschema.exceptions.ValidationError):
-            jsonschema.validate(test, spectrum_schema)
+            validate(test, spectrum_schema)
         with assert_raises(jsonschema.exceptions.ValidationError):
             Spectrum(**test)
         return
@@ -174,7 +180,7 @@ def test():
         print("\t{:3d}: '{}'".format(ii, good))
         gt = pas.utils.json_load_file(good)
 
-        jsonschema.validate(gt, spectrum_schema)
+        validate(gt, spectrum_schema)
 
     pat_bad = os.path.join(pas.PATHS.test_dir("spectrum", bad=True), "*.json")
     tests_bad = sorted(glob.glob(pat_bad))
@@ -185,6 +191,6 @@ def test():
         bt = pas.utils.json_load_file(bad)
 
         with assert_raises(jsonschema.exceptions.ValidationError):
-            jsonschema.validate(bt, spectrum_schema)
+            validate(bt, spectrum_schema)
 
     return

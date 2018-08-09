@@ -62,7 +62,7 @@ NAW_QUANTS = [NAW_QUANT_0, NAW_QUANT_1, NAW_QUANT_2, NAW_QUANT_3]
 
 
 def test_basics():
-    # source_schema = pas.utils.load_schema('source')
+    # source_schema = pas.utils.load_schema_dict('source')
 
     # Should work with alias and arxivid
 
