@@ -67,8 +67,8 @@ def is_astrotime_compatible(value):
 
 
 # Create a new instance of your custom validator. Add a custom type.
-def PAS_Validator(schema):
-    pas_valid = _PAS_Validator(schema, format_checker=format_checker)
+def PAS_Validator(schema, **kwargs):
+    pas_valid = _PAS_Validator(schema, format_checker=format_checker, **kwargs)
     return pas_valid
 
 

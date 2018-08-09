@@ -114,8 +114,6 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
                 - Set the `check_conflict` parameter to True by default.
             - `update()` [NEW-FUNCTION]
                 - Added wrapper around `JSONOrderedDict.update()` to first convert argument to `SchemaDict`.
-    - `struct.py`
-        - 
     - `utils.py`
         - `warn_with_traceback()` [NEW-FUNCTION]
             - Modify the `warnings` module to provide tracebacks
@@ -123,6 +121,9 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
             - See [1]
         - `get_list_of_schema()` [REMOVED]
             - See [1]
+    - `validation.py`
+        - `PAS_Validator()`
+            - Pass `kwargs` along so that a `resolver` can be added to the validator.
 
 - `schema/`
     - Restructure schema to reference new `defs.json` file.  Added `'id'` attributes with each files name so that both relative and internal references will work; this is likely a bug in the python `jsonschema` package.
