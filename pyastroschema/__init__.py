@@ -73,6 +73,7 @@ def copy_schema_files(target_dir, sname=None, verbose=None):
         verbose = VERBOSE
 
     index = utils.load_schema_index()
+    index = index[META_KEYS.INDEX]
     schema_names = list(sorted(index.keys()))
     # If a particular schema is targeted then select it, make sure it matches
     if sname is not None:
@@ -90,8 +91,9 @@ def copy_schema_files(target_dir, sname=None, verbose=None):
     # Iterate over all (targeted) schema files
     fnames = []
     for sch in schema_names:
-
+        # print(sch)
         src = index[sch][META_KEYS.FNAME]
+        src = os.path.join(PATHS.ASTROSCHEMA, src)
         # Make sure source file exists
         if not os.path.exists(src):
             raise RuntimeError("Path for schema '{}' does not exist!  ('{}')".format(sch, src))
