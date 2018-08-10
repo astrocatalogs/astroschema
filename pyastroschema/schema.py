@@ -51,33 +51,24 @@ class SchemaDict(JSONOrderedDict):
         """
         Path is used for RefResolver (using relative paths in schema).
         """
-        schema, schema_path = _get_schema_dict_and_path_str(schema)
+        schema, schema_path, schema_name = _get_schema_dict_and_path_str(schema)
         super(SchemaDict, self).__init__(schema)
         if path is None:
             path = schema_path
 
-        '''
-        schema_list = utils.get_list_of_schema(schema)
-        super(SchemaDict, self).__init__(**schema_list[0])
-        # Extend `self` with any additional schema
-        if len(schema_list) > 1:
-            for sch in schema_list[1:]:
-                self.extend(sch, check_conflict=True)
-
-        if path is None:
-            path = os.path.join(os.path.abspath(os.path.dirname(schema)), "")
-            # If the `path` doesnt look good, use the current working directory
-            if (not os.path.exists(schema)) or (len(path) == 0) or (not os.path.isdir(path)):
-                path = os.path.curdir
-                path = os.path.join(os.path.abspath(path), "")
-        '''
+        if (schema_path is None) or (schema_name is None):
+            fname = None
+        else:
+            fname = os.path.join(schema_path, schema_name + ".json")
 
         self.finalize()
+        self._name = schema_name
 
         self._validator = None
         self._ref_resolver = None
         self._changed = True
         self._ref_path = path
+        self._filename = fname
         path_formatted = 'file://{}/'.format(path) if (path is not None) else None
         self._ref_path_formatted = path_formatted
 
@@ -117,7 +108,16 @@ class SchemaDict(JSONOrderedDict):
                 self._validator = validation.PAS_Validator(self, resolver=resolver)
                 self._changed = False
 
-            self._validator.validate(data)
+            try:
+                self._validator.validate(data)
+            except jsonschema.exceptions.RefResolutionError as err:
+                myname = self.get('title', None)
+                if myname is None:
+                    myname = self._name
+                if myname is None:
+                    myname = str(self)
+                msg = "Reference resolution failure with: {}".format(myname)
+                raise jsonschema.exceptions.RefResolutionError(msg) from err
 
         return
 
@@ -157,47 +157,6 @@ class SchemaDict(JSONOrderedDict):
         super(SchemaDict, self).update(data)
         return
 
-    '''
-    def export_resolved_references(self):
-        path = self._ref_path_formatted
-        if path is None:
-            return self
-
-        ref_res = RefResolverExport(path, None)
-        schema = ref_res.export_resolved_references(self)
-        return SchemaDict(schema=schema, path=self._ref_path)
-    '''
-
-'''
-class RefResolverExport(jsonschema.validators.RefResolver):
-    """From: https://github.com/Julian/jsonschema/pull/419
-    """
-
-    def export_resolved_references(self, schema):
-        if len(self.store) <= 2:
-            return jsonschema.exceptions.RefResolutionError(
-                "RefResolver does not have any additional "
-                "referenced schemas outside of draft 3 & 4")
-
-        if isinstance(schema, dict):
-            for key, value in schema.items():
-                if key == "$ref":
-                    ref_schema = self.resolve(urlparse(value).path)
-                    if ref_schema:
-                        return ref_schema[1]
-
-                resolved_ref = self.export_resolved_references(value)
-                if resolved_ref:
-                    schema[key] = resolved_ref
-
-        elif isinstance(schema, list):
-            for (idx, value) in enumerate(schema):
-                resolved_ref = self.export_resolved_references(value)
-                if resolved_ref:
-                    schema[idx] = resolved_ref
-
-        return schema
-'''
 
 def _extend(aa, bb, copy_type='deep', check_conflict=False):
     """Add the key-values from `bb` into `aa`.
@@ -230,15 +189,16 @@ def _extend(aa, bb, copy_type='deep', check_conflict=False):
 def _get_schema_dict_and_path_str(schema):
     if isinstance(schema, dict):
         schema_path = None
+        schema_name = schema.get('title', None)
     elif isinstance(schema, str):
         # A string specification can be a path, or name of the schema-file and the standard
         # path will be assumed
-        schema, schema_path = utils.load_schema_dict(schema)
+        schema, schema_path, schema_name = utils.load_schema_dict(schema)
     else:
         err = "`schema` type '{}' not allowed!".format(type(schema))
         raise ValueError(err)
 
-    return schema, schema_path
+    return schema, schema_path, schema_name
 
 
 def main():

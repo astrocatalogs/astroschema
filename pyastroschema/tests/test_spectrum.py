@@ -51,7 +51,7 @@ NAW_0 = dict(
 YES = [YES_0, YES_1, YES_2]
 NAW = [NAW_0]
 
-spectrum_schema, path = pas.utils.load_schema_dict('spectrum')
+spectrum_schema, path, name = pas.utils.load_schema_dict('spectrum')
 RESOLVER = jsonschema.RefResolver('file://{}'.format(path), None)
 
 

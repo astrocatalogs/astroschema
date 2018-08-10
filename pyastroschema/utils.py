@@ -58,8 +58,9 @@ def load_schema_dict(sname):
     """
     if os.path.exists(sname):
         schema = json_load_file(sname)
+        name = os.path.basename(sname).split('.json')[0]
         path = os.path.join(os.path.abspath(os.path.dirname(sname)), "")
-        return schema, path
+        return schema, path, name
 
     schema_fname = path_for_schema_file(sname)
     schema = json_load_file(schema_fname)
@@ -69,7 +70,7 @@ def load_schema_dict(sname):
         err = "Loaded schema title mismatch!  Target: '{}', Loaded: '{}'".format(sname, title)
         raise ValueError(err)
 
-    return schema, path
+    return schema, path, title
 
 
 def json_dump_str(odict, **kwargs):

@@ -46,7 +46,7 @@ NAW_2 = dict(
 YES = [YES_0]
 NAW = [NAW_0, NAW_1, NAW_2]
 
-photometry_schema, path = pas.utils.load_schema_dict('photometry')
+photometry_schema, path, name = pas.utils.load_schema_dict('photometry')
 RESOLVER = jsonschema.RefResolver('file://{}'.format(path), None)
 
 
