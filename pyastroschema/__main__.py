@@ -146,9 +146,14 @@ def schemas_index(schemas, file_names, index_fname):
         # relpath = fname.split(common_path)[-1]
         schema_file_relpath = utils.get_relative_path(fname, PATHS.ASTROSCHEMA)
 
-        title = astroschema[META_KEYS.TITLE]
-        desc = astroschema[META_KEYS.DESC]
-        vers = astroschema[META_KEYS.VERS]
+        try:
+            title = astroschema[META_KEYS.TITLE]
+            desc = astroschema[META_KEYS.DESC]
+            vers = astroschema[META_KEYS.VERS]
+        except KeyError as err:
+            msg = "Attribute missing in '{}' ('{}')".format(title, fname)
+            raise KeyError(msg) from err
+
         # Get modification time of file
         mtime = os.path.getmtime(fname)
         #     Convert to str via `datetime` instance for nice formatting
