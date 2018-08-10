@@ -139,6 +139,9 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
     - `defs.json` [NEW-FILE]
         - New file specifically for schema definitions, references from other schema files.
 
+- `astroschema_index.json`
+    - Updated to include new `defs.json`.
+
 
 ### v0.5.0 - 2018-08-02
 
