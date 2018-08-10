@@ -102,7 +102,10 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 - `pyastroschema/`
     - [1] Using the `defs.json` file now, and relative paths in schema references, requires validators to use `jsonschema.RefResolver` objects with the base path.  To do this, when creating `struct.SchemaDict` instances, the schema specification should be the absolute file-path.  The method `utils.load_schema_dict` now returns the path to the schema also.  The methods `utils.get_schema_odict` and `utils.get_list_of_schema` have been deprecated (commented out for now), to simplify what types of arguments are acceptable.
-
+    
+    - `__init__.py`
+        - `copy_schema_files()` [NEW-FUNCTION]
+            - Copy all, or a single, schema file to the given target directory.
     - `schema.py`
         - `JSONOrderedDict`
             - Add hooks to sort before `dump` and `dumps` commands by passing sorting function.

@@ -4,6 +4,7 @@
 __version__ = "0.5.0"
 
 import os
+import shutil
 from jsonschema import ValidationError  # noqa
 
 
@@ -52,6 +53,65 @@ class PATHS:
             td = os.path.join(td, "bad", "")
 
         return td
+
+
+def copy_schema_files(target_dir, sname=None, verbose=None):
+    """
+
+    Arguments
+    ---------
+    target_dir : str
+        Destination for copied files.  This must be a directory, and it must exist.
+    sname : str
+
+    Returns
+    -------
+    fnames : list of str, or str
+
+    """
+    if verbose is None:
+        verbose = VERBOSE
+
+    index = utils.load_schema_index()
+    schema_names = list(sorted(index.keys()))
+    # If a particular schema is targeted then select it, make sure it matches
+    if sname is not None:
+        if sname not in schema_names:
+            raise ValueError("Schema '{}' is not in the index!".format(sname))
+
+        schema_names = [sname]
+
+    # Make sure the target destination looks good
+    if not os.path.exists(target_dir):
+        raise ValueError("Target directory '{}' does not exist!".format(target_dir))
+    elif not os.path.isdir(target_dir):
+        raise ValueError("Target directory '{}' is not a directory!".format(target_dir))
+
+    # Iterate over all (targeted) schema files
+    fnames = []
+    for sch in schema_names:
+
+        src = index[sch][META_KEYS.FNAME]
+        # Make sure source file exists
+        if not os.path.exists(src):
+            raise RuntimeError("Path for schema '{}' does not exist!  ('{}')".format(sch, src))
+        # Construct destination path/filename
+        fname_base = os.path.basename(src)
+        dst = os.path.join(target_dir, fname_base)
+
+        # Copy file
+        shutil.copy(src, dst)
+        if not os.path.exists(dst):
+            raise RuntimeError("Copy failed '{}'==>'{}'".format(src, dst))
+        if verbose:
+            print("Copied '{}' to '{}'".format(sch, dst))
+        fnames.append(dst)
+
+    # If a single target file was given, return str instead of list
+    if sname is not None:
+        fnames = fnames[0]
+
+    return fnames
 
 
 class META_KEYS:
