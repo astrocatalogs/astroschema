@@ -13,6 +13,41 @@ def load_schema_index():
     return index
 
 
+def index_entry_for_schema(sname):
+    """Retrieve the schema-index entry for a given schema.
+
+    Returns
+    -------
+    schema_meta: dict
+
+    """
+    index = load_schema_index()
+    index = index[META_KEYS.INDEX]
+    if sname not in index.keys():
+        err = "Schema '{}' does not exist as a file, and is not found in the index!".format(sname)
+        raise ValueError(err)
+
+    # Load the meta-data for this particular schema
+    schema_meta = index[sname]
+    return schema_meta
+
+
+def path_for_schema_file(sname):
+    """Retrieve the complete path to the target schema file using the schema-index.
+
+    Returns
+    -------
+    schema_fname: str
+
+    """
+    schema_meta = index_entry_for_schema(sname)
+
+    # Get the filename for the schema file
+    schema_fname = schema_meta[META_KEYS.FNAME]
+    schema_fname = os.path.join(PATHS.ASTROSCHEMA, schema_fname)
+    return schema_fname
+
+
 def load_schema_dict(sname):
     """
 
@@ -26,18 +61,7 @@ def load_schema_dict(sname):
         path = os.path.join(os.path.abspath(os.path.dirname(sname)), "")
         return schema, path
 
-    index = load_schema_index()
-    index = index[META_KEYS.INDEX]
-    if sname not in index.keys():
-        err = "Schema '{}' does not exist as a file, and is not found in the index!".format(sname)
-        raise ValueError(err)
-
-    # Load the meta-data for this particular schema
-    schema_meta = index[sname]
-    # Get the filename for the schema file
-    schema_fname = schema_meta[META_KEYS.FNAME]
-    schema_fname = os.path.join(PATHS.ASTROSCHEMA, schema_fname)
-
+    schema_fname = path_for_schema_file(sname)
     schema = json_load_file(schema_fname)
     path = os.path.join(os.path.abspath(os.path.dirname(schema_fname)), "")
     title = schema['title']

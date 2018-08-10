@@ -121,6 +121,10 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
             - See [1]
         - `get_list_of_schema()` [REMOVED]
             - See [1]
+        - `index_entry_for_schema()` [NEW-FUNCTION]
+            - Retrieve the index entry (dict) for the target schema.
+        - `path_for_schema_file()` [NEW-FUNCTION]
+            - Retrieve the full-path for the target schema.
     - `validation.py`
         - `PAS_Validator()`
             - Pass `kwargs` along so that a `resolver` can be added to the validator.
