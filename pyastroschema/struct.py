@@ -31,9 +31,9 @@ def set_struct_schema(schema_source, extendable=None,
 
 class Struct(schema.JSONOrderedDict):
 
-    # __SCHEMA = None
-    # __KEYCHAIN = None
-    # __extendable = True
+    # _SCHEMA = None
+    # _KEYCHAIN = None
+    # _extendable = True
 
     def __init__(self, *args, parent=None, validate=True, **kwargs):
         """Initialize with parameters based on the associated schema.
