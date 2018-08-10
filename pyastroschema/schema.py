@@ -4,6 +4,8 @@ import os
 import copy
 from collections import OrderedDict
 
+from urllib.parse import urlparse
+
 import jsonschema
 
 from pyastroschema import utils, validation
@@ -33,23 +35,26 @@ class JSONOrderedDict(OrderedDict):
     def loads(cls, jstr):
         return cls(utils.json_load_str(jstr))
 
-    def extend(self, schema, **kwargs):
+    def extend(self, data, **kwargs):
         """Add elements from `schema` not present in self (recursively).
         """
         # data = utils.get_schema_odict(schema)
-        data = JSONOrderedDict(schema)
+        # print("schema = ", schema)
+        # data = JSONOrderedDict(schema)
         _extend(self, data, **kwargs)
         return
 
 
 class SchemaDict(JSONOrderedDict):
 
-    def __init__(self, schema={}):
+    def __init__(self, schema={}, path=None):
         """
         Path is used for RefResolver (using relative paths in schema).
         """
         schema, schema_path = _get_schema_dict_and_path_str(schema)
         super(SchemaDict, self).__init__(schema)
+        if path is None:
+            path = schema_path
 
         '''
         schema_list = utils.get_list_of_schema(schema)
@@ -72,7 +77,9 @@ class SchemaDict(JSONOrderedDict):
         self._validator = None
         self._ref_resolver = None
         self._changed = True
-        self._ref_path = schema_path
+        self._ref_path = path
+        path_formatted = 'file://{}/'.format(path) if (path is not None) else None
+        self._ref_path_formatted = path_formatted
 
         # Validate the schema itself
         self.validate()
@@ -105,12 +112,8 @@ class SchemaDict(JSONOrderedDict):
         else:
             # Construct and cache a validator
             if (self._validator is None) or (self._changed):
-                path = self._ref_path
-                if path is None:
-                    resolver = None
-                else:
-                    _path = 'file://{}/'.format(path)
-                    resolver = jsonschema.RefResolver(_path, None)
+                path = self._ref_path_formatted
+                resolver = jsonschema.RefResolver(path, None) if (path is not None) else None
                 self._validator = validation.PAS_Validator(self, resolver=resolver)
                 self._changed = False
 
@@ -146,7 +149,7 @@ class SchemaDict(JSONOrderedDict):
             warn = "`SchemaDict.extend()` designed to *only* add 'properties'; other keys found!"
             warnings.warn(warn)
 
-        super(SchemaDict, self).extend(schema, **kwargs)
+        super(SchemaDict, self).extend(data, **kwargs)
         return
 
     def update(self, schema):
@@ -154,6 +157,47 @@ class SchemaDict(JSONOrderedDict):
         super(SchemaDict, self).update(data)
         return
 
+    '''
+    def export_resolved_references(self):
+        path = self._ref_path_formatted
+        if path is None:
+            return self
+
+        ref_res = RefResolverExport(path, None)
+        schema = ref_res.export_resolved_references(self)
+        return SchemaDict(schema=schema, path=self._ref_path)
+    '''
+
+'''
+class RefResolverExport(jsonschema.validators.RefResolver):
+    """From: https://github.com/Julian/jsonschema/pull/419
+    """
+
+    def export_resolved_references(self, schema):
+        if len(self.store) <= 2:
+            return jsonschema.exceptions.RefResolutionError(
+                "RefResolver does not have any additional "
+                "referenced schemas outside of draft 3 & 4")
+
+        if isinstance(schema, dict):
+            for key, value in schema.items():
+                if key == "$ref":
+                    ref_schema = self.resolve(urlparse(value).path)
+                    if ref_schema:
+                        return ref_schema[1]
+
+                resolved_ref = self.export_resolved_references(value)
+                if resolved_ref:
+                    schema[key] = resolved_ref
+
+        elif isinstance(schema, list):
+            for (idx, value) in enumerate(schema):
+                resolved_ref = self.export_resolved_references(value)
+                if resolved_ref:
+                    schema[idx] = resolved_ref
+
+        return schema
+'''
 
 def _extend(aa, bb, copy_type='deep', check_conflict=False):
     """Add the key-values from `bb` into `aa`.
