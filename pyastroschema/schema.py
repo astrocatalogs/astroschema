@@ -4,7 +4,7 @@ import os
 import copy
 from collections import OrderedDict
 
-from urllib.parse import urlparse
+# from urllib.parse import urlparse
 
 import jsonschema
 
