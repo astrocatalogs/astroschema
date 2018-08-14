@@ -141,12 +141,17 @@ class SchemaDict(JSONOrderedDict):
         else:
             data_keys.remove("properties")
 
-        if "definitions" in data_keys:
-            data_keys.remove("definitions")
+        # if "definitions" in data_keys:
+        #     data_keys.remove("definitions")
+
+        ignore_keys = ["definitions", "title", "id", "description"]
+        for igkey in ignore_keys:
+            if igkey in data_keys:
+                data_keys.remove(igkey)
 
         # Warn if there are keys *besides* 'properties'
         if len(data_keys) > 0:
-            warn = "`SchemaDict.extend()` designed to *only* add 'properties'; other keys found!"
+            warn = "`SchemaDict.extend()` unexpected keys found! '{}'".format(data_keys)
             warnings.warn(warn)
 
         super(SchemaDict, self).extend(data, **kwargs)
