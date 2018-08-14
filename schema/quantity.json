@@ -4,6 +4,7 @@
     "title": "quantity",
     "description": "An item representing a numerical value.",
     "version": "0.3",
+    "id": "quantity.json",
     "type": "object",
 
     "properties": {

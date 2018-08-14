@@ -3,6 +3,7 @@
     "title": "key",
     "description": "`Key` objects describe key-value pairs in each entry.",
     "version": "0.5",
+    "id": "key.json",
     "type": "object",
 
     "properties": {

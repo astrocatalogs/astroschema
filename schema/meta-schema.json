@@ -2,6 +2,7 @@
     "$schema": "http://json-schema.org/schema#",
     "title": "meta-schema",
     "description": "Core astro-schema meta-schema.  Describes requirements of all other schema.",
+    "id": "meta-schema.json",
     "version": "0.5",
 
     "allOf": [

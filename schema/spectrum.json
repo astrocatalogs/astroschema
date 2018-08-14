@@ -3,6 +3,7 @@
     "title": "spectrum",
     "description": "An item representing a single spectrum.",
     "version": "0.1",
+    "id": "spectrum.json",
     "type": "object",
 
     "properties": {

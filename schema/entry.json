@@ -3,6 +3,7 @@
     "title": "entry",
     "description": "An item representing a complete catalog entry.",
     "version": "0.2",
+    "id": "entry.json",
     "type": "object",
 
     "definitions": {
@@ -55,7 +56,7 @@
             "unique": false,
             "distinguishing": true,
             "replace_better": true,
-            "$ref": "#/definitions/DIST_PREF_KINDS",
+            "$ref": "entry.json#/definitions/DIST_PREF_KINDS",
             "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
         },
         "dec": {
@@ -131,7 +132,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "#/definitions/HOST_DIST_PREF_KINDS",
+            "$ref": "entry.json#/definitions/HOST_DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
         },
@@ -139,7 +140,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "#/definitions/HOST_DIST_PREF_KINDS",
+            "$ref": "entry.json#/definitions/HOST_DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
         },
@@ -147,7 +148,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "#/definitions/HOST_DIST_PREF_KINDS",
+            "$ref": "entry.json#/definitions/HOST_DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
         },
@@ -155,7 +156,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "#/definitions/HOST_DIST_PREF_KINDS",
+            "$ref": "entry.json#/definitions/HOST_DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
         },
@@ -163,7 +164,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "#/definitions/DIST_PREF_KINDS",
+            "$ref": "entry.json#/definitions/DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
         },
@@ -177,7 +178,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "#/definitions/DIST_PREF_KINDS",
+            "$ref": "entry.json#/definitions/DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
         },
@@ -185,7 +186,7 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "#/definitions/DIST_PREF_KINDS",
+            "$ref": "entry.json#/definitions/DIST_PREF_KINDS",
             "replace_better": true,
             "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
         },

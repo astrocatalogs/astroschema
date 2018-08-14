@@ -4,6 +4,7 @@
     "title": "photometry",
     "description": "An item representing a single photometric data-point.",
     "version": "0.1",
+    "id": "photometry.json",
     "type": "object",
 
     "definitions": {

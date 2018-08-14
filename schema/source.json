@@ -3,7 +3,9 @@
     "title": "source",
     "description": "An item representing a bibliographic attribution or reference.",
     "version": "0.5",
+    "id": "source.json",
     "type": "object",
+
     "properties": {
         "alias": {
             "description": "The unique identifier for this source.",

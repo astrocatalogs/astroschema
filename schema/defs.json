@@ -3,6 +3,7 @@
     "title": "defs",
     "description": "Schema specifying definitions used throughout astroschema.",
     "type": "object",
+    "id": "defs.json",
     "version": "0.1",
 
     "definitions": {
