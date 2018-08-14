@@ -10,15 +10,15 @@ VERBOSE = False
 EXTENDABLE = True
 
 
-def set_struct_schema(schema_source, extendable=None,
-                      extensions=[], updates=[], schema_class=schema.SchemaDict):
+def set_struct_schema(schema_source, extensions=[], updates=[],
+                      extendable=None, check_conflict=True, schema_class=schema.SchemaDict):
     if extendable is None:
         extendable = EXTENDABLE
 
     def wrapper(cls):
         schema_dict = schema_class(schema_source)
         for ext in extensions:
-            schema_dict.extend(ext, check_conflict=True)
+            schema_dict.extend(ext, check_conflict=check_conflict)
         for upd in updates:
             schema_dict.update(upd)
         cls._SCHEMA = schema_dict
