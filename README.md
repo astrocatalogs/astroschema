@@ -2,6 +2,11 @@
 
 This package defines a set of JSON schema relevant to astronomy and astrophysics research.  The schema are meant to specify the structure of JSON files used to contain astronomical (and associated) data.  The package also contains modules for the use of those schema in `python`, and in the future additional languages.
 
+[![Build Status](https://travis-ci.org/astrocatalogs/astroschema.svg?branch=master)](https://travis-ci.org/astrocatalogs/astroschema)
+
+[![Coverage Status](https://coveralls.io/repos/github/astrocatalogs/astroschema/badge.svg?branch=master)](https://coveralls.io/github/astrocatalogs/astroschema?branch=master)
+
+
 ## Structure
 
 - `schema/`: the schema specifications themselves
