@@ -11,7 +11,7 @@ setuptools.setup(
     version=version,
     author="Luke Zoltan Kelley",
     author_email="lzkelley@gmail.com",
-    # description="",
+    description="Standardized specifications for astronomy and astrophysics data.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/astrocatalogs/astroschema",
