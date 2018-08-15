@@ -2,7 +2,8 @@
 """
 
 # from numbers import Number
-from past.builtins import basestring
+# from past.builtins import basestring
+import six
 
 from jsonschema import FormatChecker
 # from jsonschema.exceptions import ValidationError
@@ -42,7 +43,7 @@ def contains_numeric_value(value):
     if isinstance(value, list):
         return False
 
-    if isinstance(value, basestring) and ' ' in value:
+    if isinstance(value, six.string_types) and ' ' in value:
         return False
 
     try:
