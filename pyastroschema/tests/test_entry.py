@@ -5,12 +5,11 @@ Can be run with:
     $ nosetests path/to/test_file.py:Test_Class.test_method
 
 """
-# from __future__ import absolute_import, division, print_function, unicode_literals
-import copy
+# import copy
 
 import jsonschema
 
-from nose.tools import assert_true, assert_raises, assert_false  # , assert_equal,
+from nose.tools import assert_true
 
 # import pyastroschema as pas
 from pyastroschema.struct import Entry
