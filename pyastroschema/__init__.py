@@ -1,9 +1,14 @@
 """Python module for interaction with astroschema.
 """
-
-__version__ = "0.5.1"
-
 import os
+
+_par_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
+_PATH_VERSION = os.path.join(_par_dir, "VERSION")
+with open(_PATH_VERSION, "r") as inn:
+    version = inn.read().strip()
+
+__version__ = version
+
 import shutil
 from jsonschema import ValidationError  # noqa
 
