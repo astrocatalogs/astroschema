@@ -2,3 +2,4 @@ jsonschema
 six
 nose
 coverage
+coveralls
