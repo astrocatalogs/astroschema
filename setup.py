@@ -21,6 +21,7 @@ setuptools.setup(
     license="GNU",
     classifiers=(
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 2",
         "License :: OSI Approved :: GNU License",
         "Operating System :: OS Independent",
     )
