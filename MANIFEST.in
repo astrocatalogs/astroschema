@@ -1,0 +1,7 @@
+include *.md
+include requirements.txt
+include VERSION
+include LICENSE
+
+include astroschema_index.json
+include schema/*.json
