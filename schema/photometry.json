@@ -131,11 +131,11 @@
 			"description": "",
 			"$ref": "file:defs.json#/definitions/NUMERIC"
 		},
-        "e_lower_count_rate": {
+        "e_lower_countrate": {
 			"description": "",
 			"$ref": "file:defs.json#/definitions/NUMERIC"
 		},
-        "e_upper_count_rate": {
+        "e_upper_countrate": {
 			"description": "",
 			"$ref": "file:defs.json#/definitions/NUMERIC"
 		},
@@ -339,7 +339,7 @@
                 { "required": ["flux"]},
                 { "required": ["unabsorbedflux"]},
                 { "required": ["fluxdensity"]},
-                { "required": ["count_rate"]},
+                { "required": ["countrate"]},
                 { "required": ["luminosity"]}
             ]
         }
