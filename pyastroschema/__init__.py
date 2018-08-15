@@ -142,3 +142,5 @@ from . import utils  # noqa
 from . import struct  # noqa
 from . import schema  # noqa
 from . import validation  # noqa
+
+from . schema import SchemaDict  # noqa
