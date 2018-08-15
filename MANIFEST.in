@@ -5,3 +5,4 @@ include LICENSE
 
 include astroschema_index.json
 include schema/*.json
+include-recursive tests/*

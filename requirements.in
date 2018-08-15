@@ -1,3 +1,4 @@
 jsonschema
-nose
 six
+nose
+coverage
