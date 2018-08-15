@@ -41,6 +41,7 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 - `pyastroschema/`
     - [1] Using the `defs.json` file now, and relative paths in schema references, requires validators to use `jsonschema.RefResolver` objects with the base path.  To do this, when creating `struct.SchemaDict` instances, the schema specification should be the absolute file-path.  The method `utils.load_schema_dict` now returns the path to the schema also.  The methods `utils.get_schema_odict` and `utils.get_list_of_schema` have been deprecated (commented out for now), to simplify what types of arguments are acceptable.
+    - [2] Code modified to be python2 and python3 compatible.
     
     - `__init__.py`
         - `copy_schema_files()` [NEW-FUNCTION]
@@ -80,6 +81,11 @@ This package defines a set of JSON schema relevant to astronomy and astrophysics
 
 - `astroschema_index.json`
     - Updated to include new `defs.json`.
+- `LICENSE`
+    - Changed from MIT to GNU
+- `MANIFEST.in`, `requirements.in`, `requirements.txt`, `setup.py`, `tox.ini`
+    - Added package material for distribution.
+
 
 
 ### v0.5.0 - 2018-08-02
