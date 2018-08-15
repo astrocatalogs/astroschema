@@ -36,25 +36,11 @@ class Struct(schema.JSONOrderedDict):
     # _extendable = True
 
     def __init__(self, *args, parent=None, validate=True, **kwargs):
+    # def __init__(self, parent=None, validate=True, **kwargs):
         """Initialize with parameters based on the associated schema.
 
         Arguments
         ---------
-        schema : str or dict,
-            This can be a schema specification itself (i.e. a `dict`) or it can be a string which
-            either gives the name of the target schema (e.g. `source` or `quantity`) or it can be
-            the file-path from which to load a schema (e.g. `../schema/source.json`).
-        *args : None,
-            NOT ALLOWED.  Only keyword-arguments (`kwargs`) can be used.
-        parent : obj,
-            Parent entry/structure or `None`.
-        extendable : bool,
-            If `True`, then new key-value pairs can be added to this dict after initialization.
-        validate : bool,
-            If `True`, then the internal validation method is called to compare values against the
-            associated schema.
-        **kwargs : dict,
-            Key-value pairs to be stored to this dictionary during initialization.
 
         """
         if len(args) > 0:
