@@ -69,6 +69,7 @@
 
 ## Packaging
 
+- Setup in develop mode (i.e. symlinks): `$ pip install -e .`
 - Run tests in current environment with `$ nosetests --with-coverage --cover-package=pyastroschema`
 - Generate `requirements.txt` from `requirements.in` by running `$ pip-compile` in the package directory (containing `setup.py`).
 - To run tests in environments, use `$ tox`
