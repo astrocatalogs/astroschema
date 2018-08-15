@@ -35,17 +35,15 @@ class Struct(schema.JSONOrderedDict):
     # _KEYCHAIN = None
     # _extendable = True
 
-    def __init__(self, *args, parent=None, validate=True, **kwargs):
-    # def __init__(self, parent=None, validate=True, **kwargs):
+    def __init__(self, parent=None, validate=True, **kwargs):
         """Initialize with parameters based on the associated schema.
 
         Arguments
         ---------
 
         """
-        if len(args) > 0:
-            err = "Only `kwargs` are allowed in initialization, no additional `args`!"
-            raise RuntimeError(err)
+        # NOTE: this is needed for python2 but not python3, not sure why
+        super(Struct, self).__init__()
 
         _schema = getattr(self, "_SCHEMA", None)
         if (_schema is None) or (not isinstance(_schema, schema.SchemaDict)):

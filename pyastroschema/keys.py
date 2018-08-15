@@ -182,6 +182,8 @@ class Keychain(object):
             if create_if_missing:
                 return Key(name)
 
-            raise ValueError("`Keychain` does not have a key for '{}'! " + str(err)) from err
+            # NOTE: this does not work in python2
+            # raise ValueError("`Keychain` does not have a key for '{}'! " + str(err)) from err
+            raise
 
         return self._keys[idx]

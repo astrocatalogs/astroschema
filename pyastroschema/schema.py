@@ -2,15 +2,13 @@
 """
 import os
 import copy
+import warnings
 from collections import OrderedDict
-
-# from urllib.parse import urlparse
 
 import jsonschema
 
 from pyastroschema import utils, validation
 
-import warnings
 warnings.showwarning = utils.warn_with_traceback
 
 
@@ -117,7 +115,10 @@ class SchemaDict(JSONOrderedDict):
                 if myname is None:
                     myname = str(self)
                 msg = "Reference resolution failure with: {}".format(myname)
-                raise jsonschema.exceptions.RefResolutionError(msg) from err
+                warnings.warn(msg)
+                # NOTE: this does not work in python2
+                # raise jsonschema.exceptions.RefResolutionError(msg) from err
+                raise
 
         return
 
