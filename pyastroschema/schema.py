@@ -142,9 +142,8 @@ class SchemaDict(JSONOrderedDict):
         else:
             data_keys.remove("properties")
 
-        # if "definitions" in data_keys:
-        #     data_keys.remove("definitions")
-
+        '''
+        '$schema', 'version', 'type', 'required'
         ignore_keys = ["definitions", "title", "id", "description"]
         for igkey in ignore_keys:
             if igkey in data_keys:
@@ -154,6 +153,7 @@ class SchemaDict(JSONOrderedDict):
         if len(data_keys) > 0:
             warn = "`SchemaDict.extend()` unexpected keys found! '{}'".format(data_keys)
             warnings.warn(warn)
+        '''
 
         super(SchemaDict, self).extend(data, **kwargs)
         return
