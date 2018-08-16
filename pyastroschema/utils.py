@@ -96,7 +96,7 @@ def json_load_file(fname):
     try:
         with open(fname, 'r') as inp:
             data = json.load(inp, object_pairs_hook=OrderedDict)
-    except:
+    except Exception:
         print("ERROR: Failed to load file '{}'".format(fname))
         raise
 

@@ -222,11 +222,11 @@
 		},
         "bandset": {
 			"description": "",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "$ref": "file:defs.json#/definitions/STRING"
 		},
         "system": {
 			"description": "",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "$ref": "file:defs.json#/definitions/STRING"
 		},
         "description": {
 			"description": "",

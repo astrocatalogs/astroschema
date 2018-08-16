@@ -54,7 +54,7 @@
 		},
 
         "filename": {
-            "$ref": "file:defs.json#/definitions/STRING",
+            "$ref": "file:defs.json#/definitions/STRING"
 		},
         "u_fluxes": {
 			"type": "string",

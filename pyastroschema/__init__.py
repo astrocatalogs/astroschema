@@ -125,12 +125,15 @@ def copy_schema_files(target_dir, sname=None, verbose=None):
     return fnames
 
 
+# NOTE: this doesn't work in python2
+'''
 class MetaEnum(type):
     def __contains__(cls, val):
         return (val in cls.__options)
+'''
 
 
-class META_KEYS(object, metaclass=MetaEnum):
+class META_KEYS(object):  # , metaclass=MetaEnum):
     FNAME = "filename"
     TITLE = "title"
     DESC = "description"
@@ -142,7 +145,7 @@ class META_KEYS(object, metaclass=MetaEnum):
     _options = [FNAME, TITLE, DESC, VERS, UPDATED, INDEX, SCHEMA]
 
 
-class SCHEMA_KEYS(object, metaclass=MetaEnum):
+class SCHEMA_KEYS(object):  # , metaclass=MetaEnum):
     TITLE = "title"
     DESC = "description"
     PROPS = "properties"
@@ -152,7 +155,7 @@ class SCHEMA_KEYS(object, metaclass=MetaEnum):
     _options = [TITLE, DESC, PROPS, TYPE, REQD]
 
 
-class KEY_FORMATS(object, metaclass=MetaEnum):
+class KEY_FORMATS(object):  # , metaclass=MetaEnum):
     NUMERIC = "numeric"
     ASTROTIME = "astrotime"
     STRING = "string"
