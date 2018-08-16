@@ -40,7 +40,7 @@ format_checker = FormatChecker()
 
 # Register a new format checker that checks for numerical values of the proper format
 #     NOTE: list of valid numeric values is *not* accepted, must be specified in schema
-@format_checker.checks(pas.NUMERIC)
+@format_checker.checks(pas.KEY_FORMATS.NUMERIC)
 def contains_numeric_value(value):
     if isinstance(value, list):
         return False
@@ -58,7 +58,7 @@ def contains_numeric_value(value):
 
 # Register a new format checker that checks for numerical values of the proper format
 #     NOTE: list of valid numeric values is *not* accepted, must be specified in schema
-@format_checker.checks(pas.ASTROTIME)
+@format_checker.checks(pas.KEY_FORMATS.ASTROTIME)
 def is_astrotime_compatible(value):
     if isinstance(value, list):
         return False
