@@ -44,7 +44,7 @@ def path_for_schema_file(sname):
 
     # Get the filename for the schema file
     schema_fname = schema_meta[META_KEYS.FNAME]
-    schema_fname = os.path.join(PATHS.ASTROSCHEMA, schema_fname)
+    schema_fname = os.path.join(PATHS.PYASTROSCHEMA, schema_fname)
     return schema_fname
 
 

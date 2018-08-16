@@ -2,8 +2,10 @@
 """
 import os
 
-_par_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
-_PATH_VERSION = os.path.join(_par_dir, "VERSION")
+# _par_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
+# _PATH_VERSION = os.path.join(_par_dir, "VERSION")
+_this_dir = os.path.abspath(os.path.dirname(__file__))
+_PATH_VERSION = os.path.join(_this_dir, "VERSION")
 with open(_PATH_VERSION, "r") as inn:
     version = inn.read().strip()
 
@@ -22,6 +24,7 @@ _FNAME_VERSION = "VERSION"
 _INDEX_JSON_FILENAME = "astroschema_index.json"
 _DIR_SCHEMA = "schema"
 _DIR_TESTS = "tests"
+_DIR_TESTS_SCHEMA = "test_schema"
 _DIR_META_SCHEMA = "meta-schema"
 _META_SCHEMA_FILENAME = "meta-schema.json"
 
@@ -33,19 +36,20 @@ INDEX_DESCRIPTION = "Index and summary of schema included in `astroschema`."
 
 class PATHS:
     PYASTROSCHEMA = os.path.realpath(os.path.dirname(__file__))
-    ASTROSCHEMA = os.path.realpath(os.path.join(PYASTROSCHEMA, os.path.pardir))
+    # ASTROSCHEMA = os.path.realpath(os.path.join(PYASTROSCHEMA, os.path.pardir))
 
-    SCHEMA_DIR = os.path.join(ASTROSCHEMA, _DIR_SCHEMA, "")
+    SCHEMA_DIR = os.path.join(PYASTROSCHEMA, _DIR_SCHEMA, "")
     META_SCHEMA_DIR = os.path.join(SCHEMA_DIR, _DIR_META_SCHEMA, "")
-    TESTS_DIR = os.path.join(ASTROSCHEMA, _DIR_TESTS, "")
-    ASTROSCHEMA_VERSION_FILE = os.path.join(ASTROSCHEMA, _FNAME_VERSION)
-    INDEX_JSON_FILE = os.path.join(ASTROSCHEMA, _INDEX_JSON_FILENAME)
+    TESTS_DIR = os.path.join(PYASTROSCHEMA, _DIR_TESTS, "")
+    TESTS_SCHEMA_DIR = os.path.join(TESTS_DIR, _DIR_TESTS_SCHEMA, "")
+    ASTROSCHEMA_VERSION_FILE = os.path.join(PYASTROSCHEMA, _FNAME_VERSION)
+    INDEX_JSON_FILE = os.path.join(PYASTROSCHEMA, _INDEX_JSON_FILENAME)
 
     META_SCHEMA_FILE = os.path.join(SCHEMA_DIR, _META_SCHEMA_FILENAME)
 
     @classmethod
     def test_dir(cls, name, good=False, bad=False):
-        td = os.path.join(cls.TESTS_DIR, name, "")
+        td = os.path.join(cls.TESTS_SCHEMA_DIR, name, "")
         if not os.path.exists(td):
             err = "Test directory for '{}' does not exist!  '{}'".format(name, td)
             raise ValueError(err)

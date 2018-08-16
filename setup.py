@@ -1,9 +1,11 @@
+import os
 import setuptools
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-with open("VERSION", "r") as inn:
+VERSION_PATH = os.path.join("./pyastroschema", "VERSION")
+with open(VERSION_PATH, "r") as inn:
     version = inn.read().strip()
 
 setuptools.setup(

@@ -1,6 +1,6 @@
 include *.md
 include requirements.txt
-include VERSION
+include pyastroschema/VERSION
 include LICENSE
 
 include astroschema_index.json
