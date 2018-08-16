@@ -15,14 +15,13 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/astrocatalogs/astroschema",
-    # packages=setuptools.find_packages(),
+    include_package_data=True,
     packages=["pyastroschema"],
     test_suite="nose.collector",
     license="GNU",
     classifiers=(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 2",
-        "License :: OSI Approved :: GNU License",
-        "Operating System :: OS Independent",
+        "Operating System :: OS Independent"
     )
 )
