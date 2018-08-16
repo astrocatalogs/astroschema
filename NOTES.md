@@ -74,4 +74,7 @@
 - Generate `requirements.txt` from `requirements.in` by running `$ pip-compile` in the package directory (containing `setup.py`).
 - To run tests in environments, use `$ tox`
     - NOTE: if dependencies change, need to rebuild `tox` environments using `$ tox --recreate`
-- Package distribution using: `$ python setup.py sdist bdist_wheel` and upload to `pypi` with `$ twine upload dist/*`
+- Package distribution using: 
+    - `$ rm dist/*`   cleanup old packages
+    - `$ python setup.py sdist bdist_wheel`   create packages
+    - `$ twine upload dist/*`    upload to `pypi`
