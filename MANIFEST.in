@@ -1,5 +1,7 @@
 include *.md
-include *.json
 include requirements.txt
 include pyastroschema/VERSION
 include LICENSE
+include README.md
+
+recursive-include *.json
