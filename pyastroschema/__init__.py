@@ -125,7 +125,12 @@ def copy_schema_files(target_dir, sname=None, verbose=None):
     return fnames
 
 
-class META_KEYS:
+class MetaEnum(type):
+    def __contains__(cls, val):
+        return (val in cls.__options)
+
+
+class META_KEYS(object, metaclass=MetaEnum):
     FNAME = "filename"
     TITLE = "title"
     DESC = "description"
@@ -134,13 +139,27 @@ class META_KEYS:
     INDEX = "index"
     SCHEMA = "schema"
 
+    _options = [FNAME, TITLE, DESC, VERS, UPDATED, INDEX, SCHEMA]
 
-class SCHEMA_KEYS:
+
+class SCHEMA_KEYS(object, metaclass=MetaEnum):
     TITLE = "title"
     DESC = "description"
     PROPS = "properties"
     TYPE = "type"
     REQD = "required"
+
+    _options = [TITLE, DESC, PROPS, TYPE, REQD]
+
+
+class KEY_FORMATS(object, metaclass=MetaEnum):
+    NUMERIC = "numeric"
+    ASTROTIME = "astrotime"
+    STRING = "string"
+
+    _options = [NUMERIC, ASTROTIME, STRING]
+
+
 
 from . import utils  # noqa
 from . import struct  # noqa

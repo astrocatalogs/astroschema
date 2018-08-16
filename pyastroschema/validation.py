@@ -10,6 +10,8 @@ from jsonschema import FormatChecker
 from jsonschema import validators
 from jsonschema import Draft4Validator as Validator
 
+import pyastroschema as pas
+
 
 def _extend_with_default(validator_class):
     """Take a given validator and add behavior to set default values if they are given.
@@ -38,7 +40,7 @@ format_checker = FormatChecker()
 
 # Register a new format checker that checks for numerical values of the proper format
 #     NOTE: list of valid numeric values is *not* accepted, must be specified in schema
-@format_checker.checks('numeric')
+@format_checker.checks(pas.NUMERIC)
 def contains_numeric_value(value):
     if isinstance(value, list):
         return False
@@ -56,12 +58,21 @@ def contains_numeric_value(value):
 
 # Register a new format checker that checks for numerical values of the proper format
 #     NOTE: list of valid numeric values is *not* accepted, must be specified in schema
-@format_checker.checks('astrotime')
+@format_checker.checks(pas.ASTROTIME)
 def is_astrotime_compatible(value):
     if isinstance(value, list):
         return False
 
     if (not contains_numeric_value(value)) and (('-' not in value) and ('/' not in value)):
+        return False
+
+    return True
+
+
+# Register a new format checker that checks for string values
+@format_checker.checks(pas.STRING)
+def is_string_format(value):
+    if isinstance(value, six.string_types):
         return False
 
     return True
