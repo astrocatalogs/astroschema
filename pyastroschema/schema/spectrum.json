@@ -54,7 +54,7 @@
 		},
 
         "filename": {
-			"type": "string"
+            "$ref": "file:defs.json#/definitions/STRING",
 		},
         "u_fluxes": {
 			"type": "string",
@@ -65,35 +65,35 @@
 			"distinguishing": false
 		},
         "instrument": {
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "observatory": {
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "observer": {
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "source": {
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "reducer": {
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "reduction": {
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "survey": {
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "telescope": {
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "u_time": {

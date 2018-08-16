@@ -18,7 +18,7 @@
     "properties": {
         "name": {
             "description": "Standard designation for this Entry.",
-            "type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
             "unique": false,
             "distinguishing": true,
             "no_source": true,
@@ -192,7 +192,7 @@
         },
         "discovery_date": {
             "description": "",
-            "type": "string"
+            "$ref": "file:defs.json#/definitions/STRING"
         },
         "errors": {
             "description": ""

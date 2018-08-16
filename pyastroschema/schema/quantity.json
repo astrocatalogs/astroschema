@@ -51,7 +51,7 @@
         },
         "description": {
             "description": "Any additional descriptive/meta information about this quantity.",
-            "type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
             "unique": false,
             "distinguishing": false
         },

@@ -7,6 +7,10 @@
     "version": "0.1",
 
     "definitions": {
+        "STRING": {
+            "type": "string",
+            "format": "string"
+        },
         "NUMERIC": {
             "type": ["number", "string"],
             "format": "numeric"

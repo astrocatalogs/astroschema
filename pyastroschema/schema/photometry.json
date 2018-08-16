@@ -187,50 +187,50 @@
 		},
         "telescope": {
 			"description": "",
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "instrument": {
 			"description": "",
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "mode": {
 			"description": "",
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "band": {
 			"description": "",
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"priority": 8
 		},
         "observatory": {
 			"description": "",
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "observer": {
 			"description": "",
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "survey": {
 			"description": "",
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "bandset": {
 			"description": "",
-			"type": "string"
+            "$ref": "file:defs.json#/definitions/STRING",
 		},
         "system": {
 			"description": "",
-			"type": "string"
+            "$ref": "file:defs.json#/definitions/STRING",
 		},
         "description": {
 			"description": "",
-			"type": "string",
+            "$ref": "file:defs.json#/definitions/STRING",
 			"distinguishing": false
 		},
         "u_countrate": {
