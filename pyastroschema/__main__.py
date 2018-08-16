@@ -144,7 +144,7 @@ def schemas_index(schemas, file_names, index_fname):
         # Get filename relative to `PATH_ASTROSCHEMA`
         # common_path = os.path.join(os.path.commonpath([fname, PATHS.ASTROSCHEMA]), '')
         # relpath = fname.split(common_path)[-1]
-        schema_file_relpath = utils.get_relative_path(fname, PATHS.ASTROSCHEMA)
+        schema_file_relpath = utils.get_relative_path(fname, PATHS.PYASTROSCHEMA)
 
         try:
             title = astroschema[META_KEYS.TITLE]
@@ -173,7 +173,7 @@ def schemas_index(schemas, file_names, index_fname):
     # Construct top-level dictionary including meta-data
     # --------------------------------------------------------------
     vers = utils.get_astroschema_version()
-    index_fname_rel = utils.get_relative_path(index_fname, PATHS.ASTROSCHEMA)
+    index_fname_rel = utils.get_relative_path(index_fname, PATHS.PYASTROSCHEMA)
     if VERBOSE:
         print("\tastroschema version: '{}'".format(vers))
 

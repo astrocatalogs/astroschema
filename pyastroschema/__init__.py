@@ -102,7 +102,7 @@ def copy_schema_files(target_dir, sname=None, verbose=None):
     for sch in schema_names:
         # print(sch)
         src = index[sch][META_KEYS.FNAME]
-        src = os.path.join(PATHS.ASTROSCHEMA, src)
+        src = os.path.join(PATHS.PYASTROSCHEMA, src)
         # Make sure source file exists
         if not os.path.exists(src):
             raise RuntimeError("Path for schema '{}' does not exist!  ('{}')".format(sch, src))
