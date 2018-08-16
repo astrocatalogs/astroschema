@@ -70,13 +70,14 @@ def is_astrotime_compatible(value):
 
 
 # Register a new format checker that checks for string values
+'''
 @format_checker.checks(pas.STRING)
 def is_string_format(value):
     if isinstance(value, six.string_types):
         return False
 
     return True
-
+'''
 
 # Create a new instance of your custom validator. Add a custom type.
 def PAS_Validator(schema, **kwargs):
