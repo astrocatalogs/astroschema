@@ -1,8 +1,5 @@
 include *.md
+include *.json
 include requirements.txt
 include pyastroschema/VERSION
 include LICENSE
-
-include astroschema_index.json
-include schema/*.json
-include-recursive tests/*
