@@ -1,8 +1,6 @@
 """
 """
 
-# from numbers import Number
-# from past.builtins import basestring
 import six
 
 from jsonschema import FormatChecker
