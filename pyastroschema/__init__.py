@@ -10,6 +10,7 @@ with open(_PATH_VERSION, "r") as inn:
     version = inn.read().strip()
 
 __version__ = version
+print("\n" + __file__ + " : version : " + version + "\n")
 
 import shutil
 from jsonschema import ValidationError  # noqa
