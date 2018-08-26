@@ -22,7 +22,7 @@ class JSONOrderedDict(OrderedDict):
         return utils.json_dump_file(package, fname)
 
     def dumps(self, sort_func=None):
-        package = self if sort_func is None else sort_func(self)
+        package = self if (sort_func is None) else sort_func(self)
         return utils.json_dump_str(package)
 
     @classmethod
