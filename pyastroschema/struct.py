@@ -11,6 +11,8 @@ VERBOSE = False
 
 EXTENDABLE = True
 
+DUPLICATE_USES_HASH = True
+
 
 def set_struct_schema(schema_source, extensions=[], updates=[],
                       extendable=None, check_conflict=True, schema_class=schema.SchemaDict):
@@ -173,7 +175,7 @@ class Struct(schema.JSONOrderedDict):
         self.schema.validate(self)
         return
 
-    def is_duplicate_of(self, other, hashed=False, ignore_case=True, verbose=None):
+    def is_duplicate_of(self, other, hashed=None, ignore_case=True, verbose=None):
         """Compares this instance to another to determine if they are 'duplicates'.
 
         NOTE: A 'duplicate' means that *certain* types of properties match, not (necessarily) that
@@ -188,6 +190,9 @@ class Struct(schema.JSONOrderedDict):
         """
         if verbose is None:
             verbose = VERBOSE
+
+        if hashed is None:
+            hashed = DUPLICATE_USES_HASH
 
         if hashed:
             return (self.hash == other.hash)
@@ -271,7 +276,6 @@ class Struct(schema.JSONOrderedDict):
         return DEFAULT_BEHAVIOR
 
 
-# Source = Struct.construct("source")
 @set_struct_schema("source")
 class Source(Struct):
     pass
