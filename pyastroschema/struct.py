@@ -1,7 +1,9 @@
 """Eventually this will be generalized from 'source' specifically to any 'struct'.
 """
-
+from collections import OrderedDict
 from copy import deepcopy
+
+import json
 
 from . import keys, schema
 
@@ -54,6 +56,8 @@ class Struct(schema.JSONOrderedDict):
             raise ValueError("`_KEYCHAIN` is a required attribute and must be a `Keychain`!")
 
         self._parent = parent
+        self._hash = None
+        self._hash_changed = True
 
         # Store parameters passed during initialization
         # NOTE: this is fine for `source`, but perhaps this should be a deepcopy for other objects?
@@ -79,6 +83,8 @@ class Struct(schema.JSONOrderedDict):
             raise RuntimeError(err)
 
         super(Struct, self).__setitem__(name, value)
+        # This instance will need to have its hash reconstructed
+        self._hash_changed = True
         return
 
     def __copy__(self):
@@ -125,6 +131,35 @@ class Struct(schema.JSONOrderedDict):
         return self._SCHEMA
 
     @property
+    def hash(self):  # , unique=True, distinguishing=True):
+        '''
+        hash_name = "_hash"
+        if unique:
+            hash_name += "_uniq"
+        if distinguishing:
+            hash_name += "_dist"
+        '''
+        # print(__file__ + ":hash()")
+        # If hash has yet to be constructed, construct one
+        if (self._hash is None) or self._hash_changed:
+            # print("\tHashing")
+            # Store only the values contributing to the hash (i.e. comparable values)
+            hash_dict = OrderedDict()
+            # Go through keys and store the targeted ones in a sorted order
+            for key in sorted(self.keychain.keys()):
+                # print("\t\t", key)
+                if (key.unique or key.distinguishing) and (key in self):
+                    # print("\t\t\tusing: ", self[key])
+                    hash_dict[key] = self[key]
+
+            # Construct and store the hash
+            self._hash = hash(json.dumps(hash_dict))
+            self._hash_changed = False
+
+        # print("\t", self._hash)
+        return self._hash
+
+    @property
     def extendable(self):
         return self._extendable
 
@@ -138,7 +173,7 @@ class Struct(schema.JSONOrderedDict):
         self.schema.validate(self)
         return
 
-    def is_duplicate_of(self, other, ignore_case=True, verbose=None):
+    def is_duplicate_of(self, other, hashed=False, ignore_case=True, verbose=None):
         """Compares this instance to another to determine if they are 'duplicates'.
 
         NOTE: A 'duplicate' means that *certain* types of properties match, not (necessarily) that
@@ -153,6 +188,9 @@ class Struct(schema.JSONOrderedDict):
         """
         if verbose is None:
             verbose = VERBOSE
+
+        if hashed:
+            return (self.hash == other.hash)
 
         # If these are not the same type, return False
         if type(other) is not type(self):

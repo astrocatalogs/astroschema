@@ -241,3 +241,52 @@ def test_custom_schema_class():
         Test_Struct(name_test="hello", number_test=1)
 
     return
+
+
+def test_hash():
+
+    SCHEMA = dict(
+        properties=dict(
+            name=dict(
+                type="string",
+                unique=False,
+                distinguishing=True
+            ),
+            number=dict(
+                type="number",
+                unique=False,
+                distinguishing=False
+            )
+        ),
+        required=["name", "number"]
+    )
+
+    # create subclass, explicitly adding required attributes
+    Test_Struct = struct.Struct.construct(SCHEMA)
+
+    # Make sure that hash is generated
+    num0 = 123
+    name0 = "Name"
+    t0 = Test_Struct(name=name0, number=num0)
+    h0 = t0.hash
+    print("Struct instance: ", t0)
+    print("Hash: ", h0)
+    assert_true(h0 is not None)
+    assert_true(t0["number"] == num0)
+    assert_true(t0["name"] == name0)
+
+    # Hash should not change when modifying non-distinguishing (and non-unique) values
+    n1 = 321
+    t0["number"] = n1
+    assert_true(t0["number"] == n1)
+    h1 = t0.hash
+    assert_true(h1 == h0)
+
+    # Hash should change when a distinguishing value changes
+    t0["name"] = "different"
+    h1 = t0.hash
+    print("New Hash: ", h1)
+    assert_true(t0["name"] != name0)
+    assert_true(h1 != h0)
+
+    return
