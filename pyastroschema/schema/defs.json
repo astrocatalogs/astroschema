@@ -4,12 +4,26 @@
     "description": "Schema specifying definitions used throughout astroschema.",
     "type": "object",
     "id": "defs.json",
-    "version": "0.1",
+    "version": "0.2",
 
     "definitions": {
         "STRING": {
             "type": "string",
-            "format": "string"
+            "format": "string",
+            "minLength": 1
+        },
+        "STRING_LIST": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "$ref": "#/definitions/STRING"
+            }
+        },
+        "STRING_LISTABLE": {
+            "anyOf": [
+                {"$ref": "#/definitions/STRING"},
+                {"$ref": "#/definitions/STRING_LIST"}
+            ]
         },
         "NUMERIC": {
             "type": ["number", "string"],
