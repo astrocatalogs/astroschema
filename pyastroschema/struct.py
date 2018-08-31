@@ -275,6 +275,9 @@ class Struct(schema.JSONOrderedDict):
 
         return DEFAULT_BEHAVIOR
 
+    def merge_from(self, other, **kwargs):
+        return
+
 
 @set_struct_schema("source")
 class Source(Struct):
