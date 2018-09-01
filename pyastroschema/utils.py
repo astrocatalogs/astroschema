@@ -5,7 +5,19 @@ import os
 import json
 from collections import OrderedDict
 
+import numpy as np
+
 from . import PATHS, META_KEYS
+
+
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, np.number):
+            return np.asscalar(obj)
+        return super(NumpyEncoder, self).default(self, obj)
+        # return json.JSONEncoder.default(self, obj)
 
 
 def load_schema_index():
@@ -73,20 +85,23 @@ def load_schema_dict(sname):
     return schema, path, title
 
 
-def json_dump_str(odict, **kwargs):
+def json_dump_str(odict, cls=NumpyEncoder, pretty=True, **kwargs):
     """Dump the contents of a dictionary to a string using json formatting.
     """
-    kw = _json_dump_kwargs(indent=2)
-    jsonstring = json.dumps(odict, **kw)
+    if pretty:
+        kwargs = _json_dump_kwargs(**kwargs)
+    # Use `cls=None` for default
+    jsonstring = json.dumps(odict, cls=cls, **kwargs)
     return jsonstring
 
 
-def json_dump_file(odict, fname, **kwargs):
+def json_dump_file(odict, fname, pretty=True, **kwargs):
     """Dump the contents of a dictionary to a JSON file with the given filename.
     """
-    kw = _json_dump_kwargs(**kwargs)
+    if pretty:
+        kwargs = _json_dump_kwargs(**kwargs)
     with open(fname, 'w') as out:
-        json.dump(odict, out, **kw)
+        json.dump(odict, out, **kwargs)
     return
 
 
@@ -114,8 +129,9 @@ def _json_dump_kwargs(**kwargs):
     """Load kwargs to be passed to `json.dump` and `json.dumps`.
     """
     kw = dict(indent=2, separators=(',', ':'), ensure_ascii=False)
-    for kk, vv in kwargs.items():
-        kw[kk] = vv
+    kw.update(kwargs)
+    # for kk, vv in kwargs.items():
+    #     kw[kk] = vv
 
     return kw
 
