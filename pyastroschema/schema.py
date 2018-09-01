@@ -17,13 +17,13 @@ class JSONOrderedDict(OrderedDict):
     def __str__(self):
         return utils.json_dump_str(self)
 
-    def dump(self, fname, sort_func=None):
+    def dump(self, fname, sort_func=None, **kwargs):
         package = self if sort_func is None else sort_func(self)
-        return utils.json_dump_file(package, fname)
+        return utils.json_dump_file(package, fname, **kwargs)
 
-    def dumps(self, sort_func=None):
+    def dumps(self, sort_func=None, **kwargs):
         package = self if (sort_func is None) else sort_func(self)
-        return utils.json_dump_str(package)
+        return utils.json_dump_str(package, **kwargs)
 
     @classmethod
     def load(cls, fname):
