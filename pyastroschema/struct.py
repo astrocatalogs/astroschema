@@ -4,8 +4,9 @@ from collections import OrderedDict
 from copy import deepcopy
 
 import json
+import numpy as np
 
-from . import keys, schema
+from . import keys, schema, utils
 
 VERBOSE = False
 
@@ -155,7 +156,22 @@ class Struct(schema.JSONOrderedDict):
                     hash_dict[key] = self[key]
 
             # Construct and store the hash
-            self._hash = hash(json.dumps(hash_dict))
+            try:
+                # hash_str = json.dumps(hash_dict, cls=NumpyEncoder)
+                hash_str = utils.json_dump_str(hash_dict, pretty=False)
+            except:
+                print("FAILED TO DUMPS")
+                print("hash_dict = ", hash_dict)
+                raise
+
+            try:
+                self._hash = hash(hash_str)
+            except:
+                print("FAILED TO HASH")
+                print("str = ", hash_str)
+                print("nice hash_dict: \n\n", utils.json_dump_str(hash_dict))
+                raise
+
             self._hash_changed = False
 
         # print("\t", self._hash)
