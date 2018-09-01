@@ -4,6 +4,7 @@
 import os
 import json
 from collections import OrderedDict
+import decimal
 
 import numpy as np
 
@@ -16,7 +17,9 @@ class NumpyEncoder(json.JSONEncoder):
             return obj.tolist()
         elif isinstance(obj, np.number):
             return np.asscalar(obj)
-        return super(NumpyEncoder, self).default(self, obj)
+        elif isinstance(obj, decimal.Decimal):
+            return str(obj)
+        return super(NumpyEncoder, self).default(obj)
         # return json.JSONEncoder.default(self, obj)
 
 
