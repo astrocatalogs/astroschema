@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/schema#",
     "title": "entry",
     "description": "An item representing a complete catalog entry.",
-    "version": "0.2",
+    "version": "0.3",
     "id": "entry.json",
     "type": "object",
 
@@ -180,7 +180,7 @@
             "distinguishing": true,
             "$ref": "entry.json#/definitions/DIST_PREF_KINDS",
             "replace_better": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "$ref": "file:defs.json#/definitions/QUANTITY_NUMERIC_LISTABLE"
         },
         "velocity": {
             "description": "",
