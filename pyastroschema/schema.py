@@ -36,10 +36,13 @@ class JSONOrderedDict(OrderedDict):
     def extend(self, data, **kwargs):
         """Add elements from `schema` not present in self (recursively).
         """
-        # data = utils.get_schema_odict(schema)
-        # print("schema = ", schema)
-        # data = JSONOrderedDict(schema)
         _extend(self, data, **kwargs)
+        return
+
+    def update(self, data, **kwargs):
+        """Add elements from `schema` not present in self (recursively).
+        """
+        _update(self, data, **kwargs)
         return
 
 
@@ -139,10 +142,11 @@ class SchemaDict(JSONOrderedDict):
         if "properties" not in data_keys:
             warn = "`SchemaDict.extend()` designed to add 'properties', which is not found!"
             warnings.warn(warn)
+
+        '''
         else:
             data_keys.remove("properties")
 
-        '''
         '$schema', 'version', 'type', 'required'
         ignore_keys = ["definitions", "title", "id", "description"]
         for igkey in ignore_keys:
@@ -158,14 +162,20 @@ class SchemaDict(JSONOrderedDict):
         super(SchemaDict, self).extend(data, **kwargs)
         return
 
-    def update(self, schema):
+    def update(self, schema, **kwargs):
         data = SchemaDict(schema)
-        super(SchemaDict, self).update(data)
+        data_keys = list(data.keys())
+        # Warn if there is no 'properties'
+        if "properties" not in data_keys:
+            warn = "`SchemaDict.update()` designed to add 'properties', which is not found!"
+            warnings.warn(warn)
+
+        super(SchemaDict, self).update(data, **kwargs)
         return
 
 
 def _extend(aa, bb, copy_type='deep', check_conflict=False):
-    """Add the key-values from `bb` into `aa`.
+    """Add *without overwriting* the key-values from `bb` into `aa`.
     """
 
     for key, val in bb.items():
@@ -173,12 +183,33 @@ def _extend(aa, bb, copy_type='deep', check_conflict=False):
         if (key in aa):
             # If there is a lower-level dictionary, pass that to `_extend` to continue copying
             if isinstance(aa[key], dict):
-                _extend(aa[key], val, check_conflict=check_conflict)
+                _extend(aa[key], val, check_conflict=check_conflict, copy_type=copy_type)
             # If `check_conflicts` make sure leaf values match
             elif check_conflict and (aa[key] != val):
                 raise ValueError("Key: '{}' conflict!  '{}' vs '{}'".format(key, aa[key], val))
 
         # If `aa` does not have the key-value, add them
+        else:
+            if copy_type == 'deep':
+                aa[key] = copy.deepcopy(val)
+            elif copy_type == 'shallow':
+                aa[key] = copy.copy(val)
+            elif copy_type == 'point':
+                aa[key] = val
+            else:
+                raise ValueError("Unrecognized `copy_type` = '{}'!".format(copy_type))
+
+    return aa
+
+
+def _update(aa, bb, copy_type='deep'):
+    """Add *or overwrite* the key-values from `bb` into `aa`.
+    """
+
+    for key, val in bb.items():
+        # If there is a lower-level dictionary, pass that to `_update` to continue copying
+        if (key in aa) and isinstance(val, dict):
+            _update(aa[key], val, copy_type=copy_type)
         else:
             if copy_type == 'deep':
                 aa[key] = copy.deepcopy(val)
