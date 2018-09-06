@@ -126,6 +126,38 @@ def copy_schema_files(target_dir, sname=None, verbose=None):
     return fnames
 
 
+def get_schema_file_names(sname=None):
+    """
+    """
+    index = utils.load_schema_index()
+    index = index[META_KEYS.INDEX]
+    schema_names = list(sorted(index.keys()))
+    # If a particular schema is targeted then select it, make sure it matches
+    if sname is not None:
+        if sname not in schema_names:
+            raise ValueError("Schema '{}' is not in the index!".format(sname))
+
+        schema_names = [sname]
+
+    # Iterate over all (targeted) schema files
+    fnames = []
+    for sch in schema_names:
+        # print(sch)
+        src = index[sch][META_KEYS.FNAME]
+        src = os.path.join(PATHS.PYASTROSCHEMA, src)
+        # Make sure source file exists
+        if not os.path.exists(src):
+            raise RuntimeError("Path for schema '{}' does not exist!  ('{}')".format(sch, src))
+
+        fnames.append(src)
+
+    # If a single target file was given, return str instead of list
+    if sname is not None:
+        fnames = fnames[0]
+
+    return fnames
+
+
 # NOTE: this doesn't work in python2
 '''
 class MetaEnum(type):
