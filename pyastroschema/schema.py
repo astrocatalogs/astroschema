@@ -117,7 +117,8 @@ class SchemaDict(JSONOrderedDict):
                     myname = self._name
                 if myname is None:
                     myname = str(self)
-                msg = "Reference resolution failure with: {}".format(myname)
+                msg = "Reference resolution failure with: {} ({})".format(
+                    myname, self._filename)
                 warnings.warn(msg)
                 # NOTE: this does not work in python2
                 # raise jsonschema.exceptions.RefResolutionError(msg) from err
@@ -178,26 +179,35 @@ def _extend(aa, bb, copy_type='deep', check_conflict=False):
     """Add *without overwriting* the key-values from `bb` into `aa`.
     """
 
+    def _store_func(val):
+        if copy_type == 'deep':
+            return copy.deepcopy(val)
+        elif copy_type == 'shallow':
+            return copy.copy(val)
+        elif copy_type == 'point':
+            return val
+
+        raise ValueError("Unrecognized `copy_type` = '{}'!".format(copy_type))
+
     for key, val in bb.items():
         # If both dicts have the key, make sure deeper levels also match
         if (key in aa):
             # If there is a lower-level dictionary, pass that to `_extend` to continue copying
             if isinstance(aa[key], dict):
                 _extend(aa[key], val, check_conflict=check_conflict, copy_type=copy_type)
+            elif isinstance(aa[key], list):
+                val = val if isinstance(val, list) else [val]
+                for vv in val:
+                    if vv not in aa[key]:
+                        aa[key].append(_store_func(vv))
+
             # If `check_conflicts` make sure leaf values match
             elif check_conflict and (aa[key] != val):
                 raise ValueError("Key: '{}' conflict!  '{}' vs '{}'".format(key, aa[key], val))
 
         # If `aa` does not have the key-value, add them
         else:
-            if copy_type == 'deep':
-                aa[key] = copy.deepcopy(val)
-            elif copy_type == 'shallow':
-                aa[key] = copy.copy(val)
-            elif copy_type == 'point':
-                aa[key] = val
-            else:
-                raise ValueError("Unrecognized `copy_type` = '{}'!".format(copy_type))
+            aa[key] = _store_func(val)
 
     return aa
 
@@ -205,6 +215,7 @@ def _extend(aa, bb, copy_type='deep', check_conflict=False):
 def _update(aa, bb, copy_type='deep'):
     """Add *or overwrite* the key-values from `bb` into `aa`.
     """
+    raise NotImplementedError("`_update` needs to be rethought!")
 
     for key, val in bb.items():
         # If there is a lower-level dictionary, pass that to `_update` to continue copying
