@@ -14,7 +14,9 @@
                 "properties": {
                     "patternProperties": {
                         ".*": {
-                            "$ref": "file:/Users/lzkelley/Research/catalogs/astroschema/schema/key.json"
+                            "allOf": [
+                                { "$ref": "file:/Users/lzkelley/Research/catalogs/astroschema/schema/key.json" }
+                            ]
                         }
                     }
                 }

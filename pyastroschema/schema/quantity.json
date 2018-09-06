@@ -15,19 +15,25 @@
         },
         "error_value": {
             "description": "Symmetric, one-sigma error associated with this Quantity's value.",
-            "$ref": "file:defs.json#/definitions/NUMERIC",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ],
             "unique": false,
             "distinguishing": true
         },
         "error_upper": {
             "description": "Upper (plus) one-sigma error on this Quantity's value.",
-            "$ref": "file:defs.json#/definitions/NUMERIC",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ],
             "unique": false,
             "distinguishing": true
         },
         "error_lower": {
             "description": "Lower (minus) one-sigma error on this Quantity's value.",
-            "$ref": "file:defs.json#/definitions/NUMERIC",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ],
             "unique": false,
             "distinguishing": true
         },
@@ -51,7 +57,9 @@
         },
         "description": {
             "description": "Any additional descriptive/meta information about this quantity.",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
             "unique": false,
             "distinguishing": false
         },

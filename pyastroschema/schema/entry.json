@@ -18,7 +18,9 @@
     "properties": {
         "name": {
             "description": "Standard designation for this Entry.",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
             "unique": false,
             "distinguishing": true,
             "no_source": true,
@@ -34,139 +36,181 @@
         "sources": {
             "description": "Bibliographic attributions describing the sources of this Entry's data.",
             "no_source": true,
-            "$ref": "file:defs.json#/definitions/SOURCE_LIST"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/SOURCE_LIST" }
+            ]
         },
         "photometry": {
             "description": "",
-            "$ref": "file:defs.json#/definitions/PHOTOMETRY_LIST"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/PHOTOMETRY_LIST" }
+            ]
         },
         "spectra": {
             "description": "",
-            "$ref": "file:defs.json#/definitions/SPECTRUM_LIST"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/SPECTRUM_LIST" }
+            ]
         },
 
         "alias": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LIST"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LIST" }
+            ]
         },
         "comoving_dist": {
             "description": "",
             "unique": false,
             "distinguishing": true,
             "replace_better": true,
-            "$ref": "entry.json#/definitions/DIST_PREF_KINDS",
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "entry.json#/definitions/DIST_PREF_KINDS" },
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "dec": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "discoverdate": {
             "description": "",
             "unique": false,
             "distinguishing": true,
             "replace_better": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "discoverer": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "distinct_from": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "ebv": {
             "description": "",
             "unique": false,
             "distinguishing": true,
             "replace_better": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "av_circum": {
             "description": "",
             "unique": false,
             "distinguishing": true,
             "replace_better": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "host": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "host_dec": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "host_offset_ang": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "host_offset_dist": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "host_ra": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "host_redshift": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "entry.json#/definitions/HOST_DIST_PREF_KINDS",
             "replace_better": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "entry.json#/definitions/HOST_DIST_PREF_KINDS" },
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "host_velocity": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "entry.json#/definitions/HOST_DIST_PREF_KINDS",
             "replace_better": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "entry.json#/definitions/HOST_DIST_PREF_KINDS" },
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "host_lum_dist": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "entry.json#/definitions/HOST_DIST_PREF_KINDS",
             "replace_better": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "entry.json#/definitions/HOST_DIST_PREF_KINDS" },
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "host_comoving_dist": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "entry.json#/definitions/HOST_DIST_PREF_KINDS",
             "replace_better": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "entry.json#/definitions/HOST_DIST_PREF_KINDS" },
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "lum_dist": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "entry.json#/definitions/DIST_PREF_KINDS",
             "replace_better": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "entry.json#/definitions/DIST_PREF_KINDS" },
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "ra": {
             "description": "",
@@ -178,21 +222,27 @@
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "entry.json#/definitions/DIST_PREF_KINDS",
             "replace_better": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_NUMERIC_LISTABLE"
+            "allOf": [
+                { "$ref": "entry.json#/definitions/DIST_PREF_KINDS" },
+                { "$ref": "file:defs.json#/definitions/QUANTITY_NUMERIC_LISTABLE" }
+            ]
         },
         "velocity": {
             "description": "",
             "unique": false,
             "distinguishing": true,
-            "$ref": "entry.json#/definitions/DIST_PREF_KINDS",
             "replace_better": true,
-            "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE"
+            "allOf": [
+                { "$ref": "entry.json#/definitions/DIST_PREF_KINDS" },
+                { "$ref": "file:defs.json#/definitions/QUANTITY_LISTABLE" }
+            ]
         },
         "discovery_date": {
             "description": "",
-            "$ref": "file:defs.json#/definitions/STRING"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ]
         },
         "errors": {
             "description": ""

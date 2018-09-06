@@ -25,38 +25,54 @@
 
         "time": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/TIME_LISTABLE",
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/TIME_LISTABLE" }
+            ],
 			"priority": 10
 		},
 
         "magnitude": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC",
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ],
 			"priority": 9
 		},
         "flux": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "fluxdensity": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "countrate": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "luminosity": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "zero_point": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "upper_limit_sigma": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "energy": {
 			"description": "",
@@ -72,112 +88,166 @@
 		},
         "nhmw": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "photonindex": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "unabsorbedflux": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "exposure_time": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "off_axis_angle": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "extraction_radius": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_countrate": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_flux": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_fluxdensity": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_luminosity": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_magnitude": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC",
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ],
 			"priority": 7
 		},
         "e_time": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_unabsorbedflux": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_lower_unabsorbedflux": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_upper_unabsorbedflux": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_lower_countrate": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_upper_countrate": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_lower_magnitude": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_upper_magnitude": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_lower_flux": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_upper_flux_density": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_lower_flux_density": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_upper_flux": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_lower_luminosity": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_upper_luminosity": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_lower_time": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
         "e_upper_time": {
 			"description": "",
-			"$ref": "file:defs.json#/definitions/NUMERIC"
+			"allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ]
 		},
 
         "source": {
@@ -187,37 +257,51 @@
 		},
         "telescope": {
 			"description": "",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "instrument": {
 			"description": "",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "mode": {
 			"description": "",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "band": {
 			"description": "",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"priority": 8
 		},
         "observatory": {
 			"description": "",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "observer": {
 			"description": "",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "survey": {
 			"description": "",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "bandset": {
@@ -230,7 +314,9 @@
 		},
         "description": {
 			"description": "",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "u_countrate": {

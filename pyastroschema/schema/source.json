@@ -19,13 +19,17 @@
         },
         "name": {
             "description": "Description designation for this source.",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
             "unique": false,
             "distinguishing": true,
             "minLength": 3
         },
         "bibcode": {
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
             "unique": true,
             "distinguishing": true,
             "minLength": 19,
@@ -33,13 +37,17 @@
         },
         "arxivid": {
             "description": "ID number for the arXiv.",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
             "unique": true,
             "distinguishing": true
         },
         "doi": {
             "description": "Digital Object Identifier (DOI) for this source.",
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
             "unique": true,
             "distinguishing": true
         },

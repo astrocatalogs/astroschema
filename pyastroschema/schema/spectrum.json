@@ -25,36 +25,52 @@
 		},
 
         "e_lower_time": {
-            "$ref": "file:defs.json#/definitions/NUMERIC",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ],
 			"distinguishing": false
 		},
         "e_time": {
-            "$ref": "file:defs.json#/definitions/NUMERIC",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ],
 			"distinguishing": false
 		},
         "e_upper_time": {
-            "$ref": "file:defs.json#/definitions/NUMERIC",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ],
 			"distinguishing": false
 		},
         "snr": {
-            "$ref": "file:defs.json#/definitions/NUMERIC",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ],
 			"distinguishing": false
 		},
         "time": {
-            "$ref": "file:defs.json#/definitions/NUMERIC",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ],
 			"distinguishing": false
 		},
         "redshift": {
-            "$ref": "file:defs.json#/definitions/NUMERIC",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ],
 			"distinguishing": false
 		},
         "airmass": {
-            "$ref": "file:defs.json#/definitions/NUMERIC",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/NUMERIC" }
+            ],
 			"distinguishing": false
 		},
 
         "filename": {
-            "$ref": "file:defs.json#/definitions/STRING"
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ]
 		},
         "u_fluxes": {
 			"type": "string",
@@ -65,35 +81,51 @@
 			"distinguishing": false
 		},
         "instrument": {
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "observatory": {
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "observer": {
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "source": {
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "reducer": {
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "reduction": {
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "survey": {
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "telescope": {
-            "$ref": "file:defs.json#/definitions/STRING",
+            "allOf": [
+                { "$ref": "file:defs.json#/definitions/STRING" }
+            ],
 			"distinguishing": false
 		},
         "u_time": {
